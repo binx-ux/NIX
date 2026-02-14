@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binxix Hub | Official Script Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0b10;
+            --bg-secondary: #111118;
+            --bg-card: #16161f;
+            --bg-card-hover: #1c1c28;
+            --accent: #c864fa;
+            --accent-dim: #9b4dca;
+            --accent-glow: rgba(200, 100, 250, 0.15);
+            --accent-glow-strong: rgba(200, 100, 250, 0.35);
+            --green: #4ade80;
+            --green-dim: rgba(74, 222, 128, 0.12);
+            --yellow: #facc15;
+            --yellow-dim: rgba(250, 204, 21, 0.12);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.12);
+            --blue: #60a5fa;
+            --blue-dim: rgba(96, 165, 250, 0.12);
+            --text: #e8e8f0;
+            --text-secondary: #8888a0;
+            --text-dim: #555568;
+            --border: #222233;
+            --border-light: #2a2a3d;
+            --code-green: #4ade80;
+            --discord-blurple: #5865f2;
+            --tiktok-pink: #ff0050;
+            --instagram-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════ AMBIENT BACKGROUND ═══════════ */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ambient::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(200, 100, 250, 0.06) 0%, transparent 70%);
+            animation: ambientFloat 20s ease-in-out infinite;
+        }
+
+        .ambient::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.04) 0%, transparent 70%);
+            animation: ambientFloat 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes ambientFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, -60px) scale(1.1); }
+            66% { transform: translate(-40px, 40px) scale(0.95); }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(200, 100, 250, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200, 100, 250, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ═══════════ LAYOUT ═══════════ */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ═══════════ HEADER ═══════════ */
+        .hero {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(200, 100, 250, 0.2);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #c864fa 0%, #60a5fa 50%, #c864fa 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto 24px;
+            line-height: 1.5;
+        }
+
+        .hero-version {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .hero-version .ver {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .hero-version .sep {
+            width: 4px;
+            height: 4px;
+            background: var(--text-dim);
+            border-radius: 50%;
+        }
+
+        /* ═══════════ SECTION TITLES ═══════════ */
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-header .icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-glow);
+            border: 1px solid rgba(200, 100, 250, 0.15);
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header .count {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* ═══════════ STATUS STRIP ═══════════ */
+        .status-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 64px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 14px 18px;
+            border-radius: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .status-item:hover {
+            border-color: var(--border-light);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-dot.green { background: var(--green); box-shadow: 0 0 8px rgba(74, 222, 128, 0.4); }
+        .status-dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(250, 204, 21, 0.4); }
+        .status-dot.red { background: var(--red); box-shadow: 0 0 8px rgba(248, 113, 113, 0.4); }
+
+        .status-info {
+            flex: 1;
+        }
+
+        .status-info .label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-info .state {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ═══════════ GAMES GRID ═══════════ */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.25s ease;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 12px 12px 0 0;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .game-card:hover::before { opacity: 1; }
+        .game-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .game-card.full::before { background: var(--green); }
+        .game-card.wip::before { background: var(--yellow); }
+        .game-card.loads::before { background: var(--blue); }
+        .game-card.external::before { background: var(--accent); }
+
+        .game-card .game-name {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .game-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        .game-badge.full { background: var(--green-dim); color: var(--green); }
+        .game-badge.wip { background: var(--yellow-dim); color: var(--yellow); }
+        .game-badge.loads { background: var(--blue-dim); color: var(--blue); }
+        .game-badge.external { background: var(--accent-glow); color: var(--accent); }
+
+        .game-features {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .game-feat {
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+            background: rgba(255,255,255,0.03);
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .game-feat.on { color: var(--green); border-color: rgba(74, 222, 128, 0.15); }
+        .game-feat.off { color: var(--text-dim); }
+
+        .game-note {
+            margin-top: 8px;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        /* ═══════════ FEATURES TABLE ═══════════ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .feature-group h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li .check {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .feature-list li .check.yes {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .feature-list li .check.no {
+            background: var(--yellow-dim);
+            color: var(--yellow);
+        }
+
+        /* ═══════════ EXECUTORS ═══════════ */
+        .executor-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .executor-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: border-color 0.2s;
+        }
+
+        .executor-tag:hover {
+            border-color: var(--border-light);
+        }
+
+        .executor-tag .tested {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .executor-tag .tested.yes {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .executor-tag .tested.maybe {
+            background: rgba(255,255,255,0.04);
+            color: var(--text-dim);
+        }
+
+        /* ═══════════ CODE BLOCK ═══════════ */
+        .code-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: rgba(200, 100, 250, 0.04);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-top .lang {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: rgba(200, 100, 250, 0.1);
+            border: 1px solid rgba(200, 100, 250, 0.2);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(200, 100, 250, 0.2);
+            border-color: var(--accent);
+        }
+
+        .code-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .code-body pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: var(--code-green);
+        }
+
+        .code-body .comment { color: var(--text-dim); }
+        .code-body .keyword { color: var(--accent); }
+        .code-body .string { color: #fbbf24; }
+        .code-body .func { color: var(--blue); }
+
+        /* ═══════════ CHANGELOG ═══════════ */
+        .changelog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .changelog-entry {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .changelog-entry .version-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .changelog-entry .version-tag .latest {
+            background: var(--green-dim);
+            color: var(--green);
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .changelog-entry ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .changelog-entry ul li {
+            padding: 3px 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 8px;
+        }
+
+        .changelog-entry ul li::before {
+            content: '+';
+            color: var(--green);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════ SOCIALS ═══════════ */
+        .social-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.25s;
+        }
+
+        .social-link:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .social-link .s-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .social-link.discord .s-icon { background: rgba(88, 101, 242, 0.15); }
+        .social-link.tiktok .s-icon { background: rgba(255, 0, 80, 0.12); }
+        .social-link.instagram .s-icon { background: rgba(225, 48, 108, 0.12); }
+        .social-link.guns .s-icon { background: rgba(255, 215, 0, 0.12); }
+
+        .social-link .s-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .social-link .s-handle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════ SUGGESTION FORM ═══════════ */
+        .suggest-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            max-width: 560px;
+        }
+
+        .suggest-box label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .suggest-box input,
+        .suggest-box textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .suggest-box input:focus,
+        .suggest-box textarea:focus {
+            outline: none;
+            border-color: var(--accent-dim);
+        }
+
+        .suggest-box textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .suggest-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .suggest-btn:hover { opacity: 0.9; }
+
+        .suggest-msg {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .suggest-msg.ok { display: block; background: var(--green-dim); color: var(--green); }
+        .suggest-msg.err { display: block; background: var(--red-dim); color: var(--red); }
+
+        /* ═══════════ THEMES SHOWCASE ═══════════ */
+        .themes-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .theme-swatch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+        }
+
+        .theme-swatch .dot-row {
+            display: flex;
+            gap: 3px;
+        }
+
+        .theme-swatch .dot-row span {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .theme-swatch .name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* ═══════════ FOOTER ═══════════ */
+        footer {
+            text-align: center;
+            padding: 48px 0 32px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ═══════════ RESPONSIVE ═══════════ */
+        @media (max-width: 640px) {
+            .hero { padding: 48px 0 24px; }
+            .hero h1 { font-size: 2.2rem; letter-spacing: -1px; }
+            .status-strip { grid-template-columns: 1fr; }
+            .games-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .social-row { grid-template-columns: 1fr; }
+        }
+
+        /* ═══════════ SCROLLBAR ═══════════ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+        /* ═══════════ LIVE VERSION FETCH ANIMATION ═══════════ */
+        .version-live {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(11, 11, 16, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-brand span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        @media (max-width: 640px) {
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- NAV -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <div class="nav-brand">Binxix <span>Hub</span></div>
+            <div class="nav-links">
+                <a href="#status">Status</a>
+                <a href="#games">Games</a>
+                <a href="#features">Features</a>
+                <a href="#script">Script</a>
+                <a href="#changelog">Changelog</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                All Systems Operational
+            </div>
+            <h1><span class="gradient">Binxix Hub</span></h1>
+            <p class="subtitle">Premium Roblox ESP, Aimbot & Utility Script — AirHub V2 Style redesign with multi-game support.</p>
+            <div class="hero-version">
+                <span>Script Version: <span class="ver" id="liveVersion">Loading...</span></span>
+                <span class="sep"></span>
+                <span>Build <span id="liveBuild">...</span></span>
+            </div>
+        </section>
+
+        <!-- STATUS -->
+        <section class="section" id="status">
+            <div class="section-header">
+                <div class="icon"></div>
+                <h2>System Status</h2>
+            </div>
+            <div class="status-strip">
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-info">
+                        <div class="label">Main Script</div>
+                        <div class="state">OPERATIONAL</div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-info">
+                        <div class="label">ESP System</div>
+                        <div class="state">OPERATIONAL</div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-info">
+                        <div class="label">Aimbot</div>
+                        <div class="state">OPERATIONAL</div>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot green"></div>
+                    <div class="status-info">
+                        <div class="label">Anti-Cheat Bypass</div>
+                        <div class="state">BYPASSED</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPORTED GAMES -->
+        <section class="section" id="games">
+            <div class="section-header">
+                <div class="icon"></div>
+                <h2>Supported Games</h2>
+                <span class="count">10 Games</span>
+            </div>
+            <div class="games-grid">
+                <div class="game-card full">
+                    <div class="game-name">Arsenal</div>
+                    <span class="game-badge full">Full Support</span>
+                    <div class="game-features">
+                        <span class="game-feat on">ESP</span>
+                        <span class="game-feat on">Aimbot</span>
+                        <span class="game-feat on">Gun Mods</span>
+                    </div>
+                </div>
+
+                <div class="game-card full">
+                    <div class="game-name">Misc Gun Test</div>
+                    <span class="game-badge full">Full Support</span>
+                    <div class="game-features">
+                        <span class="game-feat off">ESP Override</span>
+                        <span class="game-feat on">Aimbot</span>
+                        <span class="game-feat on">Gun Mods</span>
+                    </div>
+                </div>
+
+                <div class="game-card full">
+                    <div class="game-name">MTC</div>
+                    <span class="game-badge full">Full Support</span>
+                    <div class="game-features">
+                        <span class="game-feat on">ESP</span>
+                        <span class="game-feat on">Aimbot</span>
+                    </div>
+                </div>
+
+                <div class="game-card full">
+                    <div class="game-name">Sniper Duels</div>
+                    <span class="game-badge full">Full Support</span>
+                    <div class="game-features">
+                        <span class="game-feat off">ESP Override</span>
+                        <span class="game-feat on">Aimbot</span>
+                    </div>
+                </div>
+
+                <div class="game-card full">
+                    <div class="game-name">Phantasm</div>
+                    <span class="game-badge full">Full Support</span>
+                    <div class="game-features">
+                        <span class="game-feat on">ESP</span>
+                        <span class="game-feat on">Aimbot</span>
+                    </div>
+                </div>
+
+                <div class="game-card wip">
+                    <div class="game-name">Quick-Shot</div>
+                    <span class="game-badge wip">In Development</span>
+                    <div class="game-features">
+                        <span class="game-feat on">ESP</span>
+                        <span class="game-feat on">Aimbot</span>
+                    </div>
+                </div>
+
+                <div class="game-card wip">
+                    <div class="game-name">Phantom Forces</div>
+                    <span class="game-badge wip">In Development</span>
+                    <div class="game-features">
+                        <span class="game-feat on">ESP</span>
+                    </div>
+                </div>
+
+                <div class="game-card external">
+                    <div class="game-name">Murder Mystery 2</div>
+                    <span class="game-badge external">External Script</span>
+                    <div class="game-note">Loads Vertex or Binxix Hub — your choice</div>
+                </div>
+
+                <div class="game-card external">
+                    <div class="game-name">TSB</div>
+                    <span class="game-badge external">External Script</span>
+                    <div class="game-note">Loads Phantasm or Binxix Hub — your choice</div>
+                </div>
+
+                <div class="game-card loads">
+                    <div class="game-name">Vertext</div>
+                    <span class="game-badge loads">Loads</span>
+                    <div class="game-features">
+                        <span class="game-feat on">Universal</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; font-size: 0.8rem; color: var(--text-dim);">
+                ℹ Games not listed above use <strong style="color: var(--text-secondary);">Universal Mode</strong> — ESP, Aimbot, and all features available.
+            </p>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="section" id="features">
+            <div class="section-header">
+                <div class="icon"></div>
+                <h2>Features</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-group">
+                    <h3> ESP</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Box ESP (Highlight)</li>
+                        <li><span class="check yes">✓</span> Name Tags</li>
+                        <li><span class="check yes">✓</span> Health Bars</li>
+                        <li><span class="check yes">✓</span> Distance Tags</li>
+                        <li><span class="check yes">✓</span> Tracers (Bottom/Center/Mouse)</li>
+                        <li><span class="check yes">✓</span> Skeleton ESP (R15 + R6)</li>
+                        <li><span class="check yes">✓</span> Offscreen Arrows</li>
+                        <li><span class="check yes">✓</span> Chams / Wallhack Glow</li>
+                        <li><span class="check yes">✓</span> Rainbow Color Mode</li>
+                        <li><span class="check yes">✓</span> Team / Enemy / All Filters</li>
+                    </ul>
+                </div>
+
+                <div class="feature-group">
+                    <h3> Aimbot</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Smooth Aim Lock</li>
+                        <li><span class="check yes">✓</span> FOV Circle</li>
+                        <li><span class="check yes">✓</span> Hold / Toggle Modes</li>
+                        <li><span class="check yes">✓</span> Target Prediction</li>
+                        <li><span class="check yes">✓</span> Line of Sight Check</li>
+                        <li><span class="check yes">✓</span> Sticky Aim</li>
+                        <li><span class="check yes">✓</span> Custom Lock Part</li>
+                        <li><span class="check yes">✓</span> Target Lock Highlight</li>
+                    </ul>
+                </div>
+
+                <div class="feature-group">
+                    <h3> Gun Mods</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Fast Reload</li>
+                        <li><span class="check yes">✓</span> Fast Fire Rate</li>
+                        <li><span class="check yes">✓</span> Always Auto</li>
+                        <li><span class="check yes">✓</span> No Spread</li>
+                        <li><span class="check yes">✓</span> No Recoil</li>
+                        <li><span class="check no">⚠</span> May cause lag (WIP)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-group">
+                    <h3> Movement</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Speed Boost (3 Methods)</li>
+                        <li><span class="check yes">✓</span> High Jump</li>
+                        <li><span class="check yes">✓</span> Bunny Hop</li>
+                        <li><span class="check yes">✓</span> Fly (Toggle with F)</li>
+                        <li><span class="check yes">✓</span> Custom FOV</li>
+                    </ul>
+                </div>
+
+                <div class="feature-group">
+                    <h3> Combat</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Kill Aura (Click / Touch)</li>
+                        <li><span class="check yes">✓</span> Trigger Bot</li>
+                        <li><span class="check yes">✓</span> Auto TP Loop</li>
+                        <li><span class="check yes">✓</span> Anti-Death (TP Mode)</li>
+                        <li><span class="check yes">✓</span> Custom Crosshair</li>
+                    </ul>
+                </div>
+
+                <div class="feature-group">
+                    <h3> Misc</h3>
+                    <ul class="feature-list">
+                        <li><span class="check yes">✓</span> Anti-AFK</li>
+                        <li><span class="check yes">✓</span> Auto-Rejoin</li>
+                        <li><span class="check yes">✓</span> Chat Spy (All Channels)</li>
+                        <li><span class="check yes">✓</span> Chat Spammer</li>
+                        <li><span class="check yes">✓</span> Streamer Mode</li>
+                        <li><span class="check yes">✓</span> Profile Save/Load System</li>
+                        <li><span class="check yes">✓</span> FPS Counter / Velocity</li>
+                        <li><span class="check yes">✓</span> Fullbright / No Fog</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- THEMES -->
+        <section class="section">
+            <div class="section-header">
+                <div class="icon"></div>
+                <h2>GUI Themes</h2>
+            </div>
+            <div class="themes-row">
+                <div class="theme-swatch">
+                    <div class="dot-row">
+                        <span style="background: #aa64c8;"></span>
+                        <span style="background: #c882e6;"></span>
+                        <span style="background: #19191e;"></span>
+                    </div>
+                    <span class="name">Purple</span>
+                </div>
+                <div class="theme-swatch">
+                    <div class="dot-row">
+                        <span style="background: #4682dc;"></span>
+                        <span style="background: #64a0ff;"></span>
+                        <span style="background: #141820;"></span>
+                    </div>
+                    <span class="name">Blue</span>
+                </div>
+                <div class="theme-swatch">
+                    <div class="dot-row">
+                        <span style="background: #c84646;"></span>
+                        <span style="background: #f06464;"></span>
+                        <span style="background: #1c1616;"></span>
+                    </div>
+                    <span class="name">Red</span>
+                </div>
+                <div class="theme-swatch">
+                    <div class="dot-row">
+                        <span style="background: #3cb45a;"></span>
+                        <span style="background: #50dc78;"></span>
+                        <span style="background: #141c16;"></span>
+                    </div>
+                    <span class="name">Green</span>
+                </div>
+                <div class="theme-swatch">
+                    <div class="dot-row">
+                        <span style="background: #dc508c;"></span>
+                        <span style="background: #ff6eaa;"></span>
+                        <span style="background: #1c161a;"></span>
+                    </div>
+                    <span class="name">Rose</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTORS -->
+        <section class="section">
+            <div class="section-header">
+                <div class="icon">🔌</div>
+                <h2>Executor Compatibility</h2>
+            </div>
+            <div class="executor-grid">
+                <div class="executor-tag">Solara <span class="tested yes">TESTED</span></div>
+                <div class="executor-tag">Xeno <span class="tested yes">TESTED</span></div>
+                <div class="executor-tag">Wave <span class="tested yes">TESTED</span></div>
+                <div class="executor-tag">Electron <span class="tested maybe">SHOULD WORK</span></div>
+                <div class="executor-tag">Celery <span class="tested maybe">SHOULD WORK</span></div>
+                <div class="executor-tag">Synapse X <span class="tested maybe">SHOULD WORK</span></div>
+                <div class="executor-tag">Script-Ware <span class="tested maybe">SHOULD WORK</span></div>
+                <div class="executor-tag">KRNL <span class="tested maybe">SHOULD WORK</span></div>
+            </div>
+        </section>
+
+        <!-- SCRIPT LOADER -->
+        <section class="section" id="script">
+            <div class="section-header">
+                <div class="icon">📋</div>
+                <h2>Load Script</h2>
+            </div>
+            <div class="code-section">
+                <div class="code-top">
+                    <span class="lang">LUA</span>
+                    <button class="copy-btn" id="copyBtn">Copy</button>
+                </div>
+                <div class="code-body">
+<pre><span class="comment">--// Binxix Hub V6 Loader</span>
+
+<span class="keyword">local</span> url = <span class="string">"https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/refs/heads/main/script/aimbot"</span>
+
+<span class="keyword">local</span> success, err = <span class="func">pcall</span>(<span class="keyword">function</span>()
+    <span class="func">loadstring</span>(game:<span class="func">HttpGet</span>(url, <span class="keyword">true</span>))()
+<span class="keyword">end</span>)
+
+<span class="keyword">if not</span> success <span class="keyword">then</span>
+    <span class="func">warn</span>(<span class="string">"[BinxixHub] Failed to load script."</span>)
+    <span class="func">warn</span>(err)
+<span class="keyword">else</span>
+    <span class="func">print</span>(<span class="string">"[BinxixHub] Script loaded successfully."</span>)
+<span class="keyword">end</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHANGELOG -->
+        <section class="section" id="changelog">
+            <div class="section-header">
+                <div class="icon">📝</div>
+                <h2>Changelog</h2>
+            </div>
+            <div class="changelog-list">
+                <div class="changelog-entry">
+                    <div class="version-tag">v6.4 (Build 345) <span class="latest">LATEST</span></div>
+                    <ul>
+                        <li>Gun Mods system — Fast Reload, Fast Fire Rate, Always Auto, No Spread, No Recoil</li>
+                        <li>Chat Spammer with customizable message & delay</li>
+                        <li>Streamer Mode — hide names, notifications, chat spy logs</li>
+                        <li>Profile Save/Load system (replaces legacy config)</li>
+                        <li>5 theme presets: Purple, Blue, Red, Green, Rose</li>
+                        <li>Optimized Skeleton ESP & Tracer line pooling</li>
+                        <li>Auto TP Loop with Anti-Death, void protection, keybind support</li>
+                        <li>Chat Spy — logs all channels including whispers & team chat</li>
+                        <li>Suggestion box & Bug Report system (sends to Discord)</li>
+                        <li>Update checker — compares against GitHub VERSION file</li>
+                    </ul>
+                </div>
+                <div class="changelog-entry">
+                    <div class="version-tag">v6.3</div>
+                    <ul>
+                        <li>External script redirect for MM2 (Vertex) and TSB (Phantasm)</li>
+                        <li>Choice GUI — pick game-specific script or Binxix Hub</li>
+                        <li>Chams / Wallhack glow with adjustable fill transparency</li>
+                        <li>Offscreen arrows with distance labels</li>
+                        <li>Trigger Bot — standalone or combined with Aimbot</li>
+                        <li>Kill Aura with Click and Touch methods</li>
+                    </ul>
+                </div>
+                <div class="changelog-entry">
+                    <div class="version-tag">v6.0 – v6.2</div>
+                    <ul>
+                        <li>Complete AirHub V2 style GUI redesign</li>
+                        <li>ESP system with Box, Tracers, Skeleton, Name, Health, Distance</li>
+                        <li>Aimbot with FOV circle, prediction, smoothness, sticky aim</li>
+                        <li>Custom crosshair (Cross, Dot, Circle styles)</li>
+                        <li>Movement: Speed Boost (3 methods), High Jump, Bunny Hop, Fly</li>
+                        <li>Players tab with live health, distance, spectate, copy name</li>
+                        <li>Notification system with slide-in animations</li>
+                        <li>Anti-AFK, Auto-Rejoin, Server Hop</li>
+                        <li>Multi-game detection with per-game ESP config</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIALS -->
+        <section class="section" id="socials">
+            <div class="section-header">
+                <div class="icon">🔗</div>
+                <h2>Connect</h2>
+            </div>
+            <div class="social-row">
+                <a href="https://discord.gg/S4nPV2Rx7F" target="_blank" class="social-link discord">
+                    <div class="s-icon">💬</div>
+                    <div>
+                        <div class="s-label">Discord Server</div>
+                        <div class="s-handle">Support & Updates</div>
+                    </div>
+                </a>
+                <a href="https://www.tiktok.com/@_binxix" target="_blank" class="social-link tiktok">
+                    <div class="s-icon">🎵</div>
+                    <div>
+                        <div class="s-label">TikTok</div>
+                        <div class="s-handle">@_binxix</div>
+                    </div>
+                </a>
+                <a href="https://www.instagram.com/_binxix/" target="_blank" class="social-link instagram">
+                    <div class="s-icon">📸</div>
+                    <div>
+                        <div class="s-label">Instagram</div>
+                        <div class="s-handle">@_binxix</div>
+                    </div>
+                </a>
+                <a href="https://guns.lol/binxix" target="_blank" class="social-link guns">
+                    <div class="s-icon">🎯</div>
+                    <div>
+                        <div class="s-label">Guns.lol</div>
+                        <div class="s-handle">Profile & Stats</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        
+        <!-- SUGGESTION -->
+        <section class="section">
+            <div class="section-header">
+                <div class="icon">💡</div>
+                <h2>Send a Suggestion</h2>
+            </div>
+            <div class="suggest-box">
+                <form id="suggestionForm">
+                    <label>Your Name (Optional)</label>
+                    <input type="text" id="username" placeholder="Anonymous">
+                    <label>Suggestion</label>
+                    <textarea id="suggestion" placeholder="Feature ideas, feedback, bug reports..." required></textarea>
+                    <button type="submit" class="suggest-btn">Send Suggestion</button>
+                    <div id="suggestMsg" class="suggest-msg"></div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Binxix Hub. Built by <a href="https://guns.lol/binxix" target="_blank">Binxix</a>.</p>
+    </footer>
+
+    <script>
+        // ═══════════ LIVE VERSION FETCH ═══════════
+        (async function() {
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/main/VERSION');
+                if (res.ok) {
+                    const text = await res.text();
+                    const build = text.trim();
+                    document.getElementById('liveVersion').textContent = 'v6.' + build;
+                    document.getElementById('liveVersion').classList.add('version-live');
+                    document.getElementById('liveBuild').textContent = build;
+                }
+            } catch(e) {
+                document.getElementById('liveVersion').textContent = 'v6.4';
+                document.getElementById('liveBuild').textContent = '345';
+            }
+        })();
+
+        // ═══════════ COPY BUTTON ═══════════
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const code = `--// Binxix Hub V6 Loader\n\nlocal url = "https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/refs/heads/main/script/aimbot"\n\nlocal success, err = pcall(function()\n    loadstring(game:HttpGet(url, true))()\nend)\n\nif not success then\n    warn("[BinxixHub] Failed to load script.")\n    warn(err)\nelse\n    print("[BinxixHub] Script loaded successfully.")\nend`;
+
+            navigator.clipboard.writeText(code).then(() => {
+                this.textContent = ' Copied!';
+                this.style.color = '#4ade80';
+                setTimeout(() => {
+                    this.textContent = 'Copy';
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+
+        // ═══════════ SUGGESTION FORM ═══════════
+        document.getElementById('suggestionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value || 'Anonymous';
+            const suggestion = document.getElementById('suggestion').value;
+            const msgDiv = document.getElementById('suggestMsg');
+
+            if (!suggestion.trim()) return;
+
+            const webhookURL = 'https://discord.com/api/webhooks/1469598356975124531/2gW0s_svmwzMFNPidKhyOztLVKPVPI3V2g1OT0VN3ownM6Fpzu1UZ1qFl33ojmnfNGbr';
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        embeds: [{
+                            title: '💡 Website Suggestion',
+                            color: 0xc864fa,
+                            fields: [
+                                { name: '👤 From', value: username },
+                                { name: '📝 Suggestion', value: suggestion }
+                            ],
+                            timestamp: new Date().toISOString(),
+                            footer: { text: 'Binxix Hub Website' }
+                        }]
+                    })
+                });
+
+                if (response.ok) {
+                    msgDiv.textContent = '✅ Sent! Thank you!';
+                    msgDiv.className = 'suggest-msg ok';
+                    this.reset();
+                    setTimeout(() => msgDiv.className = 'suggest-msg', 4000);
+                } else throw new Error();
+            } catch {
+                msgDiv.textContent = '❌ Failed to send. Try again.';
+                msgDiv.className = 'suggest-msg err';
+                setTimeout(() => msgDiv.className = 'suggest-msg', 4000);
+            }
+        });
+
+        // ═══════════ SMOOTH SCROLL ═══════════
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
