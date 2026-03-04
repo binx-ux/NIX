@@ -4,299 +4,753 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Binxix Hub — NIX V6</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Fragment+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anybody:wght@400;600;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 :root{
-  --bg0:#06080b;--bg1:#090c11;--bg2:#0d1118;--bg3:#111820;--bg4:#161e28;
-  --line:#1c2530;--line2:#243040;--white:#e2edf5;--grey:#8a9baa;--mute:#3a4a58;--dim:#2a3d4d;
-  --cyan:#4dd9ff;--cyan2:#1a8aa8;--cyan-glow:rgba(77,217,255,0.1);--cyan-line:rgba(77,217,255,0.2);
-  --green:#3dffa0;--red:#ff4d6a;--orange:#ffaa44;
+  --bg:#080a0e;
+  --bg1:#0b0e14;
+  --bg2:#0f1319;
+  --bg3:#141920;
+  --bg4:#1a2030;
+  --border:#1e2733;
+  --border2:#27333f;
+  --text:#dce8f0;
+  --muted:#5a7080;
+  --dim:#2e3d4a;
+  --accent:#00d4ff;
+  --accent2:#008fad;
+  --accent-glow:rgba(0,212,255,0.08);
+  --accent-border:rgba(0,212,255,0.18);
+  --green:#00e87a;
+  --red:#ff3d5a;
+  --orange:#ff9420;
+  --yellow:#ffd93d;
 }
-html,body{width:100%;height:100%;background:var(--bg0);font-family:'Syne',sans-serif;color:var(--white);overflow:hidden}
-body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:.35}
-#win{display:flex;flex-direction:column;width:100vw;height:100vh;overflow:hidden}
+
+html,body{
+  width:100%;height:100%;
+  background:var(--bg);
+  font-family:'Anybody',sans-serif;
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* scanline overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:9999;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+}
+
+/* noise */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:9998;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.5;
+}
+
+/* ── LAYOUT ─────────────────────────────── */
+#shell{display:flex;flex-direction:column;width:100vw;height:100vh;overflow:hidden}
 
 /* TITLEBAR */
-#tb{height:38px;background:var(--bg1);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 14px;gap:10px;flex-shrink:0;position:relative}
-.tb-dots{display:flex;gap:5px}
-.tb-dot{width:11px;height:11px;border-radius:50%;cursor:pointer;transition:filter .15s}
-.tb-dot:hover{filter:brightness(1.3)}
-.tb-dot.r{background:#ff5f56}.tb-dot.y{background:#ffbd2e}.tb-dot.g{background:#27c93f}
-.tb-name{position:absolute;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:11px;font-weight:300;color:var(--mute);letter-spacing:.12em}
-.tb-ver{margin-left:auto;font-family:'Fragment Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:.1em}
+#titlebar{
+  height:34px;
+  background:var(--bg1);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 14px;gap:8px;
+  flex-shrink:0;
+  position:relative;
+}
+.dots{display:flex;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%;cursor:pointer;transition:.12s}
+.dot:hover{filter:brightness(1.25)}
+.dot.r{background:#ff5f56}.dot.y{background:#ffbd2e}.dot.g{background:#27c93f}
+.tb-title{
+  position:absolute;left:50%;transform:translateX(-50%);
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.1em;
+}
+.tb-build{
+  margin-left:auto;
+  font-family:'DM Mono',monospace;font-size:8.5px;
+  color:var(--dim);letter-spacing:.08em;
+}
 
 /* BODY */
 #body{display:flex;flex:1;overflow:hidden}
 
 /* SIDEBAR */
-#sb{width:200px;background:var(--bg1);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0}
-.sb-top{padding:22px 16px 16px;border-bottom:1px solid var(--line)}
-.sb-logo{font-size:17px;font-weight:800;color:var(--white);letter-spacing:-.01em;line-height:1}
-.sb-logo em{font-style:normal;color:var(--cyan)}
-.sb-tag{font-family:'DM Mono',monospace;font-size:8px;color:var(--mute);letter-spacing:.2em;margin-top:5px}
-.sb-pill{display:inline-flex;align-items:center;gap:4px;margin-top:10px;padding:3px 8px;background:rgba(61,255,160,.07);border:1px solid rgba(61,255,160,.18);border-radius:20px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.12em;color:var(--green)}
-.sb-pill-dot{width:4px;height:4px;border-radius:50%;background:var(--green);box-shadow:0 0 4px var(--green);animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.sb-nav{flex:1;padding:10px 0;overflow-y:auto}
-.sb-section{padding:10px 16px 4px;font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
-.sb-item{display:flex;align-items:center;gap:9px;padding:9px 16px;cursor:pointer;border-left:2px solid transparent;font-size:13px;font-weight:600;color:var(--grey);transition:all .12s}
-.sb-item:hover{color:var(--white);background:rgba(255,255,255,.02)}
-.sb-item.on{color:var(--cyan);border-left-color:var(--cyan);background:var(--cyan-glow)}
-.sb-item svg{width:13px;height:13px;flex-shrink:0}
-.sb-count{margin-left:auto;font-family:'DM Mono',monospace;font-size:8px;background:var(--line2);color:var(--grey);padding:1px 5px;border-radius:2px}
-.sb-item.on .sb-count{background:var(--cyan-glow);color:var(--cyan)}
-.sb-foot{padding:12px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-.sb-link{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:4px;border:1px solid var(--line);font-size:11px;font-weight:600;color:var(--grey);cursor:pointer;text-decoration:none;transition:all .12s}
-.sb-link:hover{border-color:var(--line2);color:var(--white);background:var(--bg3)}
-.sb-link svg{width:12px;height:12px}
+#sidebar{
+  width:196px;
+  background:var(--bg1);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  flex-shrink:0;
+}
+.sb-head{
+  padding:20px 16px 14px;
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Anybody',sans-serif;
+  font-size:18px;font-weight:900;
+  color:var(--text);letter-spacing:-.02em;
+  line-height:1;
+}
+.logo span{color:var(--accent)}
+.logo-sub{
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;color:var(--muted);
+  letter-spacing:.25em;margin-top:5px;
+  text-transform:uppercase;
+}
+.status-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:10px;padding:3px 9px;
+  background:rgba(0,232,122,.06);
+  border:1px solid rgba(0,232,122,.18);
+  border-radius:3px;
+  font-family:'Space Mono',monospace;
+  font-size:7px;letter-spacing:.2em;
+  color:var(--green);
+}
+.pill-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 5px var(--green);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* CONTENT */
-#main{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--bg0);scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0}
+.sb-nav::-webkit-scrollbar{width:2px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--border)}
+
+.nav-section{
+  padding:10px 16px 4px;
+  font-family:'Space Mono',monospace;
+  font-size:7px;letter-spacing:.25em;
+  color:var(--dim);text-transform:uppercase;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 16px;
+  cursor:pointer;
+  border-left:2px solid transparent;
+  font-size:12.5px;font-weight:600;
+  color:var(--muted);
+  transition:all .1s;
+  user-select:none;
+}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.018)}
+.nav-item.active{
+  color:var(--accent);
+  border-left-color:var(--accent);
+  background:var(--accent-glow);
+}
+.nav-item svg{width:12px;height:12px;flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-badge{
+  margin-left:auto;
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;
+  background:var(--bg3);color:var(--muted);
+  padding:1px 5px;border-radius:2px;
+}
+.nav-item.active .nav-badge{background:var(--accent-glow);color:var(--accent)}
+
+.sb-foot{
+  padding:10px 12px;
+  border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:5px;
+}
+.foot-link{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 9px;border-radius:3px;
+  border:1px solid var(--border);
+  font-family:'Anybody',sans-serif;
+  font-size:11px;font-weight:600;
+  color:var(--muted);
+  text-decoration:none;
+  cursor:pointer;
+  transition:all .1s;
+}
+.foot-link:hover{border-color:var(--border2);color:var(--text);background:var(--bg3)}
+.foot-link svg{width:11px;height:11px;flex-shrink:0}
+
+/* MAIN */
+#main{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  background:var(--bg);
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
 #main::-webkit-scrollbar{width:3px}
-#main::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
-.view{display:none;padding:30px 32px 40px;animation:fi .18s ease}
-.view.on{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+#main::-webkit-scrollbar-thumb{background:var(--border)}
 
-/* TYPOGRAPHY */
-.pg-title{font-size:22px;font-weight:800;color:var(--white);letter-spacing:-.01em;line-height:1}
-.pg-title b{color:var(--cyan);font-weight:800}
-.pg-sub{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--mute);margin-top:5px}
-.divider{height:1px;background:var(--line);margin:20px 0}
-.section-hd{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:var(--mute);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.section-hd::after{content:'';flex:1;height:1px;background:var(--line)}
+.view{display:none;padding:28px 30px 44px;animation:appear .16s ease}
+.view.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-/* HERO */
-.hero{background:var(--bg1);border:1px solid var(--line);border-radius:6px;padding:28px 28px 24px;margin-bottom:22px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(77,217,255,.05) 0%,transparent 65%);pointer-events:none}
-.hero-eyebrow{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.25em;color:var(--cyan2);margin-bottom:12px}
-.hero-h{font-size:38px;font-weight:800;line-height:1.0;letter-spacing:-.02em;margin-bottom:12px}
-.hero-h span{color:var(--cyan)}
-.hero-p{font-size:13px;font-weight:400;color:var(--grey);line-height:1.65;max-width:460px;margin-bottom:22px}
-.hero-btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:4px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;border:none;letter-spacing:.02em;text-decoration:none}
-.btn-cyan{background:var(--cyan);color:#050810;box-shadow:0 0 18px rgba(77,217,255,.25)}
-.btn-cyan:hover{background:#7de8ff;box-shadow:0 0 26px rgba(77,217,255,.4);transform:translateY(-1px)}
-.btn-outline{background:transparent;border:1px solid var(--line2);color:var(--grey)}
-.btn-outline:hover{border-color:var(--cyan-line);color:var(--cyan);background:var(--cyan-glow)}
-.btn svg{width:13px;height:13px}
-.hero-nums{display:flex;gap:28px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
-.hero-num-val{font-size:22px;font-weight:800;color:var(--white);line-height:1}
-.hero-num-val em{color:var(--cyan);font-style:normal}
-.hero-num-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--mute);margin-top:3px;text-transform:uppercase}
+/* ── TYPOGRAPHY ─────────────────────────── */
+.page-header{margin-bottom:22px}
+.page-title{
+  font-size:24px;font-weight:900;
+  letter-spacing:-.02em;line-height:1;
+}
+.page-title em{font-style:normal;color:var(--accent)}
+.page-sub{
+  font-family:'Space Mono',monospace;
+  font-size:8.5px;letter-spacing:.18em;
+  color:var(--muted);margin-top:6px;
+}
+hr.rule{border:none;border-top:1px solid var(--border);margin:18px 0}
 
-/* LOADSTRING */
-.ls-box{background:var(--bg1);border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:22px}
-.ls-hd{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--line);background:var(--bg2)}
-.ls-label{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--mute)}
-.ls-label em{color:var(--cyan);font-style:normal}
-.copy-btn{display:flex;align-items:center;gap:5px;padding:5px 12px;border:none;border-radius:3px;background:var(--cyan);color:#050810;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.12em;cursor:pointer;transition:all .12s}
-.copy-btn:hover{background:#7de8ff;transform:translateY(-1px)}
-.copy-btn.done{background:var(--green)}
-.copy-btn svg{width:10px;height:10px}
-.ls-code{padding:14px 16px;font-family:'Fragment Mono',monospace;font-size:11px;line-height:1.65;color:#6ecfed;user-select:text;cursor:text;word-break:break-all}
+.section-label{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:.22em;
+  color:var(--muted);text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* TICKER */
-.ticker{display:flex;align-items:center;height:26px;background:var(--bg1);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:18px}
-.ticker-tag{padding:0 10px;height:100%;display:flex;align-items:center;background:var(--cyan);color:#050810;font-family:'DM Mono',monospace;font-size:8px;font-weight:500;letter-spacing:.15em;flex-shrink:0}
-.ticker-scroll{flex:1;overflow:hidden}
-.ticker-inner{display:flex;gap:36px;animation:scroll 22s linear infinite;white-space:nowrap}
-@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.ti{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.15em;color:var(--mute)}
-.ti em{color:var(--cyan);font-style:normal;margin-right:4px}
+/* ── TICKER ─────────────────────────────── */
+.ticker{
+  display:flex;align-items:center;height:24px;
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:3px;overflow:hidden;margin-bottom:20px;
+}
+.ticker-label{
+  padding:0 10px;height:100%;
+  display:flex;align-items:center;
+  background:var(--accent);color:#050810;
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;font-weight:700;
+  letter-spacing:.15em;flex-shrink:0;
+}
+.ticker-track{flex:1;overflow:hidden}
+.ticker-inner{
+  display:flex;gap:32px;
+  animation:marquee 20s linear infinite;
+  white-space:nowrap;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:.12em;color:var(--muted);
+}
+.ti b{color:var(--accent);font-weight:400;margin-right:4px}
 
-/* CARDS */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:22px}
-.card{background:var(--bg1);border:1px solid var(--line);border-radius:5px;padding:16px;transition:all .15s}
-.card:hover{border-color:var(--line2);background:var(--bg2);transform:translateY(-1px)}
-.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.card-ico{width:28px;height:28px;background:var(--bg3);border:1px solid var(--line2);border-radius:5px;display:flex;align-items:center;justify-content:center;color:var(--cyan)}
-.card-ico svg{width:14px;height:14px}
-.c-tag{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.1em;padding:2px 6px;border-radius:2px;border:1px solid}
-.ct-green{color:var(--green);border-color:rgba(61,255,160,.2);background:rgba(61,255,160,.06)}
-.ct-cyan{color:var(--cyan);border-color:var(--cyan-line);background:var(--cyan-glow)}
-.ct-grey{color:var(--mute);border-color:var(--line);background:transparent}
-.card-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:5px}
-.card-desc{font-size:11px;color:var(--grey);line-height:1.5}
-.card-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+/* ── HERO ───────────────────────────────── */
+.hero{
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:28px 28px 22px;
+  margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;top:-80px;right:-80px;
+  width:320px;height:320px;
+  background:radial-gradient(circle,rgba(0,212,255,.05) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-kicker{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:.28em;
+  color:var(--accent2);margin-bottom:14px;
+}
+.hero-h{
+  font-size:42px;font-weight:900;
+  line-height:.95;letter-spacing:-.03em;
+  margin-bottom:12px;
+}
+.hero-h span{color:var(--accent)}
+.hero-body{
+  font-family:'Anybody',sans-serif;
+  font-size:12.5px;font-weight:400;
+  color:var(--muted);line-height:1.7;
+  max-width:420px;margin-bottom:20px;
+}
+.hero-actions{display:flex;gap:7px;flex-wrap:wrap}
 
-/* EXECUTOR CARDS */
-.exec-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
-.exec-card{background:var(--bg1);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:border-color .15s}
-.exec-card:hover{border-color:var(--line2)}
-.exec-card-top{padding:18px 18px 14px}
-.exec-name{font-size:18px;font-weight:800;color:var(--white);margin-bottom:4px}
-.exec-name em{color:var(--cyan);font-style:normal}
-.exec-desc{font-size:11px;color:var(--grey);line-height:1.55;margin-bottom:14px}
-.exec-meta{display:flex;gap:14px;padding:12px 18px;border-top:1px solid var(--line);background:var(--bg2);flex-wrap:wrap}
-.em-lbl{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.15em;color:var(--mute);margin-bottom:2px;text-transform:uppercase}
-.em-val{font-size:11px;font-weight:700;color:var(--white)}
-.em-val.g{color:var(--green)}.em-val.c{color:var(--cyan)}
-.exec-btns{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:7px}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 18px;border-radius:3px;
+  font-family:'Anybody',sans-serif;
+  font-size:11.5px;font-weight:700;
+  cursor:pointer;border:none;
+  transition:all .12s;text-decoration:none;
+  letter-spacing:.01em;
+}
+.btn-primary{
+  background:var(--accent);color:#040810;
+  box-shadow:0 0 20px rgba(0,212,255,.2);
+}
+.btn-primary:hover{background:#33ddff;box-shadow:0 0 30px rgba(0,212,255,.35);transform:translateY(-1px)}
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--border2);
+  color:var(--muted);
+}
+.btn-ghost:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-glow)}
+.btn svg{width:12px;height:12px}
 
-/* EDITOR */
-.editor-wrap{background:var(--bg1);border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:18px}
-.editor-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg2);border-bottom:1px solid var(--line)}
-.editor-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--mute)}
-.editor-dots{display:flex;gap:4px}
-.editor-dot{width:7px;height:7px;border-radius:50%;background:var(--line2)}
-.editor-ta{width:100%;min-height:160px;background:var(--bg0);border:none;outline:none;padding:14px 16px;font-family:'Fragment Mono',monospace;font-size:11px;line-height:1.7;color:#6ecfed;resize:vertical}
-.editor-ta::placeholder{color:var(--mute)}
-.editor-actions{display:flex;align-items:center;gap:7px;padding:10px 14px;border-top:1px solid var(--line);background:var(--bg2)}
-.ea-btn{padding:6px 14px;border-radius:3px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .12s;border:none}
-.ea-exec{background:var(--cyan);color:#050810;box-shadow:0 0 14px rgba(77,217,255,.2)}
-.ea-exec:hover{background:#7de8ff;box-shadow:0 0 22px rgba(77,217,255,.35);transform:translateY(-1px)}
-.ea-sec{background:transparent;border:1px solid var(--line);color:var(--grey)}
-.ea-sec:hover{border-color:var(--line2);color:var(--white)}
-.ea-red{background:transparent;border:1px solid rgba(255,77,106,.25);color:var(--red)}
-.ea-red:hover{background:rgba(255,77,106,.08);border-color:var(--red)}
+.hero-stats{
+  display:flex;gap:26px;
+  margin-top:20px;padding-top:18px;
+  border-top:1px solid var(--border);
+}
+.stat-val{
+  font-size:20px;font-weight:900;
+  color:var(--text);line-height:1;
+}
+.stat-val em{font-style:normal;color:var(--accent)}
+.stat-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;letter-spacing:.15em;
+  color:var(--muted);margin-top:3px;
+  text-transform:uppercase;
+}
 
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
-.step{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--bg1);border:1px solid var(--line);border-radius:5px;transition:border-color .12s}
-.step:hover{border-color:var(--line2)}
-.step-n{font-size:22px;font-weight:800;color:var(--cyan);opacity:.25;line-height:1;flex-shrink:0}
-.step-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:3px}
-.step-desc{font-size:11px;color:var(--grey);line-height:1.5}
-.step-desc code{font-family:'Fragment Mono',monospace;color:var(--cyan);font-size:10px}
+/* ── LOADSTRING BOX ─────────────────────── */
+.ls-wrap{
+  background:var(--bg1);
+  border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;
+  margin-bottom:20px;
+}
+.ls-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 13px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.ls-filename{
+  font-family:'Space Mono',monospace;
+  font-size:8.5px;letter-spacing:.12em;color:var(--muted);
+}
+.ls-filename span{color:var(--accent)}
+.copy-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:4px 11px;border-radius:2px;
+  background:var(--accent);color:#050810;
+  font-family:'Space Mono',monospace;
+  font-size:8px;font-weight:700;letter-spacing:.12em;
+  border:none;cursor:pointer;transition:.12s;
+}
+.copy-btn:hover{background:#33ddff;transform:translateY(-1px)}
+.copy-btn.copied{background:var(--green)}
+.copy-btn svg{width:9px;height:9px}
+.ls-code{
+  padding:13px 15px;
+  font-family:'Space Mono',monospace;
+  font-size:10.5px;line-height:1.7;
+  color:#55c8e0;word-break:break-all;
+  cursor:text;user-select:text;
+}
 
-/* COMPAT TABLE */
-.ctable{width:100%;border-collapse:collapse;margin-bottom:22px}
-.ctable th{text-align:left;padding:9px 14px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--mute);border-bottom:1px solid var(--line);text-transform:uppercase}
-.ctable td{padding:10px 14px;font-size:12px;color:var(--grey);border-bottom:1px solid rgba(28,37,48,.7)}
-.ctable tr:hover td{background:var(--bg1)}
-.ctable td:first-child{color:var(--white);font-weight:600}
-.cs{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;padding:2px 7px;border-radius:2px;border:1px solid}
-.cs.y{color:var(--green);border-color:rgba(61,255,160,.2);background:rgba(61,255,160,.06)}
-.cs.p{color:var(--orange);border-color:rgba(255,170,68,.2);background:rgba(255,170,68,.06)}
+/* ── FEATURE CARDS ──────────────────────── */
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:10px;margin-bottom:20px;
+}
+.feat-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;padding:15px;
+  transition:all .12s;
+}
+.feat-card:hover{border-color:var(--border2);background:var(--bg2);transform:translateY(-1px)}
+.feat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.feat-icon{
+  width:26px;height:26px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:var(--accent);
+}
+.feat-icon svg{width:12px;height:12px}
+.tag{
+  font-family:'Space Mono',monospace;
+  font-size:7px;letter-spacing:.1em;
+  padding:2px 6px;border-radius:2px;border:1px solid;
+}
+.tag-cyan{color:var(--accent);border-color:var(--accent-border);background:var(--accent-glow)}
+.tag-green{color:var(--green);border-color:rgba(0,232,122,.2);background:rgba(0,232,122,.06)}
+.tag-grey{color:var(--muted);border-color:var(--border);background:transparent}
 
-/* LEGAL / CONTACT */
-.legal-block{background:var(--bg1);border:1px solid var(--line);border-radius:5px;padding:20px 22px;margin-bottom:14px}
-.legal-block h3{font-size:13px;font-weight:700;color:var(--white);margin-bottom:10px;letter-spacing:.02em}
-.legal-block p{font-size:11px;color:var(--grey);line-height:1.7;margin-bottom:8px}
-.legal-block p:last-child{margin-bottom:0}
-.legal-block a{color:var(--cyan);text-decoration:none}
-.legal-block a:hover{text-decoration:underline}
-.legal-block ul{padding-left:18px;margin-top:6px}
-.legal-block ul li{font-size:11px;color:var(--grey);line-height:1.7}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:22px}
-.contact-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg1);border:1px solid var(--line);border-radius:5px;text-decoration:none;color:var(--grey);font-size:12px;font-weight:600;transition:all .12s}
-.contact-card:hover{border-color:var(--cyan-line);color:var(--white);background:var(--bg2);transform:translateY(-1px)}
-.contact-card svg{width:15px;height:15px;color:var(--cyan);flex-shrink:0}
+.feat-name{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:4px}
+.feat-desc{font-size:10.5px;color:var(--muted);line-height:1.55}
+.feat-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:9px}
 
-/* SETTINGS */
-.sg{background:var(--bg1);border:1px solid var(--line);border-radius:5px;overflow:hidden;margin-bottom:14px}
-.sg-hd{padding:10px 15px;background:var(--bg2);border-bottom:1px solid var(--line);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase}
-.sr{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid rgba(28,37,48,.5)}
-.sr:last-child{border-bottom:none}
-.sr-name{font-size:12px;font-weight:600;color:var(--white)}
-.sr-note{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--mute);margin-top:1px;letter-spacing:.05em}
-.toggle{position:relative;width:36px;height:18px;cursor:pointer;flex-shrink:0}
+/* ── EXECUTOR CARDS ─────────────────────── */
+.exec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.exec-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;transition:.12s;
+}
+.exec-card:hover{border-color:var(--border2)}
+.exec-body{padding:18px 18px 14px}
+.exec-name{font-size:17px;font-weight:900;color:var(--text);margin-bottom:5px;letter-spacing:-.01em}
+.exec-name em{font-style:normal;color:var(--accent)}
+.exec-desc{font-size:10.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.exec-btns{display:flex;gap:6px}
+.exec-meta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  padding:11px 18px;
+  border-top:1px solid var(--border);
+  background:var(--bg2);
+}
+.meta-item{}
+.meta-lbl{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:2px}
+.meta-val{font-family:'Anybody',sans-serif;font-size:11px;font-weight:700;color:var(--text)}
+.meta-val.c{color:var(--accent)}.meta-val.g{color:var(--green)}
+
+
+
+/* ── STEPS ──────────────────────────────── */
+.steps{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+.step{
+  display:flex;align-items:flex-start;gap:13px;
+  padding:13px 15px;
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;transition:.1s;
+}
+.step:hover{border-color:var(--border2)}
+.step-num{
+  font-size:20px;font-weight:900;
+  color:var(--accent);opacity:.22;line-height:1;
+  flex-shrink:0;font-variant-numeric:tabular-nums;
+}
+.step-title{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:2px}
+.step-desc{font-size:10.5px;color:var(--muted);line-height:1.55}
+.step-desc code{font-family:'Space Mono',monospace;color:var(--accent);font-size:9.5px}
+.step-desc a{color:var(--accent);text-decoration:none}
+.step-desc a:hover{text-decoration:underline}
+
+/* ── COMPAT TABLE ───────────────────────── */
+
+/* game list editor */
+.games-editor{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;margin-bottom:20px;
+}
+.ge-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--border);
+}
+.ge-title{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.ge-add{
+  display:flex;align-items:center;gap:5px;
+  padding:4px 11px;border-radius:2px;
+  background:var(--accent);color:#050810;
+  font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:.1em;
+  border:none;cursor:pointer;transition:.12s;
+}
+.ge-add:hover{background:#33ddff}
+
+.compat-table{width:100%;border-collapse:collapse}
+.compat-table th{
+  text-align:left;padding:9px 14px;
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;letter-spacing:.18em;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  text-transform:uppercase;
+}
+.compat-table td{
+  padding:10px 14px;font-size:11.5px;
+  color:var(--muted);
+  border-bottom:1px solid rgba(30,39,51,.6);
+  vertical-align:middle;
+}
+.compat-table tr:last-child td{border-bottom:none}
+.compat-table tr:hover td{background:rgba(255,255,255,.01)}
+.compat-table td:first-child{color:var(--text);font-weight:700}
+
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:'Space Mono',monospace;font-size:7.5px;
+  letter-spacing:.08em;padding:2px 7px;
+  border-radius:2px;border:1px solid;
+}
+.badge-yes{color:var(--green);border-color:rgba(0,232,122,.2);background:rgba(0,232,122,.06)}
+.badge-no{color:var(--red);border-color:rgba(255,61,90,.2);background:rgba(255,61,90,.06)}
+.badge-partial{color:var(--orange);border-color:rgba(255,148,32,.2);background:rgba(255,148,32,.06)}
+
+/* delete btn */
+.del-btn{
+  background:transparent;border:none;
+  color:var(--dim);cursor:pointer;
+  padding:3px 6px;border-radius:2px;
+  font-size:11px;transition:.1s;
+}
+.del-btn:hover{color:var(--red);background:rgba(255,61,90,.07)}
+
+/* add row form */
+.add-row-form{
+  display:none;
+  padding:12px 14px;
+  border-top:1px solid var(--border);
+  background:var(--bg2);
+  gap:8px;flex-wrap:wrap;align-items:flex-end;
+}
+.add-row-form.open{display:flex}
+.form-field{display:flex;flex-direction:column;gap:4px}
+.form-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.form-input{
+  background:var(--bg);border:1px solid var(--border);
+  color:var(--text);padding:5px 9px;
+  border-radius:2px;font-family:'Anybody',sans-serif;font-size:11px;
+  outline:none;transition:.1s;width:130px;
+}
+.form-input:focus{border-color:var(--accent-border)}
+.form-select{
+  background:var(--bg);border:1px solid var(--border);
+  color:var(--text);padding:5px 8px;
+  border-radius:2px;font-family:'Anybody',sans-serif;font-size:11px;
+  outline:none;cursor:pointer;width:90px;
+}
+.form-select:focus{border-color:var(--accent-border)}
+.form-actions{display:flex;gap:5px;align-items:flex-end;padding-bottom:1px}
+.fa-confirm{
+  padding:5px 12px;border-radius:2px;
+  background:var(--accent);color:#050810;
+  font-family:'Anybody',sans-serif;font-size:10.5px;font-weight:700;
+  border:none;cursor:pointer;transition:.1s;
+}
+.fa-confirm:hover{background:#33ddff}
+.fa-cancel{
+  padding:5px 10px;border-radius:2px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);font-family:'Anybody',sans-serif;
+  font-size:10.5px;font-weight:600;cursor:pointer;transition:.1s;
+}
+.fa-cancel:hover{color:var(--text);border-color:var(--border2)}
+
+/* ── LEGAL ──────────────────────────────── */
+.legal-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;padding:18px 20px;margin-bottom:12px;
+}
+.legal-card h3{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:9px;letter-spacing:.01em}
+.legal-card p{font-size:10.5px;color:var(--muted);line-height:1.75;margin-bottom:6px}
+.legal-card p:last-child{margin-bottom:0}
+.legal-card a{color:var(--accent);text-decoration:none}
+.legal-card a:hover{text-decoration:underline}
+.legal-card ul{padding-left:16px;margin-top:5px}
+.legal-card ul li{font-size:10.5px;color:var(--muted);line-height:1.75}
+
+/* ── CONTACT ────────────────────────────── */
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:9px;margin-bottom:20px;
+}
+.contact-card{
+  display:flex;align-items:center;gap:11px;
+  padding:13px 15px;
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;text-decoration:none;
+  color:var(--muted);font-size:11.5px;font-weight:600;
+  transition:all .1s;
+}
+.contact-card:hover{border-color:var(--accent-border);color:var(--text);background:var(--bg2);transform:translateY(-1px)}
+.contact-card svg{width:14px;height:14px;color:var(--accent);flex-shrink:0}
+
+/* ── SETTINGS ───────────────────────────── */
+.settings-group{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;margin-bottom:12px;
+}
+.sg-head{
+  padding:9px 15px;background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;letter-spacing:.2em;color:var(--muted);
+  text-transform:uppercase;
+}
+.setting-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 15px;
+  border-bottom:1px solid rgba(30,39,51,.5);
+}
+.setting-row:last-child{border-bottom:none}
+.sr-name{font-size:12px;font-weight:600;color:var(--text)}
+.sr-note{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);margin-top:1px;letter-spacing:.04em}
+.toggle{position:relative;width:34px;height:17px;cursor:pointer;flex-shrink:0}
 .toggle input{display:none}
-.t-track{position:absolute;inset:0;background:var(--bg3);border:1px solid var(--line);border-radius:9px;transition:all .18s}
-.t-thumb{position:absolute;top:3px;left:3px;width:10px;height:10px;background:var(--mute);border-radius:50%;transition:all .18s}
-.toggle input:checked~.t-track{background:var(--cyan-glow);border-color:var(--cyan2)}
-.toggle input:checked~.t-thumb{left:21px;background:var(--cyan);box-shadow:0 0 5px var(--cyan)}
+.t-track{
+  position:absolute;inset:0;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;transition:.15s;
+}
+.t-knob{
+  position:absolute;top:2px;left:2px;
+  width:11px;height:11px;
+  background:var(--muted);border-radius:50%;transition:.15s;
+}
+.toggle input:checked~.t-track{background:var(--accent-glow);border-color:var(--accent2)}
+.toggle input:checked~.t-knob{left:19px;background:var(--accent);box-shadow:0 0 6px var(--accent)}
 
-/* TOAST */
-#toast{position:fixed;bottom:18px;right:18px;z-index:9998;padding:9px 15px;background:var(--bg2);border:1px solid var(--cyan-line);border-radius:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--cyan);transform:translateY(50px);opacity:0;transition:all .2s;pointer-events:none;box-shadow:0 4px 20px rgba(77,217,255,.1)}
+/* ── TOAST ──────────────────────────────── */
+#toast{
+  position:fixed;bottom:16px;right:16px;z-index:10000;
+  padding:8px 14px;
+  background:var(--bg2);border:1px solid var(--accent-border);
+  border-radius:3px;
+  font-family:'Space Mono',monospace;font-size:9.5px;
+  letter-spacing:.1em;color:var(--accent);
+  transform:translateY(40px);opacity:0;
+  transition:all .18s;pointer-events:none;
+  box-shadow:0 4px 20px rgba(0,212,255,.1);
+}
 #toast.show{transform:none;opacity:1}
 </style>
 </head>
 <body>
-<div id="win">
-  <div id="tb">
-    <div class="tb-dots">
-      <div class="tb-dot r"></div><div class="tb-dot y"></div><div class="tb-dot g"></div>
+<div id="shell">
+
+  <!-- TITLEBAR -->
+  <div id="titlebar">
+    <div class="dots">
+      <div class="dot r"></div>
+      <div class="dot y"></div>
+      <div class="dot g"></div>
     </div>
-    <div class="tb-name">binxix hub — nix v6</div>
-    <div class="tb-ver">build 6.0.0 · xeno v1.3.25b2</div>
+    <div class="tb-title">binxix hub — nix v6</div>
+    <div class="tb-build">build 6.0.0 · xeno v1.3.25b2</div>
   </div>
+
   <div id="body">
-    <div id="sb">
-      <div class="sb-top">
-        <div class="sb-logo">Binxix <em>Hub</em></div>
-        <div class="sb-tag">NIX V6 // ROBLOX</div>
-        <div class="sb-pill"><div class="sb-pill-dot"></div> LIVE</div>
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+      <div class="sb-head">
+        <div class="logo">Binxix <span>Hub</span></div>
+        <div class="logo-sub">NIX V6 // ROBLOX</div>
+        <div class="status-pill"><div class="pill-dot"></div>ONLINE</div>
       </div>
+
       <nav class="sb-nav">
-        <div class="sb-section">Main</div>
-        <div class="sb-item on" onclick="nav('home',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home
+        <div class="nav-section">Main</div>
+        <div class="nav-item active" onclick="switchView('home',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
         </div>
-        <div class="sb-item" onclick="nav('features',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Features<span class="sb-count">6</span>
+        <div class="nav-item" onclick="switchView('features',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Features
+          <span class="nav-badge">6</span>
         </div>
-        <div class="sb-item" onclick="nav('executor',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>Executors
+        <div class="nav-item" onclick="switchView('executor',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Executors
         </div>
-        <div class="sb-item" onclick="nav('scripts',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Script Hub
+        <div class="nav-item" onclick="switchView('scripts',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Script Hub
         </div>
-        <div class="sb-item" onclick="nav('compat',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Compatibility
+        <div class="nav-item" onclick="switchView('compat',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Compatibility
         </div>
-        <div class="sb-section" style="margin-top:6px">Info</div>
-        <div class="sb-item" onclick="nav('legal',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Legal
+        <div class="nav-section" style="margin-top:4px">Info</div>
+        <div class="nav-item" onclick="switchView('legal',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Legal
         </div>
-        <div class="sb-item" onclick="nav('contact',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact
+        <div class="nav-item" onclick="switchView('contact',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact
         </div>
-        <div class="sb-item" onclick="nav('settings',this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Settings
+        <div class="nav-item" onclick="switchView('settings',this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          Settings
         </div>
       </nav>
+
       <div class="sb-foot">
-        <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" class="sb-link">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" class="foot-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="11" height="11"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.054a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
           Discord
         </a>
-        <a href="https://guns.lol/binxix" target="_blank" class="sb-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        <a href="https://guns.lol/binxix" target="_blank" class="foot-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
           guns.lol/binxix
         </a>
       </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div id="main">
 
       <!-- HOME -->
-      <div id="view-home" class="view on">
+      <div id="view-home" class="view active">
         <div class="ticker">
-          <div class="ticker-tag">STATUS</div>
-          <div class="ticker-scroll">
+          <div class="ticker-label">STATUS</div>
+          <div class="ticker-track">
             <div class="ticker-inner">
-              <span class="ti"><em>✦</em>AIMBOT</span><span class="ti"><em>✦</em>WALL ESP</span><span class="ti"><em>✦</em>CROSSHAIR</span><span class="ti"><em>✦</em>WALKSPEED</span><span class="ti"><em>✦</em>NO KEY SYSTEM</span><span class="ti"><em>✦</em>OPEN SOURCE</span><span class="ti"><em>✦</em>FREE FOREVER</span><span class="ti"><em>✦</em>XENO SUPPORTED</span><span class="ti"><em>✦</em>SOLARA SUPPORTED</span>
-              <span class="ti"><em>✦</em>AIMBOT</span><span class="ti"><em>✦</em>WALL ESP</span><span class="ti"><em>✦</em>CROSSHAIR</span><span class="ti"><em>✦</em>WALKSPEED</span><span class="ti"><em>✦</em>NO KEY SYSTEM</span><span class="ti"><em>✦</em>OPEN SOURCE</span><span class="ti"><em>✦</em>FREE FOREVER</span><span class="ti"><em>✦</em>XENO SUPPORTED</span><span class="ti"><em>✦</em>SOLARA SUPPORTED</span>
+              <span class="ti"><b>✦</b>AIMBOT</span>
+              <span class="ti"><b>✦</b>WALL ESP</span>
+              <span class="ti"><b>✦</b>CROSSHAIR</span>
+              <span class="ti"><b>✦</b>WALKSPEED</span>
+              <span class="ti"><b>✦</b>NO KEY SYSTEM</span>
+              <span class="ti"><b>✦</b>OPEN SOURCE</span>
+              <span class="ti"><b>✦</b>FREE FOREVER</span>
+              <span class="ti"><b>✦</b>XENO SUPPORTED</span>
+              <span class="ti"><b>✦</b>SOLARA SUPPORTED</span>
+              <span class="ti"><b>✦</b>AIMBOT</span>
+              <span class="ti"><b>✦</b>WALL ESP</span>
+              <span class="ti"><b>✦</b>CROSSHAIR</span>
+              <span class="ti"><b>✦</b>WALKSPEED</span>
+              <span class="ti"><b>✦</b>NO KEY SYSTEM</span>
+              <span class="ti"><b>✦</b>OPEN SOURCE</span>
+              <span class="ti"><b>✦</b>FREE FOREVER</span>
+              <span class="ti"><b>✦</b>XENO SUPPORTED</span>
+              <span class="ti"><b>✦</b>SOLARA SUPPORTED</span>
             </div>
           </div>
         </div>
+
         <div class="hero">
-          <div class="hero-eyebrow">// UNIVERSAL ROBLOX SCRIPT HUB — FREE & OPEN SOURCE</div>
+          <div class="hero-kicker">// UNIVERSAL ROBLOX SCRIPT HUB — FREE & OPEN SOURCE</div>
           <div class="hero-h">AirHub<br><span>BinxIX</span> V6</div>
-          <div class="hero-p">Precision aimbot, full-body ESP, crosshair overlay and movement controls — clean, no-key, open-source. Compatible with Xeno and Solara.</div>
-          <div class="hero-btns">
-            <button class="btn btn-cyan" onclick="goTo('scripts')">Get Script</button>
-            <button class="btn btn-outline" onclick="goTo('executor')">Executors</button>
-            <button class="btn btn-outline" onclick="goTo('features')">Features</button>
+          <div class="hero-body">Precision aimbot, full-body ESP, crosshair overlay and movement controls. Clean, no-key, open-source. Compatible with Xeno and Solara.</div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="switchView('scripts')">Get Script</button>
+            <button class="btn btn-ghost" onclick="switchView('executor')">Executors</button>
+            <button class="btn btn-ghost" onclick="switchView('features')">Features</button>
           </div>
-          <div class="hero-nums">
-            <div><div class="hero-num-val"><em>6</em></div><div class="hero-num-lbl">Modules</div></div>
-            <div><div class="hero-num-val"><em>4+</em></div><div class="hero-num-lbl">Verified Games</div></div>
-            <div><div class="hero-num-val"><em>0</em></div><div class="hero-num-lbl">Keys Required</div></div>
-            <div><div class="hero-num-val"><em>∞</em></div><div class="hero-num-lbl">Free Forever</div></div>
+          <div class="hero-stats">
+            <div><div class="stat-val"><em>6</em></div><div class="stat-lbl">Modules</div></div>
+            <div><div class="stat-val"><em>3</em></div><div class="stat-lbl">Supported Games</div></div>
+            <div><div class="stat-val"><em>0</em></div><div class="stat-lbl">Keys Required</div></div>
+            <div><div class="stat-val"><em>∞</em></div><div class="stat-lbl">Free Forever</div></div>
           </div>
         </div>
-        <div class="section-hd">Quick Execute</div>
-        <div class="ls-box">
-          <div class="ls-hd">
-            <div class="ls-label"><em>Main.lua</em> — NIX V6 Loadstring</div>
+
+        <div class="section-label">Quick Execute</div>
+        <div class="ls-wrap">
+          <div class="ls-bar">
+            <div class="ls-filename"><span>Main.lua</span> — NIX V6 Loadstring</div>
             <button class="copy-btn" id="hcopy" onclick="doCopy('hcopy')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
             </button>
           </div>
           <div class="ls-code">loadstring(game:HttpGet("https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/main/source/Main.lua"))()</div>
@@ -305,154 +759,290 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
 
       <!-- FEATURES -->
       <div id="view-features" class="view">
-        <div class="pg-title">Core <b>Features</b></div>
-        <div class="pg-sub">// ALL MODULES INCLUDED — NO PAYWALL — NO TIERS</div>
-        <div class="divider"></div>
-        <div class="cards">
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg></div><span class="c-tag ct-cyan">COMBAT</span></div>
-            <div class="card-name">Aimbot</div><div class="card-desc">Silent & smooth. Lock onto nearest target with configurable FOV, sensitivity, and aim part. Team check included.</div>
-            <div class="card-chips"><span class="c-tag ct-cyan">FOV Circle</span><span class="c-tag ct-cyan">Smooth Aim</span><span class="c-tag ct-green">Team Check</span></div>
+        <div class="page-header">
+          <div class="page-title">Core <em>Features</em></div>
+          <div class="page-sub">// ALL MODULES INCLUDED — NO PAYWALL — NO TIERS</div>
+        </div>
+        <hr class="rule">
+        <div class="feature-grid">
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg></div>
+              <span class="tag tag-cyan">COMBAT</span>
+            </div>
+            <div class="feat-name">Aimbot</div>
+            <div class="feat-desc">Silent & smooth. Lock onto nearest target with configurable FOV, sensitivity, and aim part. Team check included.</div>
+            <div class="feat-tags"><span class="tag tag-cyan">FOV Circle</span><span class="tag tag-cyan">Smooth Aim</span><span class="tag tag-green">Team Check</span></div>
           </div>
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><span class="c-tag ct-cyan">VISION</span></div>
-            <div class="card-name">Wall ESP</div><div class="card-desc">CS-styled ESP through walls — skeleton, bounding box, tracers, name labels, distance, and health bar overlay.</div>
-            <div class="card-chips"><span class="c-tag ct-cyan">Skeleton</span><span class="c-tag ct-cyan">Tracers</span><span class="c-tag ct-green">Health Bar</span></div>
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+              <span class="tag tag-cyan">VISION</span>
+            </div>
+            <div class="feat-name">Wall ESP</div>
+            <div class="feat-desc">CS-styled ESP through walls — skeleton, bounding box, tracers, name labels, distance, and health bar overlay.</div>
+            <div class="feat-tags"><span class="tag tag-cyan">Skeleton</span><span class="tag tag-cyan">Tracers</span><span class="tag tag-green">Health Bar</span></div>
           </div>
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg></div><span class="c-tag ct-grey">UI</span></div>
-            <div class="card-name">Crosshair</div><div class="card-desc">On-screen crosshair overlay with full color control, size, gap, center dot toggle, and outline support.</div>
-            <div class="card-chips"><span class="c-tag ct-cyan">Color Picker</span><span class="c-tag ct-cyan">Center Dot</span></div>
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg></div>
+              <span class="tag tag-grey">UI</span>
+            </div>
+            <div class="feat-name">Crosshair</div>
+            <div class="feat-desc">On-screen crosshair overlay with full color control, size, gap, center dot toggle, and outline support.</div>
+            <div class="feat-tags"><span class="tag tag-cyan">Color Picker</span><span class="tag tag-cyan">Center Dot</span></div>
           </div>
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span class="c-tag ct-grey">MOVEMENT</span></div>
-            <div class="card-name">Movement</div><div class="card-desc">Override character movement limits — set any WalkSpeed or JumpPower value instantly.</div>
-            <div class="card-chips"><span class="c-tag ct-cyan">WalkSpeed</span><span class="c-tag ct-cyan">JumpPower</span></div>
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+              <span class="tag tag-grey">MOVEMENT</span>
+            </div>
+            <div class="feat-name">Movement</div>
+            <div class="feat-desc">Override character movement limits — set any WalkSpeed or JumpPower value instantly.</div>
+            <div class="feat-tags"><span class="tag tag-cyan">WalkSpeed</span><span class="tag tag-cyan">JumpPower</span></div>
           </div>
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><span class="c-tag ct-grey">UI</span></div>
-            <div class="card-name">Custom GUI</div><div class="card-desc">Drag-anywhere panel with tabbed layout. Toggle with Right Shift. Configurable keybinds, save & load config.</div>
-            <div class="card-chips"><span class="c-tag ct-cyan">Draggable</span><span class="c-tag ct-green">Config Save</span></div>
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+              <span class="tag tag-grey">UI</span>
+            </div>
+            <div class="feat-name">Custom GUI</div>
+            <div class="feat-desc">Drag-anywhere panel with tabbed layout. Toggle with Right Shift. Configurable keybinds, save & load config.</div>
+            <div class="feat-tags"><span class="tag tag-cyan">Draggable</span><span class="tag tag-green">Config Save</span></div>
           </div>
-          <div class="card">
-            <div class="card-top"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div><span class="c-tag ct-green">OSS</span></div>
-            <div class="card-name">Open Source</div><div class="card-desc">Every line is on GitHub. Fork it, modify it, study it. No obfuscation, no black boxes, no paid tiers — ever.</div>
-            <div class="card-chips"><span class="c-tag ct-green">Free Forever</span><span class="c-tag ct-green">No Key</span></div>
+          <div class="feat-card">
+            <div class="feat-top">
+              <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+              <span class="tag tag-green">OSS</span>
+            </div>
+            <div class="feat-name">Open Source</div>
+            <div class="feat-desc">Every line is on GitHub. Fork it, modify it, study it. No obfuscation, no black boxes, no paid tiers — ever.</div>
+            <div class="feat-tags"><span class="tag tag-green">Free Forever</span><span class="tag tag-green">No Key</span></div>
           </div>
         </div>
       </div>
 
       <!-- EXECUTORS -->
       <div id="view-executor" class="view">
-        <div class="pg-title">Supported <b>Executors</b></div>
-        <div class="pg-sub">// DOWNLOAD EITHER OF THESE — BOTH WORK WITH NIX V6</div>
-        <div class="divider"></div>
+        <div class="page-header">
+          <div class="page-title">Supported <em>Executors</em></div>
+          <div class="page-sub">// DOWNLOAD EITHER — BOTH WORK WITH NIX V6</div>
+        </div>
+        <hr class="rule">
         <div class="exec-grid">
           <div class="exec-card">
-            <div class="exec-card-top">
+            <div class="exec-body">
               <div class="exec-name"><em>Xeno</em> Executor</div>
-              <div class="exec-desc">Fast, lightweight, regularly updated. Full HttpGet support — works seamlessly with NIX V6. One of the most reliable free executors around.</div>
-              <div style="display:flex;gap:7px">
-                <a href="https://xeno.now/method" target="_blank" class="btn btn-cyan" style="font-size:11px;padding:8px 16px">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Xeno
+              <div class="exec-desc">Fast, lightweight, regularly updated. Full HttpGet support — works seamlessly with NIX V6. One of the most reliable free executors available.</div>
+              <div class="exec-btns">
+                <a href="https://xeno.now/method" target="_blank" class="btn btn-primary" style="font-size:10.5px;padding:7px 14px">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download Xeno
                 </a>
-                <a href="https://xeno.now/method" target="_blank" class="btn btn-outline" style="font-size:11px;padding:8px 14px">xeno.now ↗</a>
+                <a href="https://xeno.now/method" target="_blank" class="btn btn-ghost" style="font-size:10.5px;padding:7px 12px">xeno.now ↗</a>
               </div>
             </div>
             <div class="exec-meta">
-              <div><div class="em-lbl">Version</div><div class="em-val c">v1.3.25b2</div></div>
-              <div><div class="em-lbl">Platform</div><div class="em-val">Windows</div></div>
-              <div><div class="em-lbl">Status</div><div class="em-val g">Undetected</div></div>
-              <div><div class="em-lbl">HttpGet</div><div class="em-val g">✓ Yes</div></div>
+              <div class="meta-item"><div class="meta-lbl">Version</div><div class="meta-val c">v1.3.25b2</div></div>
+              <div class="meta-item"><div class="meta-lbl">Platform</div><div class="meta-val">Windows</div></div>
+              <div class="meta-item"><div class="meta-lbl">Status</div><div class="meta-val g">Undetected</div></div>
+              <div class="meta-item"><div class="meta-lbl">HttpGet</div><div class="meta-val g">✓</div></div>
             </div>
           </div>
           <div class="exec-card">
-            <div class="exec-card-top">
+            <div class="exec-body">
               <div class="exec-name"><em>Solara</em> Executor</div>
-              <div class="exec-desc">The first and best external executor post-Byfron. High UNC/sUNC scores, completely free, and fully compatible with HttpGet-based scripts.</div>
-              <div style="display:flex;gap:7px">
-                <a href="https://getsolara.net/" target="_blank" class="btn btn-cyan" style="font-size:11px;padding:8px 16px">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download Solara
+              <div class="exec-desc">First and best external executor post-Byfron. High UNC/sUNC scores, completely free, fully compatible with HttpGet-based scripts.</div>
+              <div class="exec-btns">
+                <a href="https://getsolara.net/" target="_blank" class="btn btn-primary" style="font-size:10.5px;padding:7px 14px">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download Solara
                 </a>
-                <a href="https://getsolara.net/" target="_blank" class="btn btn-outline" style="font-size:11px;padding:8px 14px">getsolara.net ↗</a>
+                <a href="https://getsolara.net/" target="_blank" class="btn btn-ghost" style="font-size:10.5px;padding:7px 12px">getsolara.net ↗</a>
               </div>
             </div>
             <div class="exec-meta">
-              <div><div class="em-lbl">Type</div><div class="em-val c">External</div></div>
-              <div><div class="em-lbl">Platform</div><div class="em-val">Windows</div></div>
-              <div><div class="em-lbl">Status</div><div class="em-val g">Undetected</div></div>
-              <div><div class="em-lbl">HttpGet</div><div class="em-val g">✓ Yes</div></div>
+              <div class="meta-item"><div class="meta-lbl">Type</div><div class="meta-val c">External</div></div>
+              <div class="meta-item"><div class="meta-lbl">Platform</div><div class="meta-val">Windows</div></div>
+              <div class="meta-item"><div class="meta-lbl">Status</div><div class="meta-val g">Undetected</div></div>
+              <div class="meta-item"><div class="meta-lbl">HttpGet</div><div class="meta-val g">✓</div></div>
             </div>
           </div>
         </div>
-        <div class="section-hd">Script Editor</div>
-        <div class="editor-wrap">
-          <div class="editor-bar">
-            <div class="editor-title">script.lua — editor</div>
-            <div class="editor-dots"><div class="editor-dot"></div><div class="editor-dot"></div><div class="editor-dot"></div></div>
-          </div>
-          <textarea class="editor-ta" id="editor" spellcheck="false" placeholder="-- paste your script here&#10;-- or click 'Load NIX' to auto-fill the loadstring"></textarea>
-          <div class="editor-actions">
-            <button class="ea-btn ea-exec" onclick="execScript()">▶ Execute</button>
-            <button class="ea-btn ea-sec" onclick="loadNIX()">Load NIX V6</button>
-            <button class="ea-btn ea-sec" onclick="clearEd()">Clear</button>
-            <button class="ea-btn ea-red" onclick="clearEd()">Kill</button>
-          </div>
-        </div>
+
+
       </div>
 
       <!-- SCRIPTS -->
       <div id="view-scripts" class="view">
-        <div class="pg-title">Script <b>Hub</b></div>
-        <div class="pg-sub">// NIX V6 — COPY & EXECUTE IN YOUR EXECUTOR</div>
-        <div class="divider"></div>
-        <div class="section-hd">How to Use</div>
-        <div class="steps">
-          <div class="step"><div class="step-n">01</div><div><div class="step-title">Download an Executor</div><div class="step-desc">Grab <strong style="color:var(--white)">Xeno</strong> at <a href="https://xeno.now/method" target="_blank" style="color:var(--cyan);text-decoration:none">xeno.now/method</a> or <strong style="color:var(--white)">Solara</strong> at <a href="https://getsolara.net" target="_blank" style="color:var(--cyan);text-decoration:none">getsolara.net</a>. Both support <code>game:HttpGet</code>.</div></div></div>
-          <div class="step"><div class="step-n">02</div><div><div class="step-title">Copy the Loadstring</div><div class="step-desc">Click the copy button below — fetches the latest NIX V6 directly from GitHub every run.</div></div></div>
-          <div class="step"><div class="step-n">03</div><div><div class="step-title">Inject & Execute</div><div class="step-desc">Open Roblox, join a game, attach your executor, paste the loadstring and hit execute.</div></div></div>
-          <div class="step"><div class="step-n">04</div><div><div class="step-title">Open the GUI</div><div class="step-desc">Press <strong style="color:var(--cyan)">Right Shift</strong> to toggle the panel. Change keybind inside the Settings tab in-game.</div></div></div>
+        <div class="page-header">
+          <div class="page-title">Script <em>Hub</em></div>
+          <div class="page-sub">// NIX V6 — COPY & EXECUTE IN YOUR EXECUTOR</div>
         </div>
-        <div class="section-hd">Loadstring</div>
-        <div class="ls-box">
-          <div class="ls-hd">
-            <div class="ls-label"><em>NIX V6</em> — Main.lua — github.com/binx-ux/airhub-binxix-v6</div>
-            <button class="copy-btn" id="scopy" onclick="doCopy('scopy')">
+        <hr class="rule">
+
+        <div class="section-label">How to Use</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div>
+              <div class="step-title">Download an Executor</div>
+              <div class="step-desc">Grab <strong style="color:var(--text)">Xeno</strong> at <a href="https://xeno.now/method" target="_blank">xeno.now/method</a> or <strong style="color:var(--text)">Solara</strong> at <a href="https://getsolara.net" target="_blank">getsolara.net</a>. Both support <code>game:HttpGet</code>.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div>
+              <div class="step-title">Copy the Loadstring</div>
+              <div class="step-desc">Click the copy button below — fetches the latest NIX V6 directly from GitHub on every run.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div>
+              <div class="step-title">Inject & Execute</div>
+              <div class="step-desc">Open Roblox, join a game, attach your executor, paste the loadstring and hit execute.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div>
+              <div class="step-title">Open the GUI</div>
+              <div class="step-desc">Press <strong style="color:var(--accent)">Right Shift</strong> to toggle the panel. Change keybind inside the Settings tab in-game.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label">Scripts</div>
+
+        <div class="ls-wrap">
+          <div class="ls-bar">
+            <div class="ls-filename"><span>Phantasm</span> — TSB</div>
+            <button class="copy-btn" id="s1copy" onclick="copyScript('s1copy', 0)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
             </button>
           </div>
-          <div class="ls-code">loadstring(game:HttpGet("https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/main/source/Main.lua"))()</div>
+          <div class="ls-code">loadstring(game:HttpGet('https://raw.githubusercontent.com/ATrainz/Phantasm/refs/heads/main/Games/TSB.lua'))()</div>
+        </div>
+
+        <div class="ls-wrap">
+          <div class="ls-bar">
+            <div class="ls-filename"><span>Vertex</span></div>
+            <button class="copy-btn" id="s2copy" onclick="copyScript('s2copy', 1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+            </button>
+          </div>
+          <div class="ls-code">loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()</div>
+        </div>
+
+        <div class="ls-wrap">
+          <div class="ls-bar">
+            <div class="ls-filename"><span>Trashcan Man</span></div>
+            <button class="copy-btn" id="s3copy" onclick="copyScript('s3copy', 2)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy
+            </button>
+          </div>
+          <div class="ls-code">loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true))()</div>
         </div>
       </div>
 
       <!-- COMPAT -->
       <div id="view-compat" class="view">
-        <div class="pg-title">Game <b>Compatibility</b></div>
-        <div class="pg-sub">// TESTED ACROSS ROBLOX TITLES</div>
-        <div class="divider"></div>
-        <table class="ctable">
-          <thead><tr><th>Game</th><th>Aimbot</th><th>ESP</th><th>Crosshair</th><th>Movement</th><th>Overall</th></tr></thead>
-          <tbody>
-            <tr><td>Arsenal</td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">Full</span></td></tr>
-            <tr><td>Phantom Forces</td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">Full</span></td></tr>
-            <tr><td>Counter Blox</td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">Full</span></td></tr>
-            <tr><td>Strucid</td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs p">Partial</span></td><td><span class="cs p">Partial</span></td></tr>
-            <tr><td>Other Shooters</td><td><span class="cs p">Varies</span></td><td><span class="cs p">Varies</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs y">✓ Full</span></td><td><span class="cs p">Varies</span></td></tr>
-          </tbody>
-        </table>
+        <div class="page-header">
+          <div class="page-title">Game <em>Compatibility</em></div>
+          <div class="page-sub">// CLICK + ADD GAME TO EDIT — CLICK ✕ TO REMOVE</div>
+        </div>
+        <hr class="rule">
+
+        <div class="games-editor">
+          <div class="ge-header">
+            <div class="ge-title">Supported Games</div>
+            <button class="ge-add" onclick="toggleAddForm()">+ Add Game</button>
+          </div>
+
+          <table class="compat-table" id="compat-table">
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th>Aimbot</th>
+                <th>ESP</th>
+                <th>Crosshair</th>
+                <th>Movement</th>
+                <th>Overall</th>
+                <th style="width:32px"></th>
+              </tr>
+            </thead>
+            <tbody id="compat-tbody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+
+          <div class="add-row-form" id="add-form">
+            <div class="form-field">
+              <div class="form-label">Game Name</div>
+              <input class="form-input" type="text" id="f-name" placeholder="Arsenal">
+            </div>
+            <div class="form-field">
+              <div class="form-label">Aimbot</div>
+              <select class="form-select" id="f-aim">
+                <option value="yes">✓ Full</option>
+                <option value="partial">Partial</option>
+                <option value="no">✕ No</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <div class="form-label">ESP</div>
+              <select class="form-select" id="f-esp">
+                <option value="yes">✓ Full</option>
+                <option value="partial">Partial</option>
+                <option value="no">✕ No</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <div class="form-label">Crosshair</div>
+              <select class="form-select" id="f-cross">
+                <option value="yes">✓ Full</option>
+                <option value="partial">Partial</option>
+                <option value="no">✕ No</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <div class="form-label">Movement</div>
+              <select class="form-select" id="f-move">
+                <option value="yes">✓ Full</option>
+                <option value="partial">Partial</option>
+                <option value="no">✕ No</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <div class="form-label">Overall</div>
+              <select class="form-select" id="f-overall">
+                <option value="yes">Full</option>
+                <option value="partial">Partial</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button class="fa-confirm" onclick="addGame()">Add</button>
+              <button class="fa-cancel" onclick="toggleAddForm()">Cancel</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- LEGAL -->
       <div id="view-legal" class="view">
-        <div class="pg-title">Legal &amp; <b>Copyright</b></div>
-        <div class="pg-sub">// TERMS OF USE — READ BEFORE USING</div>
-        <div class="divider"></div>
-        <div class="legal-block">
+        <div class="page-header">
+          <div class="page-title">Legal & <em>Copyright</em></div>
+          <div class="page-sub">// TERMS OF USE — READ BEFORE USING</div>
+        </div>
+        <hr class="rule">
+        <div class="legal-card">
           <h3>Copyright Notice</h3>
-          <p>© 2024–2025 Binxix. All rights reserved. AirHub BinxIX, NIX V6, and Binxix Hub are original works created and maintained by Binxix (<a href="mailto:antmanitis7@gmail.com">antmanitis7@gmail.com</a>). Unauthorized redistribution, resale, or claiming of this software as your own is strictly prohibited.</p>
+          <p>© 2024–2025 Binxix. All rights reserved. AirHub BinxIX, NIX V6, and Binxix Hub are original works created and maintained by Binxix (<a href="/cdn-cgi/l/email-protection#375659435a56595e435e440077505a565e5b1954585a"><span class="__cf_email__" data-cfemail="f3929d879e929d9a879a80c4b3949e929a9fdd909c9e">[email&#160;protected]</span></a>). Unauthorized redistribution, resale, or claiming of this software as your own is strictly prohibited.</p>
           <p>Source code is available on GitHub for personal, non-commercial use. Forks and modifications are permitted provided original credit is maintained and no commercial use is made without written permission.</p>
         </div>
-        <div class="legal-block">
+        <div class="legal-card">
           <h3>Terms of Use</h3>
           <p>By downloading, copying, or executing any script provided through Binxix Hub, you agree to the following:</p>
           <ul>
@@ -463,19 +1053,19 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
             <li>This software is not affiliated with, endorsed by, or sponsored by Roblox Corporation.</li>
           </ul>
         </div>
-        <div class="legal-block">
+        <div class="legal-card">
           <h3>Third-Party Executors</h3>
-          <p>Xeno Executor and Solara Executor are independent third-party tools not affiliated with Binxix Hub. Links are provided as a convenience. Binxix takes no responsibility for the behavior, safety, or updates of these tools. Always download executors from their official sources only.</p>
+          <p>Xeno Executor and Solara Executor are independent third-party tools not affiliated with Binxix Hub. Links are provided as a convenience. Binxix takes no responsibility for the behavior, safety, or updates of these tools.</p>
           <ul>
             <li>Xeno — <a href="https://xeno.now/method" target="_blank">xeno.now/method</a></li>
             <li>Solara — <a href="https://getsolara.net" target="_blank">getsolara.net</a></li>
           </ul>
         </div>
-        <div class="legal-block">
+        <div class="legal-card">
           <h3>Open Source License</h3>
           <p>NIX V6 source is hosted at <a href="https://github.com/binx-ux/airhub-binxix-v6" target="_blank">github.com/binx-ux/airhub-binxix-v6</a>. You are free to fork, study, and modify for personal use. Commercial use, resale, or redistribution under a different name is not permitted without explicit written permission from the author.</p>
         </div>
-        <div class="legal-block">
+        <div class="legal-card">
           <h3>Disclaimer</h3>
           <p>This software is provided "as is" without warranty of any kind, express or implied. In no event shall Binxix be liable for any claim, damages, or other liability arising from the use of this software. Use responsibly.</p>
         </div>
@@ -483,14 +1073,16 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
 
       <!-- CONTACT -->
       <div id="view-contact" class="view">
-        <div class="pg-title">Contact &amp; <b>Links</b></div>
-        <div class="pg-sub">// REACH OUT OR FIND ME ONLINE</div>
-        <div class="divider"></div>
-        <div class="section-hd">Get in Touch</div>
+        <div class="page-header">
+          <div class="page-title">Contact & <em>Links</em></div>
+          <div class="page-sub">// REACH OUT OR FIND ME ONLINE</div>
+        </div>
+        <hr class="rule">
+        <div class="section-label">Get in Touch</div>
         <div class="contact-grid">
-          <a href="mailto:antmanitis7@gmail.com" class="contact-card">
+          <a href="/cdn-cgi/l/email-protection#cfaea1bba2aea1a6bba6bcf88fa8a2aea6a3e1aca0a2" class="contact-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            antmanitis7@gmail.com
+            <span class="__cf_email__" data-cfemail="debfb0aab3bfb0b7aab7ade99eb9b3bfb7b2f0bdb1b3">[email&#160;protected]</span>
           </a>
           <a href="https://guns.lol/binxix" target="_blank" class="contact-card">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
@@ -505,8 +1097,8 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
             GitHub — Source Code
           </a>
         </div>
-        <div class="section-hd">About</div>
-        <div class="legal-block">
+        <div class="section-label">About</div>
+        <div class="legal-card">
           <h3>Binxix</h3>
           <p>Independent Roblox script developer. I build and maintain free, open-source tools for the community — no paywalls, no key systems, no black boxes. NIX V6 is the latest version of AirHub, built with a focus on clean code and a proper UI.</p>
           <p>For bug reports, feature requests, or general questions — email me or join the Discord. Full community profile at <a href="https://guns.lol/binxix" target="_blank">guns.lol/binxix</a>.</p>
@@ -515,41 +1107,174 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
 
       <!-- SETTINGS -->
       <div id="view-settings" class="view">
-        <div class="pg-title">App <b>Settings</b></div>
-        <div class="pg-sub">// HUB PREFERENCES</div>
-        <div class="divider"></div>
-        <div class="sg">
-          <div class="sg-hd">Appearance</div>
-          <div class="sr"><div><div class="sr-name">Noise Texture Overlay</div><div class="sr-note">Subtle grain over the interface</div></div><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div>
-          <div class="sr"><div><div class="sr-name">Status Ticker</div><div class="sr-note">Scrolling ticker on home screen</div></div><label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-thumb"></div></label></div>
+        <div class="page-header">
+          <div class="page-title">App <em>Settings</em></div>
+          <div class="page-sub">// HUB PREFERENCES</div>
         </div>
-        <div class="sg">
-          <div class="sg-hd">Executor</div>
-          <div class="sr"><div><div class="sr-name">Auto-Load NIX on Open</div><div class="sr-note">Pre-fill editor with NIX V6 loadstring</div></div><label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-thumb"></div></label></div>
-          <div class="sr"><div><div class="sr-name">Clear Editor After Execute</div><div class="sr-note">Wipe the editor after each run</div></div><label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-thumb"></div></label></div>
+        <hr class="rule">
+        <div class="settings-group">
+          <div class="sg-head">Appearance</div>
+          <div class="setting-row">
+            <div><div class="sr-name">Noise Texture Overlay</div><div class="sr-note">Subtle grain over the interface</div></div>
+            <label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-knob"></div></label>
+          </div>
+          <div class="setting-row">
+            <div><div class="sr-name">Status Ticker</div><div class="sr-note">Scrolling ticker on home screen</div></div>
+            <label class="toggle"><input type="checkbox" checked><div class="t-track"></div><div class="t-knob"></div></label>
+          </div>
         </div>
-        <div class="sg">
-          <div class="sg-hd">Version Info</div>
-          <div class="sr"><div><div class="sr-name">NIX Version</div><div class="sr-note">Current script release</div></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cyan)">v6.0.0</div></div>
-          <div class="sr"><div><div class="sr-name">Xeno</div><div class="sr-note">Supported version</div></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cyan)">v1.3.25b2</div></div>
-          <div class="sr"><div><div class="sr-name">Solara</div><div class="sr-note">Supported</div></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green)">Latest</div></div>
-          <div class="sr"><div><div class="sr-name">Hub Build</div><div class="sr-note">App version</div></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--cyan)">6.0.0</div></div>
+        <div class="settings-group">
+          <div class="sg-head">Executor</div>
+          <div class="setting-row">
+            <div><div class="sr-name">Auto-Load NIX on Open</div><div class="sr-note">Pre-fill editor with NIX V6 loadstring</div></div>
+            <label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-knob"></div></label>
+          </div>
+          <div class="setting-row">
+            <div><div class="sr-name">Clear Editor After Execute</div><div class="sr-note">Wipe the editor after each run</div></div>
+            <label class="toggle"><input type="checkbox"><div class="t-track"></div><div class="t-knob"></div></label>
+          </div>
+        </div>
+        <div class="settings-group">
+          <div class="sg-head">Version Info</div>
+          <div class="setting-row">
+            <div><div class="sr-name">NIX Version</div><div class="sr-note">Current script release</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:var(--accent)">v6.0.0</div>
+          </div>
+          <div class="setting-row">
+            <div><div class="sr-name">Xeno</div><div class="sr-note">Supported version</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:var(--accent)">v1.3.25b2</div>
+          </div>
+          <div class="setting-row">
+            <div><div class="sr-name">Solara</div><div class="sr-note">Supported</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:var(--green)">Latest</div>
+          </div>
+          <div class="setting-row">
+            <div><div class="sr-name">Hub Build</div><div class="sr-note">App version</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;color:var(--accent)">6.0.0</div>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 </div>
+
 <div id="toast"></div>
+
 <script>
-const LS=`loadstring(game:HttpGet("https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/main/source/Main.lua"))()`;
-function nav(id,el){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('on'));document.getElementById('view-'+id).classList.add('on');el.classList.add('on')}
-function goTo(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('on'));document.getElementById('view-'+id).classList.add('on');document.querySelectorAll('.sb-item').forEach(i=>{if(i.getAttribute('onclick')===`nav('${id}',this)`)i.classList.add('on')})}
-function doCopy(btnId){navigator.clipboard.writeText(LS).then(()=>{const b=document.getElementById(btnId);const orig=b.innerHTML;b.classList.add('done');b.textContent='✓ Copied';toast('Loadstring copied');setTimeout(()=>{b.classList.remove('done');b.innerHTML=orig},2000)})}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400)}
-function execScript(){const s=document.getElementById('editor').value.trim();if(!s){toast('Nothing to execute');return}toast('Script executed')}
-function loadNIX(){document.getElementById('editor').value=LS;toast('NIX V6 loaded into editor')}
-function clearEd(){document.getElementById('editor').value=''}
+const LOADSTRING = `loadstring(game:HttpGet("https://raw.githubusercontent.com/binx-ux/airhub-binxix-v6/main/source/Main.lua"))()`;
+
+const SCRIPTS = [
+  `loadstring(game:HttpGet('https://raw.githubusercontent.com/ATrainz/Phantasm/refs/heads/main/Games/TSB.lua'))()`,
+  `loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()`,
+  `loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true))()`,
+];
+
+function switchView(id, el) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  if (el) {
+    el.classList.add('active');
+  } else {
+    document.querySelectorAll('.nav-item').forEach(i => {
+      if (i.getAttribute('onclick') === `switchView('${id}',this)`) i.classList.add('active');
+    });
+  }
+}
+
+function doCopy(btnId) {
+  navigator.clipboard.writeText(LOADSTRING).then(() => {
+    const btn = document.getElementById(btnId);
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied';
+    showToast('Loadstring copied');
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  });
+}
+
+function copyScript(btnId, idx) {
+  navigator.clipboard.writeText(SCRIPTS[idx]).then(() => {
+    const btn = document.getElementById(btnId);
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied';
+    showToast('Script copied');
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  });
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+let games = [
+  { name: 'Arsenal',   aim: 'yes', esp: 'yes', cross: 'yes', move: 'yes', overall: 'yes' },
+  { name: 'MiscGun-X', aim: 'yes', esp: 'yes', cross: 'yes', move: 'yes', overall: 'yes' },
+];
+
+const statusMap = {
+  yes:     { cls: 'badge-yes',     txt: '✓ Full'  },
+  partial: { cls: 'badge-partial', txt: 'Partial' },
+  no:      { cls: 'badge-no',      txt: '✕ No'    },
+};
+
+function badge(val) {
+  const s = statusMap[val] || statusMap.partial;
+  return `<span class="badge ${s.cls}">${s.txt}</span>`;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('compat-tbody');
+  tbody.innerHTML = games.map((g, i) => `
+    <tr>
+      <td>${g.name}</td>
+      <td>${badge(g.aim)}</td>
+      <td>${badge(g.esp)}</td>
+      <td>${badge(g.cross)}</td>
+      <td>${badge(g.move)}</td>
+      <td>${badge(g.overall)}</td>
+      <td><button class="del-btn" onclick="removeGame(${i})" title="Remove">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+function removeGame(i) {
+  games.splice(i, 1);
+  renderTable();
+  showToast('Game removed');
+}
+
+function toggleAddForm() {
+  const f = document.getElementById('add-form');
+  f.classList.toggle('open');
+  if (f.classList.contains('open')) document.getElementById('f-name').focus();
+}
+
+function addGame() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { showToast('Enter a game name'); return; }
+  games.push({
+    name,
+    aim:     document.getElementById('f-aim').value,
+    esp:     document.getElementById('f-esp').value,
+    cross:   document.getElementById('f-cross').value,
+    move:    document.getElementById('f-move').value,
+    overall: document.getElementById('f-overall').value,
+  });
+  document.getElementById('f-name').value = '';
+  renderTable();
+  toggleAddForm();
+  showToast(`${name} added`);
+}
+
+renderTable();
 </script>
 </body>
 </html>
