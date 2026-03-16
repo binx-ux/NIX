@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Binxix Hub V7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .page-hero { padding:140px 40px 80px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+    .page-hero h1 { font-size:clamp(40px,6vw,72px); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-bottom:16px; }
+    .page-hero h1 span { color:var(--accent); }
+    .page-hero p { color:var(--text2); font-size:16px; line-height:1.7; max-width:520px; }
+
+    .faq-section { max-width:900px; margin:0 auto; padding:0 40px 100px; position:relative; z-index:1; }
+
+    .faq-category { margin-bottom:60px; }
+    .faq-cat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+
+    .faq-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; }
+    .faq-q { width:100%; background:none; border:none; padding:20px 24px; text-align:left; display:flex; align-items:center; justify-content:space-between; gap:16px; cursor:pointer; font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); transition:color 0.2s; }
+    .faq-q:hover { color:var(--accent2); }
+    .faq-chevron { width:16px; height:16px; color:var(--text3); flex-shrink:0; transition:transform 0.3s; }
+    .faq-item.open .faq-chevron { transform:rotate(180deg); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; font-size:14px; color:var(--text2); line-height:1.75; padding:0 24px; }
+    .faq-item.open .faq-a { max-height:400px; padding:0 24px 22px; }
+
+    .faq-cta { background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:40px; text-align:center; margin-top:48px; }
+    .faq-cta h3 { font-size:20px; font-weight:800; margin-bottom:10px; }
+    .faq-cta p { color:var(--text2); font-size:14px; margin-bottom:24px; line-height:1.6; }
+
+    @media(max-width:768px) {
+      .page-hero { padding:120px 20px 60px; }
+      .faq-section { padding:0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html"><span>binxix</span>hub<span class="logo-badge">V7</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="faq.html" class="active">FAQ</a></li>
+    <li><a href="changelog.html">Changelog</a></li>
+    <li><a href="index.html#donate">Donate</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="games.html">Games</a>
+  <a href="faq.html">FAQ</a>
+  <a href="changelog.html">Changelog</a>
+  <a href="index.html#donate">Donate</a>
+  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+</div>
+
+<div class="page-hero">
+  <div class="section-tag reveal">Help Center</div>
+  <h1 class="reveal">Frequently Asked <span>Questions</span></h1>
+  <p class="reveal">Answers to the most common questions about Binxix Hub. If yours is not here, join the Discord.</p>
+</div>
+
+<div class="faq-section">
+
+  <!-- GENERAL -->
+  <div class="faq-category reveal">
+    <div class="faq-cat-label">General</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is Binxix Hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Binxix Hub is a free Roblox script hub built and maintained by binxix. It includes an aimbot, ESP, movement hacks, misc features, and dedicated modules for specific games — all in a single loadstring. No key system, no subscriptions.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is it free?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Yes, completely. There is no key system, no paid tier, and no paywall. Copy the loadstring, execute it, and the full hub opens.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Will I get banned?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Using any third-party script in Roblox is a violation of their Terms of Service and carries a real risk of account termination. The developer (binxix) holds zero responsibility for bans. Always use an alternate account — never your main. You assume all risk by executing this script.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is Binxix Hub affiliated with Roblox?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">No. Binxix Hub is an independent project with no affiliation, endorsement, or connection to Roblox Corporation in any way.</div>
+    </div>
+  </div>
+
+  <!-- SETUP -->
+  <div class="faq-category reveal">
+    <div class="faq-cat-label">Setup & Executors</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">We officially recommend Xeno. It is free, keyless, actively maintained, and has the highest UNC compatibility with Binxix Hub's feature set. Download it at xeno.now. Other Level 7 executors like Solara also work but are not officially tested.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I run the script?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">1. Open Roblox and join any game. 2. Open Xeno and attach it to the Roblox process. 3. Paste the loadstring from the homepage into the executor. 4. Hit Execute. The hub GUI will open automatically inside the game.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Does it work on mobile or console?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">No. Script executors require Windows PC. Roblox on mobile, Xbox, or PlayStation does not support external script injection of any kind.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I use this on a Mac?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Most Roblox script executors are Windows-only applications. macOS is not officially supported. You may be able to run it through a Windows virtual machine, but this is untested and not recommended.</div>
+    </div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="faq-category reveal">
+    <div class="faq-cat-label">Troubleshooting</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">The GUI is not showing up after I execute.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">First, confirm you are using a Level 7 executor — lower-level executors will not be able to run the full script. Detach the executor, reattach it, and execute again. If it still does not appear, try a different game and then try again. If the issue persists, join the Discord and post your error logs.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">The script errored on execution. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Copy the full error message from your executor console and bring it to the Discord support channel. Most errors are executor-side and resolve by switching to Xeno or ensuring your executor is up to date.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">The aimbot is not working in my game.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Not all games have aimbot support. Check the Games page to see which titles have full aimbot enabled. If your game is not listed, it uses the universal feature set which may not include aimbot depending on how that game handles characters.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">The external script for MM2 or TSB did not load.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">The hub fetches Vertex and Phantasm from their own external URLs. If those scripts are down or their source URLs have changed, the auto-load will fail. Check the Discord for any announcements about external script outages.</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="faq-category reveal">
+    <div class="faq-cat-label">Features</div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What games have dedicated support?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Arsenal, Point Roblox, Murder Mystery 2, The Strongest Battlegrounds, and BlockSpin all have dedicated modules. MM2 auto-loads Vertex and TSB auto-loads Phantasm. See the Games page for the full breakdown.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I request a game to be added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Yes. Join the Discord and post your request. If there is enough demand and the game is technically supportable, it will be considered for the next update.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Does the hub work in every Roblox game?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a">Universal features — infinite jump, noclip, sprint, speed, click teleport, auto collect, and time freeze — work in essentially every Roblox game. ESP and aimbot are only available in games that have a dedicated module with ESP enabled.</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="faq-cta reveal">
+    <h3>Still have a question?</h3>
+    <p>Join the Discord server and ask in the support channel. The community and dev are both active.</p>
+    <a class="btn-primary" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Join the Discord</a>
+  </div>
+
+</div>
+
+<div class="legal-strip">
+  <div class="legal-strip-inner">
+    <p style="font-size:10px;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px">Legal Disclaimer</p>
+    <p>Binxix Hub is not affiliated with Roblox Corporation. Using this software violates the Roblox Terms of Service. The developer (binxix) accepts zero liability for bans, terminations, or data loss. You assume all risk. Always use an alternate account.</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo"><span>binxix</span>hub v7</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a></li>
+      <li><a href="https://github.com/binx-ux" target="_blank">GitHub</a></li>
+      <li><a href="https://guns.lol/binxix" target="_blank">guns.lol</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 binxix. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
