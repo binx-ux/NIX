@@ -71,6 +71,80 @@
     /* SECTIONS */
     section { padding:100px 40px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
 
+    /* UPCOMING UPDATE */
+    #upcoming {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      max-width: 100%;
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    #upcoming::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(191,64,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #upcoming > .inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .upcoming-header { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
+    .upcoming-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(191,64,255,0.1); border: 1px solid rgba(191,64,255,0.3);
+      color: var(--accent2); font-size: 11px; font-family: 'Space Mono', monospace;
+      padding: 6px 14px; border-radius: 100px; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .upcoming-badge::before { content:''; width:6px; height:6px; background:var(--accent2); border-radius:50%; animation:blink 1.5s infinite; }
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .upcoming-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 26px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .upcoming-item:hover {
+      border-color: rgba(191,64,255,0.4);
+      transform: translateY(-2px);
+    }
+    .upcoming-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent2), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .upcoming-item:hover::before { opacity: 1; }
+    .upcoming-item-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+    .upcoming-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .upcoming-item p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .upcoming-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: var(--text3); margin-top: 14px; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .upcoming-status .dot { width: 5px; height: 5px; border-radius: 50%; }
+    .upcoming-status .dot.wip { background: var(--accent2); animation: blink 1.5s infinite; }
+    .upcoming-status .dot.soon { background: var(--yellow); }
+
     /* FEATURES */
     .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:60px; }
     .feature-card { background:var(--bg2); padding:36px; transition:background 0.2s; }
@@ -130,19 +204,68 @@
 
     /* DONATE */
     #donate { text-align:center; }
-    .donate-card { background:var(--surface); border:1px solid var(--border2); border-radius:16px; padding:60px 40px; max-width:540px; margin:60px auto 0; position:relative; overflow:hidden; }
-    .donate-card::before { content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%); width:300px; height:300px; background:radial-gradient(ellipse,rgba(59,130,246,0.07) 0%,transparent 70%); pointer-events:none; }
-    .donate-card h3 { font-size:26px; font-weight:800; margin-bottom:12px; letter-spacing:-0.02em; }
-    .donate-card p { color:var(--text2); font-size:15px; line-height:1.6; margin-bottom:32px; }
-    .chime-tag { display:inline-block; background:var(--bg); border:1px solid var(--border2); border-radius:8px; padding:16px 28px; font-family:'Space Mono',monospace; font-size:22px; font-weight:700; color:var(--accent2); letter-spacing:0.05em; margin-bottom:28px; }
-    .donate-note { font-size:12px; color:var(--text3); font-family:'Space Mono',monospace; margin-top:20px; }
+    .donate-cards-wrap {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 60px;
+    }
+    .donate-card {
+      background: var(--surface); border: 1px solid var(--border2); border-radius: 16px;
+      padding: 44px 36px; width: 300px; flex-shrink: 0;
+      position: relative; overflow: hidden; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .donate-card:hover { transform: translateY(-3px); }
+    .donate-card.chime-card:hover { border-color: rgba(59,130,246,0.5); }
+    .donate-card.robux-card:hover { border-color: rgba(34,197,94,0.5); }
+    .donate-card.other-card:hover { border-color: rgba(191,64,255,0.5); }
+    .donate-card::before {
+      content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%);
+      width:300px; height:300px; pointer-events:none;
+    }
+    .donate-card.chime-card::before { background: radial-gradient(ellipse,rgba(59,130,246,0.07) 0%,transparent 70%); }
+    .donate-card.robux-card::before { background: radial-gradient(ellipse,rgba(34,197,94,0.07) 0%,transparent 70%); }
+    .donate-card.other-card::before { background: radial-gradient(ellipse,rgba(191,64,255,0.07) 0%,transparent 70%); }
+    .donate-card-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin: 0 auto 20px;
+    }
+    .chime-card .donate-card-icon { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); }
+    .robux-card .donate-card-icon { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); }
+    .other-card .donate-card-icon { background: rgba(191,64,255,0.1); border: 1px solid rgba(191,64,255,0.25); }
+    .donate-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .donate-card p { color: var(--text2); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    .donate-handle {
+      display: inline-block; background: var(--bg);
+      border: 1px solid var(--border2); border-radius: 8px;
+      padding: 12px 22px; font-family: 'Space Mono', monospace;
+      font-weight: 700; letter-spacing: 0.04em; margin-bottom: 22px;
+    }
+    .chime-card .donate-handle { color: var(--accent); font-size: 20px; }
+    .robux-card .donate-handle { color: var(--green); font-size: 13px; line-height: 1.6; }
+    .donate-note { font-size: 11px; color: var(--text3); font-family: 'Space Mono', monospace; margin-top: 16px; }
+    .btn-green {
+      display: inline-block; text-decoration: none;
+      background: var(--green); color: #fff;
+      padding: 12px 24px; border-radius: 8px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .btn-green:hover { opacity: 0.85; }
 
+    @media(max-width:900px) {
+      .donate-card { width: 100%; max-width: 380px; }
+    }
     @media(max-width:768px) {
       .hero { padding:100px 20px 60px; }
       .stats-bar { gap:40px; padding:24px 20px; }
       section { padding:60px 20px; }
       .executor-layout { grid-template-columns:1fr; gap:40px; }
-      #executor>.inner,#faq>.inner { padding:0 20px; }
+      #executor>.inner,#faq>.inner,#upcoming>.inner { padding:0 20px; }
       .faq-grid { grid-template-columns:1fr; }
       .preview-grid { grid-template-columns:1fr; }
     }
@@ -199,6 +322,59 @@
   <div class="stat reveal"><div class="stat-num">V7</div><div class="stat-label">Current Build</div></div>
   <div class="stat reveal"><div class="stat-num">Free</div><div class="stat-label">No Key System</div></div>
   <div class="stat reveal"><div class="stat-num">Xeno</div><div class="stat-label">Recommended</div></div>
+</div>
+
+<!-- UPCOMING UPDATE -->
+<div id="upcoming">
+  <div class="inner">
+    <div class="upcoming-header reveal">
+      <div class="section-tag" style="margin:0">What's Next</div>
+      <div class="upcoming-badge">In Development</div>
+    </div>
+    <h2 class="section-title reveal" style="margin-bottom:16px">Upcoming Update</h2>
+    <p class="section-desc reveal" style="margin-bottom:0">Here's a sneak peek at what's being cooked for the next drop. Features may change before release.</p>
+    <div class="upcoming-grid" style="margin-top:48px">
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">New Feature</div>
+        <h4>Advanced Radar</h4>
+        <p>Full 2D minimap radar with configurable range, player blips, and distance rings. Dockable to any corner of the screen.</p>
+        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
+      </div>
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">New Feature</div>
+        <h4>Profile System</h4>
+        <p>Save and load multiple config profiles per game. Switch between aggressive, stealth, and custom setups instantly.</p>
+        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
+      </div>
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">Game Support</div>
+        <h4>More Supported Games</h4>
+        <p>New dedicated modules in the works for additional popular titles. Drop game suggestions in the Discord.</p>
+        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
+      </div>
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">UI Improvement</div>
+        <h4>Keybind Manager</h4>
+        <p>Full rebind support for every toggle and action in the hub. No more hardcoded keys — set it up your way.</p>
+        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
+      </div>
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">Performance</div>
+        <h4>ESP Optimizations</h4>
+        <p>Rewritten ESP render loop to reduce FPS impact in larger lobbies. Drawing budget system to cap render calls.</p>
+        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
+      </div>
+      <div class="upcoming-item reveal">
+        <div class="upcoming-item-tag">QOL</div>
+        <h4>Notification System</h4>
+        <p>In-game toast notifications for script events — update alerts, game detection, toggle feedback, and more.</p>
+        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
+      Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
+    </p>
+  </div>
 </div>
 
 <!-- FEATURES -->
@@ -335,12 +511,38 @@
   <div class="section-tag reveal">Support the Dev</div>
   <h2 class="section-title reveal">Keep the hub free.</h2>
   <p class="section-desc reveal" style="margin:0 auto">Every donation helps keep Binxix Hub updated, maintained, and completely free. No key system, no paywalls, ever.</p>
-  <div class="donate-card reveal">
-    <h3>Donate via Chime</h3>
-    <p>If the hub has helped you out, throw a few dollars my way. Any amount is appreciated and keeps development going.</p>
-    <div class="chime-tag">$binxix</div><br>
-    <a class="btn-primary" href="https://chime.com/pay/binxix" target="_blank">Send via Chime &rarr;</a>
-    <p class="donate-note">100% goes directly to the developer. No middleman.</p>
+  <div class="donate-cards-wrap">
+
+    <!-- Chime -->
+    <div class="donate-card chime-card reveal">
+      <div class="donate-card-icon">💸</div>
+      <h3>Chime</h3>
+      <p>Send cash directly via Chime. Fast, no fees, goes straight to the dev.</p>
+      <div class="donate-handle">$binxix</div><br>
+      <a class="btn-primary" href="https://app.chime.com/link/qr?u=Binxix" target="_blank">Send via Chime &rarr;</a>
+      <p class="donate-note">Direct deposit. No middleman.</p>
+    </div>
+
+    <!-- Robux -->
+    <div class="donate-card robux-card reveal">
+      <div class="donate-card-icon">🎮</div>
+      <h3>Robux</h3>
+      <p>Support from inside Roblox. Gift Robux directly to the developer's account.</p>
+      <div class="donate-handle">binxix<br>ID: 3905919471</div><br>
+      <a class="btn-green" href="https://www.roblox.com/gift-robux?user=3905919471" target="_blank">Gift Robux &rarr;</a>
+      <p class="donate-note">Goes to Roblox account: binxix</p>
+    </div>
+
+    <!-- Other -->
+    <div class="donate-card other-card reveal">
+      <div class="donate-card-icon">⚡</div>
+      <h3>Other Methods</h3>
+      <p>Prefer a different payment method? Hit up the Discord and we'll work something out.</p>
+      <br><br>
+      <a class="btn-ghost" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Ask in Discord &rarr;</a>
+      <p class="donate-note">DM binxix directly in the server.</p>
+    </div>
+
   </div>
 </section>
 
