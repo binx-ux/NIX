@@ -144,6 +144,48 @@
     .upcoming-status .dot { width: 5px; height: 5px; border-radius: 50%; }
     .upcoming-status .dot.wip { background: var(--accent2); animation: blink 1.5s infinite; }
     .upcoming-status .dot.soon { background: var(--yellow); }
+    .upcoming-status .dot.delayed { background: var(--red); }
+    .upcoming-status .dot.eta { background: #f97316; }
+
+    /* EXECUTORS */
+    #executors { background:var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%; padding:80px 0; position:relative; z-index:1; }
+    #executors > .inner { max-width:1200px; margin:0 auto; padding:0 40px; }
+    .executor-cards { display:flex; gap:20px; flex-wrap:wrap; margin-top:48px; }
+    .exec-card {
+      background: var(--surface); border: 1px solid var(--border2); border-radius:12px;
+      padding: 28px 30px; flex: 1; min-width: 240px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .exec-card:hover { border-color: rgba(59,130,246,0.45); transform: translateY(-2px); }
+    .exec-card.coming { opacity: 0.55; cursor: default; }
+    .exec-card.coming:hover { transform: none; border-color: var(--border2); }
+    .exec-card-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .exec-card-name { font-size:17px; font-weight:800; letter-spacing:-0.01em; }
+    .exec-status-pill {
+      font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.1em;
+      padding: 4px 10px; border-radius:100px;
+    }
+    .pill-green { background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); color:var(--green); }
+    .pill-gray  { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text3); }
+    .exec-card p { font-size:13px; color:var(--text2); line-height:1.6; flex:1; }
+    .exec-card a.btn-sm {
+      display:inline-flex; align-items:center; gap:6px;
+      background:var(--accent); color:#fff; text-decoration:none;
+      font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
+      padding:9px 16px; border-radius:6px; text-transform:uppercase;
+      letter-spacing:0.06em; transition:background 0.2s; align-self:flex-start;
+    }
+    .exec-card a.btn-sm:hover { background:var(--accent3); }
+    .exec-standby {
+      margin-top:28px; background:rgba(255,255,255,0.03);
+      border:1px dashed var(--border2); border-radius:8px;
+      padding:16px 22px; font-family:'Space Mono',monospace;
+      font-size:11px; color:var(--text3); letter-spacing:0.08em;
+      text-align:center; text-transform:uppercase;
+    }
+    .exec-standby span { color:var(--accent2); }
 
     /* FEATURES */
     .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:60px; }
@@ -333,47 +375,56 @@
     </div>
     <h2 class="section-title reveal" style="margin-bottom:16px">Upcoming Update</h2>
     <p class="section-desc reveal" style="margin-bottom:0">Here's a sneak peek at what's being cooked for the next drop. Features may change before release.</p>
-    <div class="upcoming-grid" style="margin-top:48px">
+    <div class="upcoming-grid" style="margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
       <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">New Feature</div>
-        <h4>Advanced Radar</h4>
-        <p>Full 2D minimap radar with configurable range, player blips, and distance rings. Dockable to any corner of the screen.</p>
-        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
+        <div class="upcoming-item-tag">Game Module</div>
+        <h4>Rivals Module</h4>
+        <p>Dedicated module for Rivals with game-specific aimbot tuning, ESP, and movement options. Full feature parity with other supported titles.</p>
+        <div class="upcoming-status"><span class="dot wip"></span> Coming soon</div>
       </div>
       <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">New Feature</div>
-        <h4>Profile System</h4>
-        <p>Save and load multiple config profiles per game. Switch between aggressive, stealth, and custom setups instantly.</p>
-        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
+        <div class="upcoming-item-tag">Game Module</div>
+        <h4>Piano Module</h4>
+        <p>Auto-play module for piano games. Currently delayed — being reworked for better accuracy and song support. Worth the wait.</p>
+        <div class="upcoming-status"><span class="dot delayed"></span> Delayed</div>
       </div>
       <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">Game Support</div>
-        <h4>More Supported Games</h4>
-        <p>New dedicated modules in the works for additional popular titles. Drop game suggestions in the Discord.</p>
-        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
-      </div>
-      <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">UI Improvement</div>
-        <h4>Keybind Manager</h4>
-        <p>Full rebind support for every toggle and action in the hub. No more hardcoded keys — set it up your way.</p>
-        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
-      </div>
-      <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">Performance</div>
-        <h4>ESP Optimizations</h4>
-        <p>Rewritten ESP render loop to reduce FPS impact in larger lobbies. Drawing budget system to cap render calls.</p>
-        <div class="upcoming-status"><span class="dot wip"></span> In progress</div>
-      </div>
-      <div class="upcoming-item reveal">
-        <div class="upcoming-item-tag">QOL</div>
-        <h4>Notification System</h4>
-        <p>In-game toast notifications for script events — update alerts, game detection, toggle feedback, and more.</p>
-        <div class="upcoming-status"><span class="dot soon"></span> Coming soon</div>
+        <div class="upcoming-item-tag">Feature</div>
+        <h4>Rotating Code System</h4>
+        <p>A rotating code that refreshes on a set interval — adds an extra layer to the hub. ETA approximately 5 weeks out.</p>
+        <div class="upcoming-status"><span class="dot eta"></span> ~5 weeks out</div>
       </div>
     </div>
     <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
       Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
     </p>
+  </div>
+</div>
+
+<!-- EXECUTORS -->
+<div id="executors">
+  <div class="inner">
+    <div class="section-tag reveal">Supported Executors</div>
+    <h2 class="section-title reveal">Run it with the right tool.</h2>
+    <p class="section-desc reveal">Only use trusted executors. We vet every one on this list — if it ain't here, we don't recommend it.</p>
+    <div class="executor-cards">
+      <div class="exec-card reveal">
+        <div class="exec-card-top">
+          <div class="exec-card-name">Xeno</div>
+          <div class="exec-status-pill pill-green">✓ Recommended</div>
+        </div>
+        <p>Keyless, actively maintained, and top-tier UNC support. The official pick for Binxix Hub — runs everything cleanly with zero setup.</p>
+        <a class="btn-sm" href="https://xeno.onl/" target="_blank">Download Xeno &rarr;</a>
+      </div>
+      <div class="exec-card coming reveal">
+        <div class="exec-card-top">
+          <div class="exec-card-name">More Executors</div>
+          <div class="exec-status-pill pill-gray">Stand By</div>
+        </div>
+        <p>Additional vetted executors are being tested for full compatibility. More safe options dropping soon — <span style="color:var(--accent2)">please stand by.</span></p>
+      </div>
+    </div>
+    <div class="exec-standby reveal">More safe executors coming &nbsp;·&nbsp; <span>please stand by</span></div>
   </div>
 </div>
 
@@ -518,7 +569,6 @@
       <div class="donate-card-icon">💸</div>
       <h3>Chime</h3>
       <p>Send cash directly via Chime. Fast, no fees, goes straight to the dev.</p>
-      <div class="donate-handle">$binxix</div><br>
       <a class="btn-primary" href="https://app.chime.com/link/qr?u=Binxix" target="_blank">Send via Chime &rarr;</a>
       <p class="donate-note">Direct deposit. No middleman.</p>
     </div>
