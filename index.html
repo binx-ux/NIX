@@ -126,6 +126,16 @@
       transition: opacity 0.2s;
     }
     .upcoming-item:hover::before { opacity: 1; }
+    .upcoming-item.live {
+      border-color: rgba(34,197,94,0.3);
+    }
+    .upcoming-item.live::before {
+      background: linear-gradient(90deg, var(--green), transparent);
+      opacity: 1;
+    }
+    .upcoming-item.live:hover {
+      border-color: rgba(34,197,94,0.55);
+    }
     .upcoming-item-tag {
       font-family: 'Space Mono', monospace;
       font-size: 10px;
@@ -134,6 +144,7 @@
       letter-spacing: 0.12em;
       margin-bottom: 10px;
     }
+    .upcoming-item.live .upcoming-item-tag { color: var(--green); }
     .upcoming-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .upcoming-item p { font-size: 13px; color: var(--text2); line-height: 1.6; }
     .upcoming-status {
@@ -143,9 +154,11 @@
     }
     .upcoming-status .dot { width: 5px; height: 5px; border-radius: 50%; }
     .upcoming-status .dot.wip { background: var(--accent2); animation: blink 1.5s infinite; }
+    .upcoming-status .dot.live { background: var(--green); }
     .upcoming-status .dot.soon { background: var(--yellow); }
     .upcoming-status .dot.delayed { background: var(--red); }
     .upcoming-status .dot.eta { background: #f97316; }
+    .upcoming-status.live-status { color: var(--green); }
 
     /* EXECUTORS */
     #executors { background:var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%; padding:80px 0; position:relative; z-index:1; }
@@ -360,7 +373,7 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat reveal"><div class="stat-num">6+</div><div class="stat-label">Supported Games</div></div>
+  <div class="stat reveal"><div class="stat-num">7+</div><div class="stat-label">Supported Games</div></div>
   <div class="stat reveal"><div class="stat-num">V7</div><div class="stat-label">Current Build</div></div>
   <div class="stat reveal"><div class="stat-num">Free</div><div class="stat-label">No Key System</div></div>
   <div class="stat reveal"><div class="stat-num">Xeno</div><div class="stat-label">Recommended</div></div>
@@ -376,24 +389,31 @@
     <h2 class="section-title reveal" style="margin-bottom:16px">Upcoming Update</h2>
     <p class="section-desc reveal" style="margin-bottom:0">Here's a sneak peek at what's being cooked for the next drop. Features may change before release.</p>
     <div class="upcoming-grid" style="margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-      <div class="upcoming-item reveal">
+
+      <!-- RIVALS — NOW LIVE -->
+      <div class="upcoming-item live reveal">
         <div class="upcoming-item-tag">Game Module</div>
-        <h4>Rivals Module</h4>
-        <p>Dedicated module for Rivals with game-specific aimbot tuning, ESP, and movement options. Full feature parity with other supported titles.</p>
-        <div class="upcoming-status"><span class="dot wip"></span> Coming soon</div>
+        <h4>Rivals Module ✅</h4>
+        <p>Rivals is now live on Binxix Hub V7. The hub auto-detects the game and loads VavaAimbot via the script picker — same flow as MM2 and TSB. Shoutout to the testers who found the loadstring.</p>
+        <div class="upcoming-status live-status"><span class="dot live"></span> Now Live</div>
       </div>
+
+      <!-- PIANO — DELAYED -->
       <div class="upcoming-item reveal">
         <div class="upcoming-item-tag">Game Module</div>
         <h4>Piano Module</h4>
-        <p>Auto-play module for piano games. Currently delayed — being reworked for better accuracy and song support. Worth the wait.</p>
+        <p>Auto-play module for piano games. Currently delayed — we don't have the right type of script or module needed to make it work properly yet. Worth the wait when it drops.</p>
         <div class="upcoming-status"><span class="dot delayed"></span> Delayed</div>
       </div>
+
+      <!-- ROTATING CODE -->
       <div class="upcoming-item reveal">
         <div class="upcoming-item-tag">Feature</div>
         <h4>Rotating Code System</h4>
         <p>A rotating code that refreshes on a set interval — adds an extra layer to the hub. ETA approximately 5 weeks out.</p>
         <div class="upcoming-status"><span class="dot eta"></span> ~5 weeks out</div>
       </div>
+
     </div>
     <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
       Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
@@ -439,7 +459,7 @@
     <div class="feature-card reveal"><div class="feature-icon">&#9650;</div><h3>Movement</h3><p>Infinite jump, noclip, auto sprint, click-to-teleport, and speed hacks. Toggled cleanly without breaking game state.</p></div>
     <div class="feature-card reveal"><div class="feature-icon">&#9671;</div><h3>Misc Hacks</h3><p>Auto collect, time freeze, trigger bot. Game-specific scripts auto-loaded when supported place IDs are detected.</p></div>
     <div class="feature-card reveal"><div class="feature-icon">&#9670;</div><h3>Lazy Tab Loading</h3><p>Tabs only initialize when opened. Keeps the executor fast and the GUI responsive regardless of hub size.</p></div>
-    <div class="feature-card reveal"><div class="feature-icon">&#9675;</div><h3>External Script Loader</h3><p>For MM2 and TSB, the hub auto-pulls the best available external script so you never need two loadstrings.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">&#9675;</div><h3>External Script Loader</h3><p>For MM2, TSB, and Rivals, the hub auto-pulls the best available external script so you never need two loadstrings.</p></div>
   </div>
 </section>
 
