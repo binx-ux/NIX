@@ -257,6 +257,63 @@
     .faq-a { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; font-size:14px; color:var(--text2); line-height:1.7; padding:0 24px; }
     .faq-item.open .faq-a { max-height:300px; padding:0 24px 20px; }
 
+    /* CREDITS */
+    #credits {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      max-width: 100%;
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+    }
+    #credits > .inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .credit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .credit-card:hover { border-color: rgba(191,64,255,0.4); transform: translateY(-2px); }
+    .credit-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent2), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .credit-card:hover::before { opacity: 1; }
+    .credit-handle {
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent2);
+      margin-bottom: 8px;
+    }
+    .credit-role {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      font-family: 'Space Mono', monospace;
+      margin-bottom: 10px;
+    }
+    .credit-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
     /* DONATE */
     #donate { text-align:center; }
     .donate-cards-wrap {
@@ -320,9 +377,13 @@
       .stats-bar { gap:40px; padding:24px 20px; }
       section { padding:60px 20px; }
       .executor-layout { grid-template-columns:1fr; gap:40px; }
-      #executor>.inner,#faq>.inner,#upcoming>.inner { padding:0 20px; }
+      #executor>.inner,#faq>.inner,#upcoming>.inner,#credits>.inner { padding:0 20px; }
       .faq-grid { grid-template-columns:1fr; }
       .preview-grid { grid-template-columns:1fr; }
+      .credits-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:480px) {
+      .credits-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -542,6 +603,42 @@
   </div>
 </div>
 
+<!-- CREDITS -->
+<div id="credits">
+  <div class="inner">
+    <div class="section-tag reveal">The Team</div>
+    <h2 class="section-title reveal">Built by.</h2>
+    <p class="section-desc reveal">Every feature in this hub was built by real people. Here's who made what.</p>
+    <div class="credits-grid">
+      <div class="credit-card reveal">
+        <div class="credit-handle">binxix</div>
+        <div class="credit-role">Aimbot &amp; ESP</div>
+        <div class="credit-desc">Aimbot system, ESP rendering, chams, tracers, skeleton, offscreen arrows, and all visual features.</div>
+      </div>
+      <div class="credit-card reveal">
+        <div class="credit-handle">xxCMAxx</div>
+        <div class="credit-role">Auto TP</div>
+        <div class="credit-desc">Auto teleport loop system, target selection logic, and protected player detection.</div>
+      </div>
+      <div class="credit-card reveal">
+        <div class="credit-handle">devoneday</div>
+        <div class="credit-role">Main GUI</div>
+        <div class="credit-desc">The entire main GUI framework — sidebar, tab system, card layout, widget builder, and drag logic.</div>
+      </div>
+      <div class="credit-card reveal">
+        <div class="credit-handle">cloudHACK</div>
+        <div class="credit-role">Misc Options</div>
+        <div class="credit-desc">Anti-AFK, chat spammer, server hop, rejoin, gun mods, and misc gameplay features.</div>
+      </div>
+      <div class="credit-card reveal">
+        <div class="credit-handle">3895nfk93</div>
+        <div class="credit-role">Crosshair &amp; UI</div>
+        <div class="credit-desc">Crosshair system, custom UI components, theme engine, color sliders, and visual polish.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FAQ PREVIEW -->
 <div id="faq">
   <div class="inner">
@@ -578,11 +675,11 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Why wasn't my feature request added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Binxix is the owner of this hub but does not personally build every feature. Not every request is feasible, and there is no obligation to add anything. The hub is free — what's here is what's here.</div>
+        <div class="faq-a">Not every request is feasible, and there is no obligation to add anything. The hub is free — what's here is what's here.</div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" onclick="toggleFaq(this)">Who builds the features in the hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Binxix owns and runs the hub but is not solely responsible for every feature inside it. Do not hold the owner personally accountable for missing features, bugs introduced by contributors, or things that haven't been built yet.</div>
+        <div class="faq-a">Binxix owns and runs the hub. Contributors: <strong>binxix</strong> (aimbot &amp; ESP), <strong>xxCMAxx</strong> (Auto TP), <strong>devoneday</strong> (main GUI), <strong>cloudHACK</strong> (misc options), <strong>3895nfk93</strong> (crosshair &amp; UI). Check the Credits section on this page for full details.</div>
       </div>
     </div>
 
