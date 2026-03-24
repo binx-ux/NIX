@@ -10,7 +10,191 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared.css" />
   <style>
-    /* LOADER */
+    /* ── ANNOUNCEMENTS BANNER ── */
+    #announcements {
+      position: relative;
+      z-index: 900;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 0 0;
+    }
+    #announcements > .ann-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .ann-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .ann-header-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text3);
+    }
+    .ann-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* individual notice card */
+    .ann-card {
+      border-radius: 10px;
+      border: 1px solid;
+      overflow: hidden;
+      position: relative;
+    }
+    .ann-card.ann-red  { border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.04); }
+    .ann-card.ann-yellow { border-color: rgba(234,179,8,0.35); background: rgba(234,179,8,0.04); }
+
+    .ann-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 24px 0;
+    }
+    .ann-severity {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .ann-red  .ann-severity { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+    .ann-yellow .ann-severity { background: rgba(234,179,8,0.12); border: 1px solid rgba(234,179,8,0.3); color: #fbbf24; }
+    .ann-severity::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: blink 2s infinite;
+    }
+
+    .ann-title-wrap { flex: 1; }
+    .ann-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .ann-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .ann-body {
+      padding: 14px 24px 20px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+    .ann-body p { margin: 0 0 10px; }
+    .ann-body p:last-child { margin-bottom: 0; }
+
+    .ann-body strong { color: var(--text); }
+
+    .ann-body .ann-list {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ann-body .ann-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text2);
+    }
+    .ann-body .ann-list li::before {
+      content: '—';
+      color: var(--text3);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ann-footer {
+      border-top: 1px solid;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .ann-red  .ann-footer { border-color: rgba(239,68,68,0.18); }
+    .ann-yellow .ann-footer { border-color: rgba(234,179,8,0.18); }
+
+    .ann-footer-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .ann-dismiss {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--text3);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ann-dismiss:hover { color: var(--text); border-color: var(--text3); }
+
+    /* collapse animation */
+    .ann-card {
+      transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+      max-height: 600px;
+      opacity: 1;
+    }
+    .ann-card.dismissed {
+      max-height: 0 !important;
+      opacity: 0;
+      margin: 0;
+      border: none;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #announcements.all-dismissed {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      #announcements > .ann-inner { padding: 0 20px 32px; }
+      .ann-card-top { flex-direction: column; gap: 10px; }
+      .ann-title { font-size: 14px; }
+    }
+
+    /* ── REST OF PAGE STYLES (unchanged) ── */
     #loader {
       position: fixed; inset: 0;
       background: var(--bg);
@@ -28,7 +212,6 @@
     @keyframes lfill { from{width:0} to{width:100%} }
     .loader-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 0.2em; text-transform: uppercase; }
 
-    /* HERO */
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center;
@@ -57,7 +240,6 @@
     .hero-actions { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; animation:fadeUp 0.6s 1.8s ease both; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-    /* STATS */
     .stats-bar {
       border-top:1px solid var(--border); border-bottom:1px solid var(--border);
       background:var(--bg2); padding:28px 40px;
@@ -68,10 +250,8 @@
     .stat-num { font-family:'Space Mono',monospace; font-size:28px; font-weight:700; color:var(--accent); line-height:1; }
     .stat-label { font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:0.1em; margin-top:4px; }
 
-    /* SECTIONS */
     section { padding:100px 40px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
 
-    /* UPCOMING UPDATE */
     #upcoming {
       background: var(--bg2);
       border-top: 1px solid var(--border);
@@ -113,10 +293,7 @@
       overflow: hidden;
       transition: border-color 0.2s, transform 0.2s;
     }
-    .upcoming-item:hover {
-      border-color: rgba(191,64,255,0.4);
-      transform: translateY(-2px);
-    }
+    .upcoming-item:hover { border-color: rgba(191,64,255,0.4); transform: translateY(-2px); }
     .upcoming-item::before {
       content: '';
       position: absolute;
@@ -126,32 +303,14 @@
       transition: opacity 0.2s;
     }
     .upcoming-item:hover::before { opacity: 1; }
-    .upcoming-item.live {
-      border-color: rgba(34,197,94,0.3);
-    }
-    .upcoming-item.live::before {
-      background: linear-gradient(90deg, var(--green), transparent);
-      opacity: 1;
-    }
-    .upcoming-item.live:hover {
-      border-color: rgba(34,197,94,0.55);
-    }
-    .upcoming-item-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--accent2);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-    }
+    .upcoming-item.live { border-color: rgba(34,197,94,0.3); }
+    .upcoming-item.live::before { background: linear-gradient(90deg, var(--green), transparent); opacity: 1; }
+    .upcoming-item.live:hover { border-color: rgba(34,197,94,0.55); }
+    .upcoming-item-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
     .upcoming-item.live .upcoming-item-tag { color: var(--green); }
     .upcoming-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .upcoming-item p { font-size: 13px; color: var(--text2); line-height: 1.6; }
-    .upcoming-status {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'Space Mono', monospace; font-size: 10px;
-      color: var(--text3); margin-top: 14px; text-transform: uppercase; letter-spacing: 0.08em;
-    }
+    .upcoming-status { display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
     .upcoming-status .dot { width: 5px; height: 5px; border-radius: 50%; }
     .upcoming-status .dot.wip { background: var(--accent2); animation: blink 1.5s infinite; }
     .upcoming-status .dot.live { background: var(--green); }
@@ -160,47 +319,24 @@
     .upcoming-status .dot.eta { background: #f97316; }
     .upcoming-status.live-status { color: var(--green); }
 
-    /* EXECUTORS */
     #executors { background:var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%; padding:80px 0; position:relative; z-index:1; }
     #executors > .inner { max-width:1200px; margin:0 auto; padding:0 40px; }
     .executor-cards { display:flex; gap:20px; flex-wrap:wrap; margin-top:48px; }
-    .exec-card {
-      background: var(--surface); border: 1px solid var(--border2); border-radius:12px;
-      padding: 28px 30px; flex: 1; min-width: 240px;
-      display: flex; flex-direction: column; gap: 12px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
+    .exec-card { background: var(--surface); border: 1px solid var(--border2); border-radius:12px; padding: 28px 30px; flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s, transform 0.2s; }
     .exec-card:hover { border-color: rgba(59,130,246,0.45); transform: translateY(-2px); }
     .exec-card.coming { opacity: 0.55; cursor: default; }
     .exec-card.coming:hover { transform: none; border-color: var(--border2); }
     .exec-card-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
     .exec-card-name { font-size:17px; font-weight:800; letter-spacing:-0.01em; }
-    .exec-status-pill {
-      font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
-      text-transform:uppercase; letter-spacing:0.1em;
-      padding: 4px 10px; border-radius:100px;
-    }
+    .exec-status-pill { font-family:'Space Mono',monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding: 4px 10px; border-radius:100px; }
     .pill-green { background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); color:var(--green); }
     .pill-gray  { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text3); }
     .exec-card p { font-size:13px; color:var(--text2); line-height:1.6; flex:1; }
-    .exec-card a.btn-sm {
-      display:inline-flex; align-items:center; gap:6px;
-      background:var(--accent); color:#fff; text-decoration:none;
-      font-family:'Syne',sans-serif; font-size:12px; font-weight:700;
-      padding:9px 16px; border-radius:6px; text-transform:uppercase;
-      letter-spacing:0.06em; transition:background 0.2s; align-self:flex-start;
-    }
+    .exec-card a.btn-sm { display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; text-decoration:none; font-family:'Syne',sans-serif; font-size:12px; font-weight:700; padding:9px 16px; border-radius:6px; text-transform:uppercase; letter-spacing:0.06em; transition:background 0.2s; align-self:flex-start; }
     .exec-card a.btn-sm:hover { background:var(--accent3); }
-    .exec-standby {
-      margin-top:28px; background:rgba(255,255,255,0.03);
-      border:1px dashed var(--border2); border-radius:8px;
-      padding:16px 22px; font-family:'Space Mono',monospace;
-      font-size:11px; color:var(--text3); letter-spacing:0.08em;
-      text-align:center; text-transform:uppercase;
-    }
+    .exec-standby { margin-top:28px; background:rgba(255,255,255,0.03); border:1px dashed var(--border2); border-radius:8px; padding:16px 22px; font-family:'Space Mono',monospace; font-size:11px; color:var(--text3); letter-spacing:0.08em; text-align:center; text-transform:uppercase; }
     .exec-standby span { color:var(--accent2); }
 
-    /* FEATURES */
     .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-top:60px; }
     .feature-card { background:var(--bg2); padding:36px; transition:background 0.2s; }
     .feature-card:hover { background:var(--surface); }
@@ -208,7 +344,6 @@
     .feature-card h3 { font-size:16px; font-weight:700; margin-bottom:10px; }
     .feature-card p { font-size:14px; color:var(--text2); line-height:1.65; }
 
-    /* GUI PREVIEW */
     .preview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; margin-top:60px; }
     .preview-card { background:var(--surface); border:1px solid var(--border2); border-radius:12px; overflow:hidden; transition:border-color 0.2s,transform 0.2s; }
     .preview-card:hover { border-color: rgba(191,64,255,0.5); transform:translateY(-3px); box-shadow: 0 12px 40px rgba(191,64,255,0.08); }
@@ -219,7 +354,6 @@
     .preview-label h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
     .preview-label p { font-size:12px; color:var(--text3); line-height:1.5; }
 
-    /* EXECUTOR */
     #executor { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%; padding:100px 0; position:relative; z-index:1; }
     #executor > .inner { max-width:1200px; margin:0 auto; padding:0 40px; }
     .executor-layout { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-top:60px; }
@@ -245,7 +379,6 @@
     .step-num { background:var(--surface); border:1px solid var(--border2); color:var(--accent); font-size:10px; width:20px; height:20px; border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; font-weight:700; }
     .disclaimer { background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:14px 20px; font-size:12px; color:#fca5a5; font-family:'Space Mono',monospace; line-height:1.6; margin-top:28px; }
 
-    /* FAQ */
     #faq { background:var(--bg2); border-top:1px solid var(--border); max-width:100%; padding:100px 0; position:relative; z-index:1; }
     #faq > .inner { max-width:1200px; margin:0 auto; padding:0 40px; }
     .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:60px; }
@@ -257,121 +390,42 @@
     .faq-a { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.2s; font-size:14px; color:var(--text2); line-height:1.7; padding:0 24px; }
     .faq-item.open .faq-a { max-height:300px; padding:0 24px 20px; }
 
-    /* CREDITS */
-    #credits {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      max-width: 100%;
-      padding: 80px 0;
-      position: relative;
-      z-index: 1;
-    }
+    #credits { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%; padding: 80px 0; position: relative; z-index: 1; }
     #credits > .inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-    .credits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 48px;
-    }
-    .credit-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s;
-    }
+    .credits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 48px; }
+    .credit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
     .credit-card:hover { border-color: rgba(191,64,255,0.4); transform: translateY(-2px); }
-    .credit-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent2), transparent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
+    .credit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent2), transparent); opacity: 0; transition: opacity 0.2s; }
     .credit-card:hover::before { opacity: 1; }
-    .credit-handle {
-      font-family: 'Space Mono', monospace;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 8px;
-    }
-    .credit-role {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text3);
-      font-family: 'Space Mono', monospace;
-      margin-bottom: 10px;
-    }
-    .credit-desc {
-      font-size: 13px;
-      color: var(--text2);
-      line-height: 1.6;
-    }
+    .credit-handle { font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; color: var(--accent2); margin-bottom: 8px; }
+    .credit-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); font-family: 'Space Mono', monospace; margin-bottom: 10px; }
+    .credit-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
 
-    /* DONATE */
     #donate { text-align:center; }
-    .donate-cards-wrap {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 60px;
-    }
-    .donate-card {
-      background: var(--surface); border: 1px solid var(--border2); border-radius: 16px;
-      padding: 44px 36px; width: 300px; flex-shrink: 0;
-      position: relative; overflow: hidden; text-align: center;
-      transition: border-color 0.2s, transform 0.2s;
-    }
+    .donate-cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 60px; }
+    .donate-card { background: var(--surface); border: 1px solid var(--border2); border-radius: 16px; padding: 44px 36px; width: 300px; flex-shrink: 0; position: relative; overflow: hidden; text-align: center; transition: border-color 0.2s, transform 0.2s; }
     .donate-card:hover { transform: translateY(-3px); }
     .donate-card.chime-card:hover { border-color: rgba(59,130,246,0.5); }
     .donate-card.robux-card:hover { border-color: rgba(34,197,94,0.5); }
     .donate-card.other-card:hover { border-color: rgba(191,64,255,0.5); }
-    .donate-card::before {
-      content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%);
-      width:300px; height:300px; pointer-events:none;
-    }
+    .donate-card::before { content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%); width:300px; height:300px; pointer-events:none; }
     .donate-card.chime-card::before { background: radial-gradient(ellipse,rgba(59,130,246,0.07) 0%,transparent 70%); }
     .donate-card.robux-card::before { background: radial-gradient(ellipse,rgba(34,197,94,0.07) 0%,transparent 70%); }
     .donate-card.other-card::before { background: radial-gradient(ellipse,rgba(191,64,255,0.07) 0%,transparent 70%); }
-    .donate-card-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin: 0 auto 20px;
-    }
+    .donate-card-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 20px; }
     .chime-card .donate-card-icon { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); }
     .robux-card .donate-card-icon { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); }
     .other-card .donate-card-icon { background: rgba(191,64,255,0.1); border: 1px solid rgba(191,64,255,0.25); }
     .donate-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
     .donate-card p { color: var(--text2); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
-    .donate-handle {
-      display: inline-block; background: var(--bg);
-      border: 1px solid var(--border2); border-radius: 8px;
-      padding: 12px 22px; font-family: 'Space Mono', monospace;
-      font-weight: 700; letter-spacing: 0.04em; margin-bottom: 22px;
-    }
+    .donate-handle { display: inline-block; background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 12px 22px; font-family: 'Space Mono', monospace; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 22px; }
     .chime-card .donate-handle { color: var(--accent); font-size: 20px; }
     .robux-card .donate-handle { color: var(--green); font-size: 13px; line-height: 1.6; }
     .donate-note { font-size: 11px; color: var(--text3); font-family: 'Space Mono', monospace; margin-top: 16px; }
-    .btn-green {
-      display: inline-block; text-decoration: none;
-      background: var(--green); color: #fff;
-      padding: 12px 24px; border-radius: 8px;
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      transition: opacity 0.2s;
-    }
+    .btn-green { display: inline-block; text-decoration: none; background: var(--green); color: #fff; padding: 12px 24px; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity 0.2s; }
     .btn-green:hover { opacity: 0.85; }
 
-    @media(max-width:900px) {
-      .donate-card { width: 100%; max-width: 380px; }
-    }
+    @media(max-width:900px) { .donate-card { width: 100%; max-width: 380px; } }
     @media(max-width:768px) {
       .hero { padding:100px 20px 60px; }
       .stats-bar { gap:40px; padding:24px 20px; }
@@ -382,9 +436,7 @@
       .preview-grid { grid-template-columns:1fr; }
       .credits-grid { grid-template-columns:1fr 1fr; }
     }
-    @media(max-width:480px) {
-      .credits-grid { grid-template-columns:1fr; }
-    }
+    @media(max-width:480px) { .credits-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -420,6 +472,70 @@
   <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
 </div>
 
+<!-- ═══════════════════════════════════════════════
+     ANNOUNCEMENTS — injected March 24 2026
+═══════════════════════════════════════════════ -->
+<div id="announcements">
+  <div class="ann-inner">
+    <div class="ann-header">
+      <span class="ann-header-label">Announcements</span>
+      <div class="ann-divider"></div>
+      <span class="ann-header-label">March 24, 2026</span>
+    </div>
+
+    <!-- NOTICE 1: Webhook / Stealer Attack -->
+    <div class="ann-card ann-red" id="ann-security">
+      <div class="ann-card-top">
+        <div class="ann-severity">HIGH — Security</div>
+        <div class="ann-title-wrap">
+          <div class="ann-title">Webhook Attack &amp; False Stealer Claims</div>
+          <div class="ann-date">March 24, 2026 &nbsp;·&nbsp; Resolved</div>
+        </div>
+      </div>
+      <div class="ann-body">
+        <p>We became aware of claims that Binxix Hub contains a <strong>"brain rot auto-stealer"</strong> — a webhook-based credential harvester. <strong>This is false.</strong> After a full review of the codebase, there is no exfiltration code, no credential harvesting, and no auto-stealer of any kind. The claim originates from a <strong>tampered third-party fork</strong>, not from our official loadstring or GitHub repo.</p>
+        <p>Binxix Hub is and always has been <strong>free and open source</strong> — every line is auditable on GitHub. If what you're running doesn't match our repo, you are running a modified version.</p>
+        <ul class="ann-list">
+          <li>Always load from the official GitHub raw URL only</li>
+          <li>Never run scripts from random Discords or pastebin links</li>
+          <li>If you are distributing a malicious fork of our code, we <strong>will</strong> take action — DMCA, platform reports, public disclosure</li>
+        </ul>
+      </div>
+      <div class="ann-footer">
+        <span class="ann-footer-note">Official source: github.com/binx-ux/airhub-binxix-v7</span>
+        <button class="ann-dismiss" onclick="dismissAnn('ann-security')">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- NOTICE 2: Server restructure + bug channel removal -->
+    <div class="ann-card ann-yellow" id="ann-server">
+      <div class="ann-card-top">
+        <div class="ann-severity">Notice — Server</div>
+        <div class="ann-title-wrap">
+          <div class="ann-title">Discord Server Restructure &amp; Bug Channel Removal</div>
+          <div class="ann-date">March 24, 2026 &nbsp;·&nbsp; Effective immediately</div>
+        </div>
+      </div>
+      <div class="ann-body">
+        <p>As a result of the webhook attack, explicit images were posted to our <strong>#bug-reports &amp; suggestions</strong> channel. To everyone who saw those — we are deeply sorry. That is not what this server is about.</p>
+        <p>Because of this, the <strong>bug reports &amp; suggestions feature is being removed from the script</strong> in the next update. The safety of our users comes first.</p>
+        <p>The Discord server is also being <strong>cut down to a minimal set of channels</strong>. Expect general chat and open posting channels to be removed soon. Going forward:</p>
+        <ul class="ann-list">
+          <li><strong>Need support?</strong> Open a ticket using the ticket tool in the server — that's the only supported contact method</li>
+          <li><strong>Want to chat?</strong> Make your own GC. This is a hub server, not a social server</li>
+          <li>If you're into that type of content — respectfully, find a different server for that</li>
+        </ul>
+      </div>
+      <div class="ann-footer">
+        <span class="ann-footer-note">Questions? Open a ticket in Discord</span>
+        <button class="ann-dismiss" onclick="dismissAnn('ann-server')">Dismiss</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════ -->
+
 <!-- HERO -->
 <div class="hero">
   <div class="hero-glow"></div>
@@ -450,31 +566,24 @@
     <h2 class="section-title reveal" style="margin-bottom:16px">Upcoming Update</h2>
     <p class="section-desc reveal" style="margin-bottom:0">Here's a sneak peek at what's being cooked for the next drop. Features may change before release.</p>
     <div class="upcoming-grid" style="margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-
-      <!-- RIVALS — NOW LIVE -->
       <div class="upcoming-item live reveal">
         <div class="upcoming-item-tag">Game Module</div>
         <h4>Rivals Module ✅</h4>
         <p>Rivals is now live on Binxix Hub V7. The hub auto-detects the game and loads VavaAimbot via the script picker — same flow as MM2 and TSB. Shoutout to the testers who found the loadstring.</p>
         <div class="upcoming-status live-status"><span class="dot live"></span> Now Live</div>
       </div>
-
-      <!-- PIANO — DELAYED -->
       <div class="upcoming-item reveal">
         <div class="upcoming-item-tag">Game Module</div>
         <h4>Piano Module</h4>
         <p>Auto-play module for piano games. Currently delayed — we don't have the right type of script or module needed to make it work properly yet. Worth the wait when it drops.</p>
         <div class="upcoming-status"><span class="dot delayed"></span> Delayed</div>
       </div>
-
-      <!-- ROTATING CODE -->
       <div class="upcoming-item reveal">
         <div class="upcoming-item-tag">Feature</div>
         <h4>Rotating Code System</h4>
         <p>A rotating code that refreshes on a set interval — adds an extra layer to the hub. ETA approximately 5 weeks out.</p>
         <div class="upcoming-status"><span class="dot eta"></span> ~5 weeks out</div>
       </div>
-
     </div>
     <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
       Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
@@ -533,38 +642,23 @@
   <p class="section-desc reveal">Real screenshots of the in-game GUI. Clean, readable, and built to stay out of your way mid-game.</p>
   <div class="preview-grid">
     <div class="preview-card reveal">
-      <div class="preview-screen-img">
-        <img src="aimbot.png" alt="Aimbot tab screenshot" />
-      </div>
-      <div class="preview-label">
-        <h4>Aimbot Tab</h4>
-        <p>Toggle mode, LOS check, prediction, FOV radius, smoothness, lock part selection</p>
-      </div>
+      <div class="preview-screen-img"><img src="aimbot.png" alt="Aimbot tab screenshot" /></div>
+      <div class="preview-label"><h4>Aimbot Tab</h4><p>Toggle mode, LOS check, prediction, FOV radius, smoothness, lock part selection</p></div>
     </div>
     <div class="preview-card reveal">
-      <div class="preview-screen-img">
-        <img src="esp.png" alt="ESP tab screenshot" />
-      </div>
-      <div class="preview-label">
-        <h4>ESP Tab</h4>
-        <p>Names, health, distance, boxes, chams, rainbow color, tracers, skeleton, offscreen arrows</p>
-      </div>
+      <div class="preview-screen-img"><img src="esp.png" alt="ESP tab screenshot" /></div>
+      <div class="preview-label"><h4>ESP Tab</h4><p>Names, health, distance, boxes, chams, rainbow color, tracers, skeleton, offscreen arrows</p></div>
     </div>
     <div class="preview-card reveal">
-      <div class="preview-screen-img">
-        <img src="general.png" alt="General tab screenshot" />
-      </div>
-      <div class="preview-label">
-        <h4>General Tab</h4>
-        <p>Speed boost, high jump, bunny hop, fly mode, fullbright, no fog, custom FOV, gun mods</p>
-      </div>
+      <div class="preview-screen-img"><img src="general.png" alt="General tab screenshot" /></div>
+      <div class="preview-label"><h4>General Tab</h4><p>Speed boost, high jump, bunny hop, fly mode, fullbright, no fog, custom FOV, gun mods</p></div>
     </div>
   </div>
 </section>
 
 <hr class="full-divider" />
 
-<!-- EXECUTOR -->
+<!-- EXECUTOR / HOW TO RUN -->
 <div id="executor">
   <div class="inner">
     <div class="section-tag reveal">How to Run</div>
@@ -610,31 +704,11 @@
     <h2 class="section-title reveal">Built by.</h2>
     <p class="section-desc reveal">Every feature in this hub was built by real people. Here's who made what.</p>
     <div class="credits-grid">
-      <div class="credit-card reveal">
-        <div class="credit-handle">binxix</div>
-        <div class="credit-role">Aimbot &amp; ESP</div>
-        <div class="credit-desc">Aimbot system, ESP rendering, chams, tracers, skeleton, offscreen arrows, and all visual features.</div>
-      </div>
-      <div class="credit-card reveal">
-        <div class="credit-handle">xxCMAxx</div>
-        <div class="credit-role">Auto TP</div>
-        <div class="credit-desc">Auto teleport loop system, target selection logic, and protected player detection.</div>
-      </div>
-      <div class="credit-card reveal">
-        <div class="credit-handle">devoneday</div>
-        <div class="credit-role">Main GUI</div>
-        <div class="credit-desc">The entire main GUI framework — sidebar, tab system, card layout, widget builder, and drag logic.</div>
-      </div>
-      <div class="credit-card reveal">
-        <div class="credit-handle">cloudHACK</div>
-        <div class="credit-role">Misc Options</div>
-        <div class="credit-desc">Anti-AFK, chat spammer, server hop, rejoin, gun mods, and misc gameplay features.</div>
-      </div>
-      <div class="credit-card reveal">
-        <div class="credit-handle">3895nfk93</div>
-        <div class="credit-role">Crosshair &amp; UI</div>
-        <div class="credit-desc">Crosshair system, custom UI components, theme engine, color sliders, and visual polish.</div>
-      </div>
+      <div class="credit-card reveal"><div class="credit-handle">binxix</div><div class="credit-role">Aimbot &amp; ESP</div><div class="credit-desc">Aimbot system, ESP rendering, chams, tracers, skeleton, offscreen arrows, and all visual features.</div></div>
+      <div class="credit-card reveal"><div class="credit-handle">xxCMAxx</div><div class="credit-role">Auto TP</div><div class="credit-desc">Auto teleport loop system, target selection logic, and protected player detection.</div></div>
+      <div class="credit-card reveal"><div class="credit-handle">devoneday</div><div class="credit-role">Main GUI</div><div class="credit-desc">The entire main GUI framework — sidebar, tab system, card layout, widget builder, and drag logic.</div></div>
+      <div class="credit-card reveal"><div class="credit-handle">cloudHACK</div><div class="credit-role">Misc Options</div><div class="credit-desc">Anti-AFK, chat spammer, server hop, rejoin, gun mods, and misc gameplay features.</div></div>
+      <div class="credit-card reveal"><div class="credit-handle">3895nfk93</div><div class="credit-role">Crosshair &amp; UI</div><div class="credit-desc">Crosshair system, custom UI components, theme engine, color sliders, and visual polish.</div></div>
     </div>
   </div>
 </div>
@@ -645,44 +719,16 @@
     <div class="section-tag reveal">Common Questions</div>
     <h2 class="section-title reveal">FAQ</h2>
     <div class="faq-grid">
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Will I get banned using this?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">There is always a risk of being banned when using any third-party script in Roblox. It violates their ToS. Always use an alternate account — never your main. The developer takes no responsibility for bans.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Do I need a key to use Binxix Hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">No. Binxix Hub V7 is completely free with no key system. Paste the loadstring, execute, and you're in.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">We officially recommend Xeno. It is keyless, free, and has the highest compatibility with Binxix Hub's features. Download it at xeno.now.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Does it work on mobile or console?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">No. Script executors only work on PC. Mobile and console do not support external script injection.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">GUI is not showing. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Make sure you are using Xeno or another Level 7 executor. If the GUI still does not appear, re-attach the executor and execute again. If the issue persists, join the Discord for support.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">How do I request a game to be added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">To request a game, come to the Discord with either a working loadstring for the game or a solid reason why it should be included. Requests without either of those will be ignored. We're not adding games just because someone asked — there needs to be something to work with.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Can I request specific features or changes?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Do not DM begging for specific features. Feature requests can be dropped in the appropriate Discord channel, but there are no guarantees. Spamming or repeatedly asking will get you ignored.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Why wasn't my feature request added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Not every request is feasible, and there is no obligation to add anything. The hub is free — what's here is what's here.</div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q" onclick="toggleFaq(this)">Who builds the features in the hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a">Binxix owns and runs the hub. Contributors: <strong>binxix</strong> (aimbot &amp; ESP), <strong>xxCMAxx</strong> (Auto TP), <strong>devoneday</strong> (main GUI), <strong>cloudHACK</strong> (misc options), <strong>3895nfk93</strong> (crosshair &amp; UI). Check the Credits section on this page for full details.</div>
-      </div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Will I get banned using this?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">There is always a risk of being banned when using any third-party script in Roblox. It violates their ToS. Always use an alternate account — never your main. The developer takes no responsibility for bans.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Do I need a key to use Binxix Hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">No. Binxix Hub V7 is completely free with no key system. Paste the loadstring, execute, and you're in.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">We officially recommend Xeno. It is keyless, free, and has the highest compatibility with Binxix Hub's features. Download it at xeno.now.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Does it work on mobile or console?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">No. Script executors only work on PC. Mobile and console do not support external script injection.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">GUI is not showing. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Make sure you are using Xeno or another Level 7 executor. If the GUI still does not appear, re-attach the executor and execute again. If the issue persists, join the Discord for support.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I request a game to be added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">To request a game, come to the Discord with either a working loadstring for the game or a solid reason why it should be included. Requests without either of those will be ignored. We're not adding games just because someone asked — there needs to be something to work with.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Can I request specific features or changes?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Do not DM begging for specific features. Feature requests can be dropped in the appropriate Discord channel, but there are no guarantees. Spamming or repeatedly asking will get you ignored.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Why wasn't my feature request added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Not every request is feasible, and there is no obligation to add anything. The hub is free — what's here is what's here.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Who builds the features in the hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Binxix owns and runs the hub. Contributors: <strong>binxix</strong> (aimbot &amp; ESP), <strong>xxCMAxx</strong> (Auto TP), <strong>devoneday</strong> (main GUI), <strong>cloudHACK</strong> (misc options), <strong>3895nfk93</strong> (crosshair &amp; UI). Check the Credits section on this page for full details.</div></div>
     </div>
-
     <div style="text-align:center;margin-top:40px;"><a class="btn-ghost reveal" href="faq.html">View All FAQs &rarr;</a></div>
   </div>
 </div>
@@ -693,8 +739,6 @@
   <h2 class="section-title reveal">Keep the hub free.</h2>
   <p class="section-desc reveal" style="margin:0 auto">Every donation helps keep Binxix Hub updated, maintained, and completely free. No key system, no paywalls, ever.</p>
   <div class="donate-cards-wrap">
-
-    <!-- Chime -->
     <div class="donate-card chime-card reveal">
       <div class="donate-card-icon">💸</div>
       <h3>Chime</h3>
@@ -702,8 +746,6 @@
       <a class="btn-primary" href="https://app.chime.com/link/qr?u=Binxix" target="_blank">Send via Chime &rarr;</a>
       <p class="donate-note">Direct deposit. No middleman.</p>
     </div>
-
-    <!-- Robux -->
     <div class="donate-card robux-card reveal">
       <div class="donate-card-icon">🎮</div>
       <h3>Robux</h3>
@@ -712,8 +754,6 @@
       <a class="btn-green" href="https://www.roblox.com/gift-robux?user=3905919471" target="_blank">Gift Robux &rarr;</a>
       <p class="donate-note">Goes to Roblox account: binxix</p>
     </div>
-
-    <!-- Other -->
     <div class="donate-card other-card reveal">
       <div class="donate-card-icon">⚡</div>
       <h3>Other Methods</h3>
@@ -722,7 +762,6 @@
       <a class="btn-ghost" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Ask in Discord &rarr;</a>
       <p class="donate-note">DM binxix directly in the server.</p>
     </div>
-
   </div>
 </section>
 
@@ -757,6 +796,16 @@ function toggleFaq(btn) {
   const wasOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
   if (!wasOpen) item.classList.add('open');
+}
+
+function dismissAnn(id) {
+  const card = document.getElementById(id);
+  if (card) card.classList.add('dismissed');
+  // hide whole section if both dismissed
+  const remaining = document.querySelectorAll('#announcements .ann-card:not(.dismissed)');
+  if (remaining.length === 0) {
+    document.getElementById('announcements').classList.add('all-dismissed');
+  }
 }
 </script>
 </body>
