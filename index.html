@@ -306,8 +306,13 @@
     .upcoming-item.live { border-color: rgba(34,197,94,0.3); }
     .upcoming-item.live::before { background: linear-gradient(90deg, var(--green), transparent); opacity: 1; }
     .upcoming-item.live:hover { border-color: rgba(34,197,94,0.55); }
+    /* cancelled item style */
+    .upcoming-item.cancelled { border-color: rgba(107,114,128,0.3); opacity: 0.7; }
+    .upcoming-item.cancelled::before { background: linear-gradient(90deg, #6b7280, transparent); opacity: 1; }
+    .upcoming-item.cancelled:hover { border-color: rgba(107,114,128,0.5); transform: none; }
     .upcoming-item-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
     .upcoming-item.live .upcoming-item-tag { color: var(--green); }
+    .upcoming-item.cancelled .upcoming-item-tag { color: #6b7280; }
     .upcoming-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
     .upcoming-item p { font-size: 13px; color: var(--text2); line-height: 1.6; }
     .upcoming-status { display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); margin-top: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
@@ -317,6 +322,9 @@
     .upcoming-status .dot.soon { background: var(--yellow); }
     .upcoming-status .dot.delayed { background: var(--red); }
     .upcoming-status .dot.eta { background: #f97316; }
+    /* cancelled dot — solid grey, no animation */
+    .upcoming-status .dot.cancelled { background: #6b7280; }
+    .upcoming-status.cancelled-status { color: #6b7280; }
     .upcoming-status.live-status { color: var(--green); }
 
     #executors { background:var(--bg); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%; padding:80px 0; position:relative; z-index:1; }
@@ -572,11 +580,11 @@
         <p>Rivals is now live on Binxix Hub V7. The hub auto-detects the game and loads VavaAimbot via the script picker — same flow as MM2 and TSB. Shoutout to the testers who found the loadstring.</p>
         <div class="upcoming-status live-status"><span class="dot live"></span> Now Live</div>
       </div>
-      <div class="upcoming-item reveal">
+      <div class="upcoming-item cancelled reveal">
         <div class="upcoming-item-tag">Game Module</div>
-        <h4>Piano Module</h4>
-        <p>Auto-play module for piano games. Currently delayed — we don't have the right type of script or module needed to make it work properly yet. Worth the wait when it drops.</p>
-        <div class="upcoming-status"><span class="dot delayed"></span> Delayed</div>
+        <h4>Piano Module ❌</h4>
+        <p>Auto-play module for piano games. This has been cancelled — we don't have the right type of script or module needed to make it work, and it's not worth the time to pursue further.</p>
+        <div class="upcoming-status cancelled-status"><span class="dot cancelled"></span> Cancelled</div>
       </div>
       <div class="upcoming-item reveal">
         <div class="upcoming-item-tag">Feature</div>
@@ -801,7 +809,6 @@ function toggleFaq(btn) {
 function dismissAnn(id) {
   const card = document.getElementById(id);
   if (card) card.classList.add('dismissed');
-  // hide whole section if both dismissed
   const remaining = document.querySelectorAll('#announcements .ann-card:not(.dismissed)');
   if (remaining.length === 0) {
     document.getElementById('announcements').classList.add('all-dismissed');
