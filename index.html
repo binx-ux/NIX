@@ -172,7 +172,7 @@
     /* collapse animation */
     .ann-card {
       transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
-      max-height: 600px;
+      max-height: 800px;
       opacity: 1;
     }
     .ann-card.dismissed {
@@ -306,7 +306,6 @@
     .upcoming-item.live { border-color: rgba(34,197,94,0.3); }
     .upcoming-item.live::before { background: linear-gradient(90deg, var(--green), transparent); opacity: 1; }
     .upcoming-item.live:hover { border-color: rgba(34,197,94,0.55); }
-    /* cancelled item style */
     .upcoming-item.cancelled { border-color: rgba(107,114,128,0.3); opacity: 0.7; }
     .upcoming-item.cancelled::before { background: linear-gradient(90deg, #6b7280, transparent); opacity: 1; }
     .upcoming-item.cancelled:hover { border-color: rgba(107,114,128,0.5); transform: none; }
@@ -322,7 +321,6 @@
     .upcoming-status .dot.soon { background: var(--yellow); }
     .upcoming-status .dot.delayed { background: var(--red); }
     .upcoming-status .dot.eta { background: #f97316; }
-    /* cancelled dot — solid grey, no animation */
     .upcoming-status .dot.cancelled { background: #6b7280; }
     .upcoming-status.cancelled-status { color: #6b7280; }
     .upcoming-status.live-status { color: var(--green); }
@@ -481,17 +479,72 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════
-     ANNOUNCEMENTS — injected March 24 2026
+     ANNOUNCEMENTS — updated March 27 2026
 ═══════════════════════════════════════════════ -->
 <div id="announcements">
   <div class="ann-inner">
     <div class="ann-header">
       <span class="ann-header-label">Announcements</span>
       <div class="ann-divider"></div>
-      <span class="ann-header-label">March 24, 2026</span>
+      <span class="ann-header-label">March 27, 2026</span>
     </div>
 
-    <!-- NOTICE 1: Webhook / Stealer Attack -->
+    <!-- NOTICE 1: Dev Pause -->
+    <div class="ann-card ann-yellow" id="ann-pause">
+      <div class="ann-card-top">
+        <div class="ann-severity">Notice — Development</div>
+        <div class="ann-title-wrap">
+          <div class="ann-title">Development Pause — Updates On Hold</div>
+          <div class="ann-date">March 26, 2026 &nbsp;·&nbsp; Effective immediately</div>
+        </div>
+      </div>
+      <div class="ann-body">
+        <p>After careful consideration, <strong>Binxix Hub development is being paused indefinitely.</strong> Continuing to develop without a clear creative direction would compromise the quality and standards this project has been built on. Rather than releasing updates that don't meet expectations, we're stepping back responsibly.</p>
+        <p><strong>To all testers and contributors:</strong></p>
+        <ul class="ann-list">
+          <li>You will receive your scheduled payment on the <strong>1st</strong> — your time and effort will be honored</li>
+          <li>After that payment, you are no longer required to continue testing — there won't be further testing cycles for the foreseeable future</li>
+          <li>Your contributions have been essential in shaping this project and are deeply appreciated</li>
+        </ul>
+        <p><strong>Open Source Transition:</strong> The project will be transitioned to an open source model and made publicly available on GitHub. The community is free to access, modify, and build upon the codebase. If you redistribute:</p>
+        <ul class="ann-list">
+          <li>All original developer names must be removed before redistribution</li>
+          <li>The project must be renamed prior to publication</li>
+        </ul>
+        <p>This pause does not necessarily represent a permanent conclusion — but for now, development stands still.</p>
+      </div>
+      <div class="ann-footer">
+        <span class="ann-footer-note">Posted by _binxix &nbsp;·&nbsp; March 26, 2026</span>
+        <button class="ann-dismiss" onclick="dismissAnn('ann-pause')">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- NOTICE 2: Server Lockdown -->
+    <div class="ann-card ann-red" id="ann-lockdown">
+      <div class="ann-card-top">
+        <div class="ann-severity">High — Server</div>
+        <div class="ann-title-wrap">
+          <div class="ann-title">Discord Server — Temporary Lockdown</div>
+          <div class="ann-date">March 26, 2026 &nbsp;·&nbsp; Effective immediately</div>
+        </div>
+      </div>
+      <div class="ann-body">
+        <p>This message serves as the <strong>final official communication</strong> regarding the server. After careful evaluation, the decision has been made to place the server into a temporary lockdown.</p>
+        <ul class="ann-list">
+          <li>The server will <strong>not be active or accessible</strong> for the foreseeable future</li>
+          <li>No new updates, events, or support will be provided during this period</li>
+          <li>All community interactions are paused until further notice</li>
+        </ul>
+        <p>To everyone who has been part of this community — your participation, support, and energy have been a key part of this project's journey. While this is goodbye for now, it is done with genuine gratitude. This lockdown marks the end of this current phase, not necessarily a permanent closure.</p>
+        <p>Thank you all for being part of this.</p>
+      </div>
+      <div class="ann-footer">
+        <span class="ann-footer-note">Posted by _binxix &nbsp;·&nbsp; March 26, 2026</span>
+        <button class="ann-dismiss" onclick="dismissAnn('ann-lockdown')">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- NOTICE 3: Webhook / Stealer Attack (archived) -->
     <div class="ann-card ann-red" id="ann-security">
       <div class="ann-card-top">
         <div class="ann-severity">HIGH — Security</div>
@@ -515,7 +568,7 @@
       </div>
     </div>
 
-    <!-- NOTICE 2: Server restructure + bug channel removal -->
+    <!-- NOTICE 4: Server restructure + bug channel removal -->
     <div class="ann-card ann-yellow" id="ann-server">
       <div class="ann-card-top">
         <div class="ann-severity">Notice — Server</div>
@@ -586,11 +639,11 @@
         <p>Auto-play module for piano games. This has been cancelled — we don't have the right type of script or module needed to make it work, and it's not worth the time to pursue further.</p>
         <div class="upcoming-status cancelled-status"><span class="dot cancelled"></span> Cancelled</div>
       </div>
-      <div class="upcoming-item reveal">
+      <div class="upcoming-item cancelled reveal">
         <div class="upcoming-item-tag">Feature</div>
-        <h4>Rotating Code System</h4>
-        <p>A rotating code that refreshes on a set interval — adds an extra layer to the hub. ETA approximately 5 weeks out.</p>
-        <div class="upcoming-status"><span class="dot eta"></span> ~5 weeks out</div>
+        <h4>Rotating Code System ⏸</h4>
+        <p>A rotating code that refreshes on a set interval. This feature is on hold alongside the rest of development — no ETA while the pause is active.</p>
+        <div class="upcoming-status cancelled-status"><span class="dot cancelled"></span> On Hold</div>
       </div>
     </div>
     <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
