@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- SEO/social URLs use https://binx-ux.github.io/NIX/ — search & replace if you use a custom domain. -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Binxix Exploit Hub — Roblox Script Hub</title>
@@ -8,6 +9,18 @@
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
   <link rel="apple-touch-icon" href="assets/images/favicon.png" />
   <meta name="theme-color" content="#080a0f" />
+  <link rel="canonical" href="https://binx-ux.github.io/NIX/" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://binx-ux.github.io/NIX/" />
+  <meta property="og:title" content="Binxix Exploit Hub — Roblox Script Hub" />
+  <meta property="og:description" content="Binxix Exploit Hub — free Roblox script hub. Aimbot, ESP, movement hacks, and game-specific modules — one loadstring." />
+  <meta property="og:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
+  <meta property="og:site_name" content="Binxix Exploit Hub" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Binxix Exploit Hub — Roblox Script Hub" />
+  <meta name="twitter:description" content="Binxix Exploit Hub — free Roblox script hub. Aimbot, ESP, movement hacks, and game-specific modules — one loadstring." />
+  <meta name="twitter:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -447,6 +460,9 @@
     }
     @media(max-width:480px) { .credits-grid { grid-template-columns:1fr; } }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"Binxix Exploit Hub","url":"https://binx-ux.github.io/NIX/","description":"Free Roblox script hub — aimbot, ESP, movement hacks, and game-specific modules in one loadstring."}
+  </script>
 </head>
 <body>
 
@@ -456,9 +472,9 @@
   <div class="loader-tag">Initializing script hub...</div>
 </div>
 
-<div id="toast"></div>
+<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<nav>
+<nav aria-label="Main">
   <a class="nav-logo" href="index.html"><span>binxix</span> exploit hub<span class="logo-badge">V7</span></a>
   <ul class="nav-links">
     <li><a href="index.html" class="active">Home</a></li>
@@ -468,8 +484,8 @@
     <li><a href="#donate">Donate</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px;">
-    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
-    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+    <button type="button" class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
   </div>
 </nav>
 <div class="nav-mobile-menu" id="mobile-menu">
@@ -478,7 +494,7 @@
   <a href="faq.html">FAQ</a>
   <a href="changelog.html">Changelog</a>
   <a href="#donate">Donate</a>
-  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -650,7 +666,7 @@
       </div>
     </div>
     <p class="reveal" style="text-align:center;margin-top:36px;font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">
-      Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
+      Follow updates in <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);text-decoration:none;">Discord</a> &nbsp;·&nbsp; <a href="changelog.html" style="color:var(--accent2);text-decoration:none;">Changelog &rarr;</a>
     </p>
   </div>
 </div>
@@ -668,7 +684,7 @@
           <div class="exec-status-pill pill-green">✓ Recommended</div>
         </div>
         <p>Keyless, actively maintained, and top-tier UNC support. The official pick for Binxix Exploit Hub — runs everything cleanly with zero setup.</p>
-        <a class="btn-sm" href="https://xeno.onl/" target="_blank">Download Xeno &rarr;</a>
+        <a class="btn-sm" href="https://xeno.onl/" target="_blank" rel="noopener noreferrer">Download Xeno &rarr;</a>
       </div>
       <div class="exec-card coming reveal">
         <div class="exec-card-top">
@@ -706,15 +722,15 @@
   <p class="section-desc reveal">Real screenshots of the in-game GUI. Clean, readable, and built to stay out of your way mid-game.</p>
   <div class="preview-grid">
     <div class="preview-card reveal">
-      <div class="preview-screen-img"><img src="assets/images/aimbot.png" alt="Aimbot tab screenshot" /></div>
+      <div class="preview-screen-img"><img src="assets/images/aimbot.png" alt="Aimbot tab screenshot" loading="lazy" decoding="async" /></div>
       <div class="preview-label"><h4>Aimbot Tab</h4><p>Toggle mode, LOS check, prediction, FOV radius, smoothness, lock part selection</p></div>
     </div>
     <div class="preview-card reveal">
-      <div class="preview-screen-img"><img src="assets/images/esp.png" alt="ESP tab screenshot" /></div>
+      <div class="preview-screen-img"><img src="assets/images/esp.png" alt="ESP tab screenshot" loading="lazy" decoding="async" /></div>
       <div class="preview-label"><h4>ESP Tab</h4><p>Names, health, distance, boxes, chams, rainbow color, tracers, skeleton, offscreen arrows</p></div>
     </div>
     <div class="preview-card reveal">
-      <div class="preview-screen-img"><img src="assets/images/general.png" alt="General tab screenshot" /></div>
+      <div class="preview-screen-img"><img src="assets/images/general.png" alt="General tab screenshot" loading="lazy" decoding="async" /></div>
       <div class="preview-label"><h4>General Tab</h4><p>Speed boost, high jump, bunny hop, fly mode, fullbright, no fog, custom FOV, gun mods</p></div>
     </div>
   </div>
@@ -807,7 +823,7 @@
       <div class="donate-card-icon">💸</div>
       <h3>Chime</h3>
       <p>Send cash directly via Chime. Fast, no fees, goes straight to the dev.</p>
-      <a class="btn-primary" href="https://app.chime.com/link/qr?u=Binxix" target="_blank">Send via Chime &rarr;</a>
+      <a class="btn-primary" href="https://app.chime.com/link/qr?u=Binxix" target="_blank" rel="noopener noreferrer">Send via Chime &rarr;</a>
       <p class="donate-note">Direct deposit. No middleman.</p>
     </div>
     <div class="donate-card robux-card reveal">
@@ -815,7 +831,7 @@
       <h3>Robux</h3>
       <p>Support from inside Roblox. Gift Robux directly to the developer's account.</p>
       <div class="donate-handle">binxix<br>ID: 3905919471</div><br>
-      <a class="btn-green" href="https://www.roblox.com/gift-robux?user=3905919471" target="_blank">Gift Robux &rarr;</a>
+      <a class="btn-green" href="https://www.roblox.com/gift-robux?user=3905919471" target="_blank" rel="noopener noreferrer">Gift Robux &rarr;</a>
       <p class="donate-note">Goes to Roblox account: binxix</p>
     </div>
     <div class="donate-card other-card reveal">
@@ -823,7 +839,7 @@
       <h3>Other Methods</h3>
       <p>Prefer a different payment method? Hit up the Discord and we'll work something out.</p>
       <br><br>
-      <a class="btn-ghost" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Ask in Discord &rarr;</a>
+      <a class="btn-ghost" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Ask in Discord &rarr;</a>
       <p class="donate-note">DM binxix directly in the server.</p>
     </div>
   </div>
@@ -833,7 +849,7 @@
 <div class="legal-strip">
   <div class="legal-strip-inner">
     <p style="font-size:10px;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px">Legal Disclaimer</p>
-    <p>Binxix Exploit Hub is an independent project with no affiliation, endorsement, or connection to Roblox Corporation. This software is provided strictly for educational and research purposes. Using third-party scripts in Roblox is a direct violation of the <a href="https://en.help.roblox.com/hc/en-us/articles/115004647846" target="_blank">Roblox Terms of Service</a>. The developer (binxix) holds zero responsibility or liability for any account bans, terminations, data loss, or any other consequence arising from use of this software. By executing the loadstring, you acknowledge that you are solely responsible for any outcome. Always use an alternate account. You assume all risk.</p>
+    <p>Binxix Exploit Hub is an independent project with no affiliation, endorsement, or connection to Roblox Corporation. This software is provided strictly for educational and research purposes. Using third-party scripts in Roblox is a direct violation of the <a href="https://en.help.roblox.com/hc/en-us/articles/115004647846" target="_blank" rel="noopener noreferrer">Roblox Terms of Service</a>. The developer (binxix) holds zero responsibility or liability for any account bans, terminations, data loss, or any other consequence arising from use of this software. By executing the loadstring, you acknowledge that you are solely responsible for any outcome. Always use an alternate account. You assume all risk.</p>
   </div>
 </div>
 
@@ -845,9 +861,9 @@
       <li><a href="games.html">Games</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="changelog.html">Changelog</a></li>
-      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a></li>
-      <li><a href="https://github.com/binx-ux" target="_blank">GitHub</a></li>
-      <li><a href="https://guns.lol/binxix" target="_blank">guns.lol</a></li>
+      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a></li>
+      <li><a href="https://github.com/binx-ux" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://guns.lol/binxix" target="_blank" rel="noopener noreferrer">guns.lol</a></li>
     </ul>
     <div class="footer-copy">&copy; 2026 binxix. All rights reserved.</div>
   </div>

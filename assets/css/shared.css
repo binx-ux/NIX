@@ -107,6 +107,13 @@ nav {
   transition: color 0.2s;
 }
 .nav-links a:hover, .nav-links a.active { color: var(--accent2); }
+.nav-links a:focus-visible,
+.nav-cta:focus-visible,
+.nav-logo:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 
 .nav-hamburger {
   display: none;
@@ -114,6 +121,14 @@ nav {
   gap: 5px;
   cursor: pointer;
   padding: 4px;
+  background: none;
+  border: none;
+  color: inherit;
+}
+.nav-hamburger:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 .nav-hamburger span {
   display: block;
@@ -148,6 +163,10 @@ nav {
   border-bottom: 1px solid var(--border);
 }
 .nav-mobile-menu a:last-child { border: none; }
+.nav-mobile-menu a:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
 
 .nav-cta {
   background: var(--accent);
@@ -208,6 +227,11 @@ nav {
   font-family: 'Syne', sans-serif;
 }
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+}
 
 /* SECTION COMMON */
 .section-tag {

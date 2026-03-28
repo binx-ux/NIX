@@ -4,9 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Changelog — Binxix Exploit Hub</title>
+  <meta name="description" content="Binxix Exploit Hub version history — V7 features, fixes, and legacy releases." />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
   <link rel="apple-touch-icon" href="assets/images/favicon.png" />
   <meta name="theme-color" content="#080a0f" />
+  <link rel="canonical" href="https://binx-ux.github.io/NIX/changelog.html" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://binx-ux.github.io/NIX/changelog.html" />
+  <meta property="og:title" content="Changelog — Binxix Exploit Hub" />
+  <meta property="og:description" content="Binxix Exploit Hub version history — V7 features, fixes, and legacy releases." />
+  <meta property="og:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
+  <meta property="og:site_name" content="Binxix Exploit Hub" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Changelog — Binxix Exploit Hub" />
+  <meta name="twitter:description" content="Binxix Exploit Hub version history — V7 features, fixes, and legacy releases." />
+  <meta name="twitter:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -113,9 +126,9 @@
 </head>
 <body>
 
-<div id="toast"></div>
+<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<nav>
+<nav aria-label="Main">
   <a class="nav-logo" href="index.html"><span>binxix</span> exploit hub<span class="logo-badge">V7</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
@@ -125,8 +138,8 @@
     <li><a href="index.html#donate">Donate</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px;">
-    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
-    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+    <button type="button" class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
   </div>
 </nav>
 <div class="nav-mobile-menu" id="mobile-menu">
@@ -135,7 +148,7 @@
   <a href="faq.html">FAQ</a>
   <a href="changelog.html">Changelog</a>
   <a href="index.html#donate">Donate</a>
-  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a>
+  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
 </div>
 
 <div class="page-hero">
@@ -255,9 +268,9 @@
       <li><a href="games.html">Games</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="changelog.html">Changelog</a></li>
-      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank">Discord</a></li>
-      <li><a href="https://github.com/binx-ux" target="_blank">GitHub</a></li>
-      <li><a href="https://guns.lol/binxix" target="_blank">guns.lol</a></li>
+      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a></li>
+      <li><a href="https://github.com/binx-ux" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://guns.lol/binxix" target="_blank" rel="noopener noreferrer">guns.lol</a></li>
     </ul>
     <div class="footer-copy">&copy; 2026 binxix. All rights reserved.</div>
   </div>

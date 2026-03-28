@@ -17,10 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el.dataset.page === path) el.classList.add('active');
   });
 
-  // hamburger
   const ham = document.getElementById('hamburger');
   const mob = document.getElementById('mobile-menu');
-  if (ham && mob) ham.addEventListener('click', () => mob.classList.toggle('open'));
+  if (ham && mob) {
+    const setOpen = (open) => {
+      mob.classList.toggle('open', open);
+      ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+      ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    ham.addEventListener('click', () => setOpen(!mob.classList.contains('open')));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mob.classList.contains('open')) setOpen(false);
+    });
+  }
 
   // scroll reveal
   const obs = new IntersectionObserver(entries => {
@@ -37,11 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
 const LOADSTRING = `loadstring(game:HttpGet("https://raw.githubusercontent.com/binx-ux/airhub-binxix-v7/refs/heads/main/script/aimbot"))()`;
 
 function copyLoadstring() {
-  navigator.clipboard.writeText(LOADSTRING).then(() => {
-    const t = document.getElementById('toast');
+  const t = document.getElementById('toast');
+  const show = (msg) => {
     if (!t) return;
-    t.textContent = 'Loadstring copied to clipboard';
+    t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2600);
+  };
+  navigator.clipboard.writeText(LOADSTRING).then(() => show('Loadstring copied to clipboard')).catch(() => {
+    show('Copy blocked — select and copy manually, or use HTTPS');
   });
 }
