@@ -353,6 +353,7 @@
     .exec-status-pill { font-family:'Space Mono',monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding: 4px 10px; border-radius:100px; }
     .pill-green { background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); color:var(--green); }
     .pill-gray  { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:var(--text3); }
+    .pill-amber { background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.35); color:#fbbf24; }
     .exec-card p { font-size:13px; color:var(--text2); line-height:1.6; flex:1; }
     .exec-card a.btn-sm { display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:#fff; text-decoration:none; font-family:'Syne',sans-serif; font-size:12px; font-weight:700; padding:9px 16px; border-radius:6px; text-transform:uppercase; letter-spacing:0.06em; transition:background 0.2s; align-self:flex-start; }
     .exec-card a.btn-sm:hover { background:var(--accent3); }
@@ -633,7 +634,7 @@
   <div class="stat reveal"><div class="stat-num">7+</div><div class="stat-label">Supported Games</div></div>
   <div class="stat reveal"><div class="stat-num">V7</div><div class="stat-label">Current Build</div></div>
   <div class="stat reveal"><div class="stat-num">Free</div><div class="stat-label">No Key System</div></div>
-  <div class="stat reveal"><div class="stat-num">Xeno</div><div class="stat-label">Recommended</div></div>
+  <div class="stat reveal"><div class="stat-num">2+</div><div class="stat-label">Vetted Executors</div></div>
 </div>
 
 <!-- UPCOMING UPDATE -->
@@ -686,15 +687,16 @@
         <p>Keyless, actively maintained, and top-tier UNC support. The official pick for Binxix Exploit Hub — runs everything cleanly with zero setup.</p>
         <a class="btn-sm" href="https://xeno.onl/" target="_blank" rel="noopener noreferrer">Download Xeno &rarr;</a>
       </div>
-      <div class="exec-card coming reveal">
+      <div class="exec-card reveal">
         <div class="exec-card-top">
-          <div class="exec-card-name">More Executors</div>
-          <div class="exec-status-pill pill-gray">Stand By</div>
+          <div class="exec-card-name">Wave</div>
+          <div class="exec-status-pill pill-amber">Also supported</div>
         </div>
-        <p>Additional vetted executors are being tested for full compatibility. More safe options dropping soon — <span style="color:var(--accent2)">please stand by.</span></p>
+        <p>Feature-rich executor with a modern UI, cloud script hub, and optional paid license tiers. Use it if you already run Wave — pricing and plans are on their site.</p>
+        <a class="btn-sm" href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">Wave — getwave.gg &rarr;</a>
       </div>
     </div>
-    <div class="exec-standby reveal">More safe executors coming &nbsp;·&nbsp; <span>please stand by</span></div>
+    <div class="exec-standby reveal">Not affiliated with Xeno or Wave — we only list tools users run the hub on successfully. &nbsp;·&nbsp; <a href="faq.html#cat-executors" style="color:var(--accent2);text-decoration:none;">Executor FAQ &rarr;</a></div>
   </div>
 </div>
 
@@ -746,11 +748,12 @@
     <div class="executor-layout">
       <div class="executor-info reveal">
         <div class="executor-badge">Recommended — Xeno</div>
-        <p>We officially support <strong>Xeno</strong> as the primary executor. It is keyless, actively maintained, and has the highest UNC compatibility with our feature set. Download it at <strong>xeno.now</strong>.</p>
-        <p>The hub runs on most Level 7 executors, but Xeno is the safest and most stable option. Other executors may cause partial feature breakage depending on their UNC support level.</p>
+        <p>We officially support <strong>Xeno</strong> as the primary executor. It is keyless, actively maintained, and has the highest UNC compatibility with our feature set. Download it at <strong>xeno.onl</strong>.</p>
+        <p><strong>Wave</strong> (<a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">getwave.gg</a>) is also used by many players: it is a separate product with its own license and features. The hub runs on most Level 7 executors; feature parity can vary with UNC support.</p>
         <ul class="compat-list">
-          <li><span class="compat-dot dot-green"></span> Xeno — Full support, recommended</li>
-          <li><span class="compat-dot dot-green"></span> Solara — Works well</li>
+          <li><span class="compat-dot dot-green"></span> Xeno — Full support, recommended (free / keyless)</li>
+          <li><span class="compat-dot dot-green"></span> Wave — Supported; paid license via getwave.gg</li>
+          <li><span class="compat-dot dot-green"></span> Solara — Often works well</li>
           <li><span class="compat-dot dot-yellow"></span> Other L7 executors — Mostly works, untested</li>
           <li><span class="compat-dot dot-red"></span> Level 3 or below — Will not run</li>
         </ul>
@@ -768,7 +771,7 @@
         </div>
         <ol class="steps-list">
           <li><span class="step-num">1</span>Open Roblox and join any game</li>
-          <li><span class="step-num">2</span>Attach Xeno to the Roblox process</li>
+          <li><span class="step-num">2</span>Attach your executor (Xeno, Wave, or another L7) to Roblox</li>
           <li><span class="step-num">3</span>Paste the loadstring and hit Execute</li>
           <li><span class="step-num">4</span>The hub GUI opens automatically</li>
         </ol>
@@ -801,9 +804,9 @@
     <div class="faq-grid">
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Will I get banned using this?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">There is always a risk of being banned when using any third-party script in Roblox. It violates their ToS. Always use an alternate account — never your main. The developer takes no responsibility for bans.</div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Do I need a key to use Binxix Exploit Hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">No. Binxix Exploit Hub V7 is completely free with no key system. Paste the loadstring, execute, and you're in.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">We officially recommend Xeno. It is keyless, free, and has the highest compatibility with Binxix Exploit Hub's features. Download it at xeno.now.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">We recommend <strong>Xeno</strong> first — keyless, free, and the best-tested match for the hub. <strong>Wave</strong> (<a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">getwave.gg</a>) is also supported if you already use it; it uses a paid license model. See the full <a href="faq.html#cat-executors" style="color:var(--accent2)">Executor FAQ</a>.</div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Does it work on mobile or console?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">No. Script executors only work on PC. Mobile and console do not support external script injection.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">GUI is not showing. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Make sure you are using Xeno or another Level 7 executor. If the GUI still does not appear, re-attach the executor and execute again. If the issue persists, join the Discord for support.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">GUI is not showing. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Use a Level 7 executor (e.g. Xeno or Wave). Re-attach to Roblox and execute again. If it still fails, update the executor and try another game — then ask in Discord with your console error.</div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">How do I request a game to be added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">To request a game, come to the Discord with either a working loadstring for the game or a solid reason why it should be included. Requests without either of those will be ignored. We're not adding games just because someone asked — there needs to be something to work with.</div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Can I request specific features or changes?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Do not DM begging for specific features. Feature requests can be dropped in the appropriate Discord channel, but there are no guarantees. Spamming or repeatedly asking will get you ignored.</div></div>
       <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">Why wasn't my feature request added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-a">Not every request is feasible, and there is no obligation to add anything. The hub is free — what's here is what's here.</div></div>
