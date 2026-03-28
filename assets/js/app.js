@@ -1,4 +1,3 @@
-// Inject nav and footer into every page
 document.addEventListener('DOMContentLoaded', () => {
 
   // LOADER
