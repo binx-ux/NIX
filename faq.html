@@ -3,276 +3,270 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FAQ — Binxix Exploit Hub</title>
-  <meta name="description" content="FAQ for Binxix Exploit Hub — Xeno, Wave (getwave.gg), setup, bans, troubleshooting, and features." />
-  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
-  <link rel="apple-touch-icon" href="assets/images/favicon.png" />
-  <meta name="theme-color" content="#080a0f" />
-  <link rel="canonical" href="https://binx-ux.github.io/NIX/faq.html" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <meta property="og:type" content="website" />
+  <title>FAQ — NIX</title>
+  <meta name="description" content="Frequently asked questions about NIX — safety, bans, uninstalling, mods, auto-update, and more." />
+  <meta property="og:title" content="FAQ — NIX" />
   <meta property="og:url" content="https://binx-ux.github.io/NIX/faq.html" />
-  <meta property="og:title" content="FAQ — Binxix Exploit Hub" />
-  <meta property="og:description" content="FAQ — Xeno, Wave, setup, bans, troubleshooting, and features." />
-  <meta property="og:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
-  <meta property="og:site_name" content="Binxix Exploit Hub" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FAQ — Binxix Exploit Hub" />
-  <meta name="twitter:description" content="FAQ — Xeno, Wave, setup, bans, troubleshooting, and features." />
-  <meta name="twitter:image" content="https://binx-ux.github.io/NIX/assets/images/favicon.png" />
+  <meta name="theme-color" content="#7C3AED" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/shared.css" />
-  <style>
-    .page-hero { padding:140px 40px 48px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
-    .page-hero h1 { font-size:clamp(40px,6vw,72px); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-bottom:16px; }
-    .page-hero h1 span { color:var(--accent); }
-    .page-hero p { color:var(--text2); font-size:16px; line-height:1.7; max-width:560px; }
-
-    .faq-quick-wrap {
-      max-width:900px; margin:0 auto; padding:0 40px 32px; position:relative; z-index:1;
-    }
-    .faq-quick-label { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3); margin-bottom:10px; }
-    .faq-quick-nav { display:flex; flex-wrap:wrap; gap:8px; }
-    .faq-chip {
-      display:inline-flex; align-items:center; padding:0 12px; height:36px; border-radius:100px;
-      border:1px solid var(--border2); background:var(--bg2); color:var(--text2); text-decoration:none;
-      font-size:12px; font-weight:600; letter-spacing:0.04em; transition:background 0.2s, border-color 0.2s, color 0.2s;
-    }
-    .faq-chip:hover { border-color:var(--accent); color:var(--accent2); background:var(--surface); }
-    .faq-chip:focus-visible { outline:2px solid var(--accent2); outline-offset:2px; }
-
-    .faq-section { max-width:900px; margin:0 auto; padding:0 40px 100px; position:relative; z-index:1; }
-
-    .faq-category { margin-bottom:56px; scroll-margin-top:88px; }
-    .faq-cat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); }
-
-    .faq-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:10px; }
-    .faq-q { width:100%; background:none; border:none; padding:20px 24px; text-align:left; display:flex; align-items:center; justify-content:space-between; gap:16px; cursor:pointer; font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:var(--text); transition:color 0.2s; }
-    .faq-q:hover { color:var(--accent2); }
-    .faq-chevron { width:16px; height:16px; color:var(--text3); flex-shrink:0; transition:transform 0.3s; }
-    .faq-item.open .faq-chevron { transform:rotate(180deg); }
-    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.2s; font-size:14px; color:var(--text2); line-height:1.75; padding:0 24px; }
-    .faq-a a { color:var(--accent2); text-decoration:none; border-bottom:1px solid rgba(96,165,250,0.35); }
-    .faq-a a:hover { color:var(--accent); }
-    .faq-item.open .faq-a { max-height:min(1200px, 240vh); padding:0 24px 22px; }
-
-    .faq-cta { background:var(--surface); border:1px solid var(--border2); border-radius:12px; padding:40px; text-align:center; margin-top:48px; }
-    .faq-cta h3 { font-size:20px; font-weight:800; margin-bottom:10px; }
-    .faq-cta p { color:var(--text2); font-size:14px; margin-bottom:24px; line-height:1.6; }
-
-    @media(max-width:768px) {
-      .page-hero { padding:120px 20px 32px; }
-      .faq-quick-wrap { padding:0 20px 24px; }
-      .faq-section { padding:0 20px 60px; }
-    }
-  </style>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"What is Binxix Exploit Hub?","acceptedAnswer":{"@type":"Answer","text":"A free Roblox script hub with aimbot, ESP, movement hacks, and game modules in one loadstring — no key system."}},
-    {"@type":"Question","name":"Which executor should I use?","acceptedAnswer":{"@type":"Answer","text":"Xeno is recommended as keyless and well-tested. Wave at getwave.gg is also supported for users on a paid license."}},
-    {"@type":"Question","name":"What is Wave?","acceptedAnswer":{"@type":"Answer","text":"Wave is a third-party Roblox script executor from getwave.gg with optional paid plans and extra features. It is not affiliated with Binxix Exploit Hub."}},
-    {"@type":"Question","name":"Will I get banned?","acceptedAnswer":{"@type":"Answer","text":"Using third-party scripts violates Roblox Terms of Service and may result in bans. Use an alt account; the developer accepts no liability."}}
-  ]}
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
-<nav aria-label="Main">
-  <a class="nav-logo" href="index.html"><span>binxix</span> exploit hub<span class="logo-badge">V7</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="games.html">Games</a></li>
-    <li><a href="faq.html" class="active">FAQ</a></li>
-    <li><a href="changelog.html">Changelog</a></li>
-    <li><a href="index.html#donate">Donate</a></li>
-  </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <button type="button" class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-    <a class="nav-cta" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="nav-logo-mark">NIX</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.1</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#install">Install</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+      <li><a href="faq.html" class="active">FAQ</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      OPERATIONAL
+    </div>
   </div>
 </nav>
-<div class="nav-mobile-menu" id="mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="games.html">Games</a>
-  <a href="faq.html">FAQ</a>
-  <a href="changelog.html">Changelog</a>
-  <a href="index.html#donate">Donate</a>
-  <a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a>
-</div>
 
 <div class="page-hero">
-  <div class="section-tag reveal">Help Center</div>
-  <h1 class="reveal">Frequently Asked <span>Questions</span></h1>
-  <p class="reveal">Jump to a section or browse every answer. Hub is free; executors like Wave may use separate paid licenses.</p>
-</div>
-
-<div class="faq-quick-wrap reveal">
-  <div class="faq-quick-label">Jump to section</div>
-  <nav class="faq-quick-nav" aria-label="FAQ sections">
-    <a class="faq-chip" href="#cat-general">General</a>
-    <a class="faq-chip" href="#cat-executors">Executors</a>
-    <a class="faq-chip" href="#cat-setup">Setup</a>
-    <a class="faq-chip" href="#cat-troubleshooting">Troubleshooting</a>
-    <a class="faq-chip" href="#cat-features">Features</a>
-  </nav>
-</div>
-
-<div class="faq-section">
-
-  <!-- GENERAL -->
-  <div class="faq-category reveal" id="cat-general">
-    <div class="faq-cat-label">General</div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">What is Binxix Exploit Hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Binxix Exploit Hub is a free Roblox script hub built and maintained by binxix. It includes an aimbot, ESP, movement hacks, misc features, and dedicated modules for specific games — all in a single loadstring. No key system, no subscriptions.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Is it free?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Yes, completely. There is no key system, no paid tier, and no paywall. Copy the loadstring, execute it, and the full hub opens. (Your <em>executor</em> may be paid separately — e.g. <a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">Wave</a> — that is separate from the hub.)</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Will I get banned?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Using any third-party script in Roblox is a violation of their Terms of Service and carries a real risk of account termination. The developer (binxix) holds zero responsibility for bans. Always use an alternate account — never your main. You assume all risk by executing this script.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Is Binxix Exploit Hub affiliated with Roblox?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">No. Binxix Exploit Hub is an independent project with no affiliation, endorsement, or connection to Roblox Corporation in any way.</div>
-    </div>
-  </div>
-
-  <!-- EXECUTORS -->
-  <div class="faq-category reveal" id="cat-executors">
-    <div class="faq-cat-label">Executors</div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Which executor should I use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a"><strong>First choice: <a href="https://xeno.onl/" target="_blank" rel="noopener noreferrer">Xeno</a>.</strong> It is free, keyless, actively maintained, and has the best-tested UNC compatibility with this hub. <strong>Wave</strong> (<a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">getwave.gg</a>) is also supported if you already use it — it uses <strong>paid license</strong> tiers (daily / weekly / monthly plans) on their site. Other Level 7 executors like Solara sometimes work but are not guaranteed.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">What is Wave?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a"><a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">Wave</a> is a third-party Roblox script executor with its own client, roadmap, and support. The official site advertises fast execution, stability features, an integrated cloud script hub, a decompiler, and subscription-style pricing. <strong>Binxix Exploit Hub is not affiliated with Wave</strong> — we list it because users run our loadstring on it successfully. All purchase, licensing, and Terms for Wave are between you and Wave.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Xeno or Wave — which is better for this hub?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">For most people, <strong>Xeno</strong> is simpler: no key, no purchase, and it is what we test against first. Choose <strong>Wave</strong> if you already pay for it or want its extra features (see <a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">getwave.gg</a>). Expect to pay for Wave; do not confuse hub updates with Wave billing.</div>
-    </div>
-  </div>
-
-  <!-- SETUP -->
-  <div class="faq-category reveal" id="cat-setup">
-    <div class="faq-cat-label">Setup</div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">How do I run the script?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">1. Open Roblox and join any game. 2. Open your executor (e.g. <a href="https://xeno.onl/" target="_blank" rel="noopener noreferrer">Xeno</a> or <a href="https://getwave.gg/" target="_blank" rel="noopener noreferrer">Wave</a>) and attach it to the Roblox process. 3. Paste the loadstring from the homepage into the executor. 4. Execute. The hub GUI should open in-game.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Does it work on mobile or console?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">No. Script executors require Windows PC. Roblox on mobile, Xbox, or PlayStation does not support external script injection of any kind.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Can I use this on a Mac?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Most Roblox script executors are Windows-only applications. macOS is not officially supported. You may be able to run it through a Windows virtual machine, but this is untested and not recommended.</div>
-    </div>
-  </div>
-
-  <!-- TROUBLESHOOTING -->
-  <div class="faq-category reveal" id="cat-troubleshooting">
-    <div class="faq-cat-label">Troubleshooting</div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">The GUI is not showing up after I execute.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Confirm you are on a <strong>Level 7</strong> executor (Xeno, Wave, etc.). Detach, reattach, and execute again. Try a different game. Update the executor. If it still fails, join Discord with a screenshot of the console error.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">The script errored on execution. What do I do?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Copy the full error from your executor console. Most issues are executor-side (outdated client, UNC limits, or attach problems). Try <a href="https://xeno.onl/" target="_blank" rel="noopener noreferrer">Xeno</a> or the latest Wave build before asking for help.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">The aimbot is not working in my game.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Not all games have aimbot support. Check the <a href="games.html">Games</a> page. If your game is not listed, you may only get universal features — not full aimbot.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">The external script for MM2 or TSB did not load.<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">The hub fetches Vertex and Phantasm from their own external URLs. If those scripts are down or their source URLs have changed, the auto-load will fail. Check the Discord for any announcements about external script outages.</div>
-    </div>
-  </div>
-
-  <!-- FEATURES -->
-  <div class="faq-category reveal" id="cat-features">
-    <div class="faq-cat-label">Features</div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">What games have dedicated support?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Arsenal, Point Roblox, Murder Mystery 2, The Strongest Battlegrounds, and BlockSpin all have dedicated modules. MM2 auto-loads Vertex and TSB auto-loads Phantasm. See the Games page for the full breakdown.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Can I request a game to be added?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Yes. Join the Discord and post your request. If there is enough demand and the game is technically supportable, it will be considered for the next update.</div>
-    </div>
-
-    <div class="faq-item">
-      <button type="button" class="faq-q" onclick="toggleFaq(this)">Does the hub work in every Roblox game?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <div class="faq-a">Universal features — infinite jump, noclip, sprint, speed, click teleport, auto collect, and time freeze — work in essentially every Roblox game. ESP and aimbot are only available in games that have a dedicated module with ESP enabled.</div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="faq-cta reveal">
-    <h3>Still have a question?</h3>
-    <p>Join the Discord server and ask in the support channel. The community and dev are both active.</p>
-    <a class="btn-primary" href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Join the Discord</a>
-  </div>
-
-</div>
-
-<div class="legal-strip">
-  <div class="legal-strip-inner">
-    <p style="font-size:10px;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px">Legal Disclaimer</p>
-    <p>Binxix Exploit Hub is not affiliated with Roblox Corporation. Using this software violates the Roblox Terms of Service. The developer (binxix) accepts zero liability for bans, terminations, or data loss. You assume all risk. Always use an alternate account.</p>
+  <div class="page-hero-inner">
+    <div class="section-eyebrow">Help</div>
+    <h1>Frequently Asked Questions</h1>
+    <p>If something isn't answered here, open an issue on GitHub or ask in Discord.</p>
   </div>
 </div>
 
-<footer class="site-footer">
+<div class="faq-pg-body">
+  <div class="faq-pg-inner">
+
+    <div class="faq-section-title">Safety &amp; Bans</div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Is NIX safe to use?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Yes. NIX is open source — the full source is on <a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub</a> and auditable by anyone. It replaces the Roblox bootstrapper (the part that downloads and launches Roblox), not the game client itself. NIX does not inject code into Roblox or interact with the game engine.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Will I get banned for using NIX?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          No. NIX is a launcher replacement, not a cheat. It operates the same way the default Roblox bootstrapper does — it just has more features. The upstream project (Bloxstrap) has been used by hundreds of thousands of players without bans. NIX does not modify game memory, inject scripts, or bypass anti-cheat.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Does Roblox know I'm using NIX?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Roblox can see which executable launched the game client the same way it always could, but there's nothing unusual about that. NIX doesn't hide itself or spoof any identifiers. It's a bootstrapper, not a cheat tool.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section-title">Installation &amp; Setup</div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Windows SmartScreen is blocking the installer. What do I do?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Click <strong>More info</strong> then <strong>Run anyway</strong>. SmartScreen warns about unsigned executables — NIX isn't code-signed yet. The binary is built directly from the public source on GitHub. If you're unsure, you can build it yourself from source.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        What does NIX install and where?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          NIX installs to <code>%LocalAppData%\Shadowstrap\</code>. It registers itself as the handler for the <code>roblox://</code> URL protocol, creates a Modifications folder for mods, and writes a settings file. Nothing is installed system-wide.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Does it work alongside Roblox Studio?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Yes. NIX handles Studio launches too. Player-only features like Discord Rich Presence and Activity Tracking won't apply during Studio sessions, but launching Studio from the website or Start Menu works normally.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section-title">Features</div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Does NIX auto-update?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Yes. On every launch NIX calls the GitHub releases API, compares the installed version against the latest tag, and prompts you if a newer version is available. The update check respects your preference — you can have it notify you or update silently.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        How does Multi-Instance work?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Roblox normally uses a Windows mutex named <code>RobloxSingletonMutex</code> to prevent a second instance from starting. When Multi-Instance is enabled, NIX enumerates the handles of the running Roblox process using <code>NtQuerySystemInformation</code> and closes that mutex handle before launching the next instance.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        Where do I put mod files?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Open NIX → Settings → Mods → <strong>Open Mods Folder</strong>. The folder mirrors the Roblox content directory structure — files placed here override the matching files in the game installation. For example, <code>content/sounds/ouch.ogg</code> replaces the death sound. The Custom Death Sound option in Settings handles this automatically.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        What audio formats does Custom Death Sound support?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          NIX accepts <code>.ogg</code>, <code>.mp3</code>, and <code>.wav</code>. When you pick a file, it's converted and saved as <code>ouch.ogg</code> in the mods folder automatically. Removing the sound via the button deletes that file and restores the default.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        What is Activity Tracking and does it upload anything?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Activity Tracking reads the Roblox log file to detect which game you joined, how long you were there, and what server you were on. This data is stored locally — it's never uploaded. The only external call is an optional IP geolocation lookup via <a href="https://ipinfo.io" target="_blank" rel="noopener">ipinfo.io</a> to show server region in Discord, and that only sends the server's IP, not yours.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section-title">Uninstalling</div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        How do I uninstall NIX?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Open NIX → Settings → NIX tab → <strong>Uninstall</strong>. This removes NIX and restores the default Roblox bootstrapper. Your Roblox installation (<code>%LocalAppData%\Roblox\</code>) is left completely intact.
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <button class="acc-btn" aria-expanded="false">
+        NIX won't open. How do I remove it manually?
+        <span class="acc-icon">+</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          Delete the folder <code>%LocalAppData%\Shadowstrap\</code>. Then reinstall Roblox from <a href="https://www.roblox.com" target="_blank" rel="noopener">roblox.com</a> to restore the default bootstrapper and protocol handler. Your saved games and Roblox data are unaffected.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo"><span>binxix</span> exploit hub v7</div>
-    <ul class="footer-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="games.html">Games</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="changelog.html">Changelog</a></li>
-      <li><a href="https://discord.com/invite/S4nPV2Rx7F" target="_blank" rel="noopener noreferrer">Discord</a></li>
-      <li><a href="https://github.com/binx-ux" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-      <li><a href="https://guns.lol/binxix" target="_blank" rel="noopener noreferrer">guns.lol</a></li>
-    </ul>
-    <div class="footer-copy">&copy; 2026 binxix. All rights reserved.</div>
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html"><span class="nav-logo-mark">NIX</span></a>
+      <p>Free, open source Roblox bootstrapper. Not affiliated with Roblox Corporation.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/releases" target="_blank" rel="noopener">Releases</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/issues" target="_blank" rel="noopener">Issues</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Site</h5>
+      <ul>
+        <li><a href="changelog.html">Changelog</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="https://discord.gg/nKjV3mGq6R" target="_blank" rel="noopener">Discord</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 binx-ux · MIT License</span>
+    <span class="footer-copy">Not affiliated with Roblox Corporation</span>
   </div>
 </footer>
 
-<script src="assets/js/app.js"></script>
 <script>
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
+// Accordion
+document.querySelectorAll('.acc-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.acc-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.acc-item.open').forEach(o => o.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  });
+});
+
+fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest')
+  .then(r => r.json())
+  .then(d => { if (d.tag_name) document.getElementById('nav-ver').textContent = d.tag_name; })
+  .catch(() => {});
 </script>
 </body>
 </html>
