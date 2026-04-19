@@ -19,7 +19,7 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
       <span class="nav-logo-mark">NIX</span>
-      <span class="nav-logo-ver" id="nav-ver">v2.0.2</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.3</span>
     </a>
     <ul class="nav-links">
       <li><a href="index.html#features">Features</a></li>
@@ -47,12 +47,32 @@
 <div class="cl-body">
   <div class="cl-inner">
 
+    <!-- v2.0.3 -->
+    <div class="tl-item">
+      <div class="tl-meta">
+        <span class="tl-ver">v2.0.3</span>
+        <span class="tl-date">Apr 2026</span>
+        <span class="tl-badge tl-b-current">Current</span>
+      </div>
+      <div class="tl-content">
+        <h2>FastFlags Fix &amp; Rendering Modes</h2>
+        <ul class="change-list">
+          <li class="ci"><span class="ct ct-fix">fix</span>Performance Presets now actually apply — <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">ClientAppSettings.json</code> was never written to disk when clicking Apply. All flag setters now call <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">Save()</code> immediately.</li>
+          <li class="ci"><span class="ct ct-fix">fix</span>FPS Counter toggle now persists — enabling <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">FFlagDebugDisplayFPS</code> is written to disk on toggle so the overlay appears in-game without needing a separate Save click.</li>
+          <li class="ci"><span class="ct ct-fix">fix</span>MSAA, Rendering Mode, Texture Quality, and Display Scaling dropdowns/toggles all save immediately on change.</li>
+          <li class="ci"><span class="ct ct-add">add</span>Active preset highlight — the card for the currently applied preset glows purple on the FastFlags page, persisted across sessions.</li>
+          <li class="ci"><span class="ct ct-add">add</span>OpenGL rendering mode — <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">FFlagDebugGraphicsPreferOpenGL</code> exposed in the Rendering Mode dropdown.</li>
+          <li class="ci"><span class="ct ct-add">add</span>Vulkan rendering mode — <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">FFlagDebugGraphicsPreferVulkan</code> exposed in the Rendering Mode dropdown.</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- v2.0.2 -->
     <div class="tl-item">
       <div class="tl-meta">
         <span class="tl-ver">v2.0.2</span>
         <span class="tl-date">Apr 2026</span>
-        <span class="tl-badge tl-b-current">Current</span>
+        <span class="tl-badge tl-b-stable">Stable</span>
       </div>
       <div class="tl-content">
         <h2>Server Browser &amp; Session Summary</h2>
