@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap — NIX</title>
+  <meta name="description" content="NIX public roadmap — what's shipped, what's being built, and what's planned next." />
+  <meta property="og:title" content="Roadmap — NIX" />
+  <meta property="og:url" content="https://binx-ux.github.io/NIX/roadmap.html" />
+  <meta name="theme-color" content="#7C3AED" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Roadmap board ──────────────────────────────────────────────── */
+    .rm-body  { position: relative; z-index: 1; padding: 0 0 80px; }
+    .rm-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .rm-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .rm-board { grid-template-columns: 1fr; } }
+
+    /* column header */
+    .rm-col-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid;
+    }
+    .rm-col-head h2 { font-size: 1rem; font-weight: 600; margin: 0; letter-spacing: .04em; text-transform: uppercase; }
+    .rm-col-head .rm-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: var(--text-mid);
+    }
+
+    /* column colour tokens */
+    .rm-col--done   .rm-col-head { border-color: var(--green); }
+    .rm-col--done   .rm-col-head h2 { color: var(--green); }
+    .rm-col--active .rm-col-head { border-color: var(--accent-hi); }
+    .rm-col--active .rm-col-head h2 { color: var(--accent-hi); }
+    .rm-col--plan   .rm-col-head { border-color: var(--cyan); }
+    .rm-col--plan   .rm-col-head h2 { color: var(--cyan); }
+
+    /* item card */
+    .rm-item {
+      background: var(--card-bg, rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      transition: border-color .15s, transform .15s;
+    }
+    .rm-item:hover { border-color: rgba(139,92,246,.35); transform: translateY(-1px); }
+
+    .rm-item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-hi);
+      margin: 0 0 4px;
+    }
+    .rm-item-desc {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+      margin: 0 0 8px;
+    }
+    .rm-item-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rm-tag {
+      font-size: 0.68rem;
+      font-family: var(--mono);
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-mid);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .rm-tag--version { background: var(--accent-lo); border-color: var(--accent-b); color: var(--accent-hi); }
+    .rm-tag--cyan    { background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.2); color: var(--cyan); }
+
+    /* done tick */
+    .rm-item--done { opacity: 0.85; }
+    .rm-item--done .rm-item-title::before {
+      content: "✓ ";
+      color: var(--green);
+    }
+
+    /* disclaimer */
+    .rm-disclaimer {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      text-align: center;
+      margin-top: 40px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="nav-logo-mark">NIX</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.6</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#install">Install</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+      <li><a href="roadmap.html" class="active">Roadmap</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      OPERATIONAL
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-eyebrow">What's Coming</div>
+    <h1>Roadmap</h1>
+    <p>Shipped, in progress, and what's next. Updated with each release.</p>
+  </div>
+</div>
+
+<div class="rm-body">
+  <div class="rm-inner">
+    <div class="rm-board">
+
+      <!-- ── DONE ─────────────────────────────────────────────────── -->
+      <div class="rm-col rm-col--done">
+        <div class="rm-col-head">
+          <span>✓</span>
+          <h2>Released</h2>
+          <span class="rm-count">12</span>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Per-game FastFlag Profiles</p>
+          <p class="rm-item-desc">Auto-apply game-specific flag sets on join, restore on leave. 8 built-in presets for popular games.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.6</span>
+            <span class="rm-tag">FastFlags</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Community Flag Sharing</p>
+          <p class="rm-item-desc">Export / import flag presets as JSON for GitHub community contributions.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.6</span>
+            <span class="rm-tag">Community</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Inventory / RAP Viewer</p>
+          <p class="rm-item-desc">Look up any player's public collectible inventory with item thumbnails, RAP, and serial numbers.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.5</span>
+            <span class="rm-tag">Inventory</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">FastFlag Editor Sidebar Tab</p>
+          <p class="rm-item-desc">Promoted from a sub-page to a top-level navigation item.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.5</span>
+            <span class="rm-tag">FastFlags</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Session Summary Popup</p>
+          <p class="rm-item-desc">Post-game summary showing thumbnail, playtime, server region, and one-click rejoin.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.2</span>
+            <span class="rm-tag">Activity</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Server Browser</p>
+          <p class="rm-item-desc">Browse open public servers by Place ID with ping, FPS, region, and direct join.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.2</span>
+            <span class="rm-tag">Multiplayer</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Performance Presets</p>
+          <p class="rm-item-desc">One-click FastFlag bundles — Default, Balanced, Max Performance — with active-preset highlight.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">FastFlags</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Multi-Instance</p>
+          <p class="rm-item-desc">Run multiple Roblox windows simultaneously via mutex unlock.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">System</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Auto-Rejoin</p>
+          <p class="rm-item-desc">Monitors Roblox exit and relaunches the original roblox:// URL after 5 seconds.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">Reliability</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Discord Rich Presence</p>
+          <p class="rm-item-desc">Game name, server type, elapsed time, and server region in Discord status.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">Social</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">Process Priority Boost</p>
+          <p class="rm-item-desc">Elevate Roblox to Above Normal, High, or Realtime CPU scheduling.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">Performance</span>
+          </div>
+        </div>
+
+        <div class="rm-item rm-item--done">
+          <p class="rm-item-title">RAM Cleaner</p>
+          <p class="rm-item-desc">Trims working sets of other processes before Roblox launches to free up RAM.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--version">v2.0.0</span>
+            <span class="rm-tag">Performance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── IN PROGRESS ────────────────────────────────────────────── -->
+      <div class="rm-col rm-col--active">
+        <div class="rm-col-head">
+          <span>⚡</span>
+          <h2>In Progress</h2>
+          <span class="rm-count">3</span>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">In-game Overlay</p>
+          <p class="rm-item-desc">Lightweight stats overlay (FPS, ping, RAM, server region) rendered on top of Roblox via a transparent WPF window, togglable by hotkey.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--cyan">v2.1.x</span>
+            <span class="rm-tag">Performance</span>
+            <span class="rm-tag">UI</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Automatic Game-Icon Presets</p>
+          <p class="rm-item-desc">Expand the built-in game profile list to 20+ titles. Community contributions via flags.json will be bundled into releases.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--cyan">v2.0.x</span>
+            <span class="rm-tag">FastFlags</span>
+            <span class="rm-tag">Community</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Winget Package</p>
+          <p class="rm-item-desc">Submit <code style="font-family:var(--mono);font-size:.85em;color:var(--cyan)">binx-ux.NIX</code> to the Windows Package Manager community repo so users can install and update via <code style="font-family:var(--mono);font-size:.85em;color:var(--cyan)">winget install nix</code>.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag rm-tag--cyan">v2.1.x</span>
+            <span class="rm-tag">Distribution</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PLANNED ─────────────────────────────────────────────────── -->
+      <div class="rm-col rm-col--plan">
+        <div class="rm-col-head">
+          <span>🗓</span>
+          <h2>Planned</h2>
+          <span class="rm-count">7</span>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Flag Scheduler</p>
+          <p class="rm-item-desc">Apply different flag profiles on a time schedule (e.g. low-latency flags on weekday evenings, quality flags on weekends).</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">FastFlags</span>
+            <span class="rm-tag">Automation</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Custom Keybinds</p>
+          <p class="rm-item-desc">Global hotkeys for toggle multi-instance, rejoin, screenshot, and open NIX settings from anywhere.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">UI</span>
+            <span class="rm-tag">Input</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Profile Export / Backup</p>
+          <p class="rm-item-desc">One-click export of all settings (flags, mods, profiles, appearance) to a single JSON backup file and import on any machine.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">Settings</span>
+            <span class="rm-tag">Portability</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Friend Activity Feed</p>
+          <p class="rm-item-desc">Show which games your Roblox friends are currently playing in the tray menu, with quick-join links.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">Social</span>
+            <span class="rm-tag">Activity</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Mod Manager UI Revamp</p>
+          <p class="rm-item-desc">Drag-and-drop mod cards, load-order control, per-mod enable/disable without deleting files, and conflict detection.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">Mods</span>
+            <span class="rm-tag">UI</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Roblox Update Deferral</p>
+          <p class="rm-item-desc">Intercept the bootstrapper update check and defer patching for up to 24 hours so mods and flags survive a Roblox update for one session.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">System</span>
+            <span class="rm-tag">Reliability</span>
+          </div>
+        </div>
+
+        <div class="rm-item">
+          <p class="rm-item-title">Session History Export</p>
+          <p class="rm-item-desc">Export full session log (game, time played, dates) to CSV or JSON for personal stats tracking.</p>
+          <div class="rm-item-tags">
+            <span class="rm-tag">Activity</span>
+            <span class="rm-tag">Data</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="rm-disclaimer">Roadmap is indicative, not a commitment. Items may be re-ordered or dropped based on feasibility and community feedback. Want something added? Open an issue on GitHub.</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html"><span class="nav-logo-mark">NIX</span></a>
+      <p>Free, open source Roblox bootstrapper. Not affiliated with Roblox Corporation.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/releases" target="_blank" rel="noopener">Releases</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Site</h5>
+      <ul>
+        <li><a href="changelog.html">Changelog</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="https://discord.gg/nKjV3mGq6R" target="_blank" rel="noopener">Discord</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 binx-ux · MIT License</span>
+    <span class="footer-copy">Not affiliated with Roblox Corporation</span>
+  </div>
+</footer>
+
+<script>
+fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest')
+  .then(r => r.json())
+  .then(d => { if (d.tag_name) document.getElementById('nav-ver').textContent = d.tag_name; })
+  .catch(() => {});
+</script>
+
+</body>
+</html>
