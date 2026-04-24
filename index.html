@@ -16,6 +16,20 @@
 </head>
 <body>
 
+<!-- SCROLL PROGRESS -->
+<div class="scroll-bar" id="scroll-bar"></div>
+
+<!-- NOISE GRAIN -->
+<div class="noise-overlay"></div>
+
+<!-- AURORA BACKGROUND -->
+<div class="aurora">
+  <div class="aurora-blob" style="width:720px;height:720px;background:rgba(124,58,237,0.13);top:-220px;left:-160px;animation-delay:0s;animation-duration:18s"></div>
+  <div class="aurora-blob" style="width:520px;height:520px;background:rgba(34,211,238,0.07);top:28%;right:-110px;animation-delay:-6s;animation-duration:14s"></div>
+  <div class="aurora-blob" style="width:460px;height:460px;background:rgba(124,58,237,0.09);bottom:18%;left:22%;animation-delay:-11s;animation-duration:22s"></div>
+  <div class="aurora-blob" style="width:360px;height:360px;background:rgba(34,211,238,0.06);bottom:-60px;right:18%;animation-delay:-8s;animation-duration:16s"></div>
+</div>
+
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
@@ -41,10 +55,15 @@
 
 <!-- HERO -->
 <section class="hero">
+  <canvas class="hero-canvas" id="hero-canvas"></canvas>
   <div class="hero-inner">
     <div>
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span>v2.0.6 &mdash; Latest Release</span>
+      </div>
       <div class="hero-eyebrow">Open Source &nbsp;·&nbsp; Windows 10 / 11 &nbsp;·&nbsp; Free</div>
-      <h1>The Roblox<br>bootstrapper<br>you <em>actually</em><br>wanted.</h1>
+      <h1>The Roblox<br>bootstrapper<br>you <em class="text-gradient">actually</em><br>wanted.</h1>
       <p class="hero-desc">
         NIX replaces the default Roblox launcher with something built for people
         who actually care. Performance presets, Discord RPC, multi-instance,
@@ -63,7 +82,7 @@
       <p class="hero-req">Requires <span>Windows 10/11</span> · <span>.NET 6 Desktop Runtime</span> · <span>x64</span></p>
     </div>
 
-    <div class="terminal-window">
+    <div class="terminal-window float">
       <div class="terminal-bar">
         <div class="terminal-dots">
           <div class="terminal-dot td-red"></div>
@@ -80,22 +99,22 @@
 <!-- METRICS -->
 <div class="metrics">
   <div class="metrics-inner">
-    <div class="metric">
+    <div class="metric" data-reveal="fade">
       <div class="metric-label">Total Downloads</div>
       <div class="metric-val" id="stat-dl">—</div>
       <div class="metric-sub">across all releases</div>
     </div>
-    <div class="metric">
+    <div class="metric" data-reveal="fade" data-delay="100">
       <div class="metric-label">GitHub Stars</div>
       <div class="metric-val" id="stat-stars">—</div>
       <div class="metric-sub">and counting</div>
     </div>
-    <div class="metric">
+    <div class="metric" data-reveal="fade" data-delay="200">
       <div class="metric-label">Latest Version</div>
       <div class="metric-val" id="stat-ver">v2.0.6</div>
       <div class="metric-sub">stable</div>
     </div>
-    <div class="metric">
+    <div class="metric" data-reveal="fade" data-delay="300">
       <div class="metric-label">License</div>
       <div class="metric-val" style="font-size:1.1rem;letter-spacing:0">MIT</div>
       <div class="metric-sub">free forever</div>
@@ -106,12 +125,12 @@
 <!-- FEATURES -->
 <section class="section features-bg" id="features">
   <div class="section-inner">
-    <div class="section-eyebrow">02 — Features</div>
-    <h2 class="section-head">Built for people<br>who actually play.</h2>
-    <p class="section-sub">Every feature came from someone asking for it. Nothing is here to look good on a list.</p>
+    <div class="section-eyebrow" data-reveal="fade">02 — Features</div>
+    <h2 class="section-head" data-reveal>Built for people<br>who actually play.</h2>
+    <p class="section-sub" data-reveal data-delay="100">Every feature came from someone asking for it. Nothing is here to look good on a list.</p>
 
     <div class="bento">
-      <div class="bc bc--purple gc-3">
+      <div class="bc bc--purple gc-3" data-reveal="scale">
         <span class="bc-icon">⚡</span>
         <div class="bc-label">PERF_PRESETS</div>
         <h3>Performance Presets</h3>
@@ -123,21 +142,21 @@
         </div>
       </div>
 
-      <div class="bc gc-2">
+      <div class="bc gc-2" data-reveal="scale" data-delay="100">
         <span class="bc-icon">🎮</span>
         <div class="bc-label">DISCORD_RPC</div>
         <h3>Discord Rich Presence</h3>
         <p>Shows which game you're in, which server, elapsed time, and server region if you enable location lookup. Works automatically once you enable it.</p>
       </div>
 
-      <div class="bc bc--cyan gc-1">
+      <div class="bc bc--cyan gc-1" data-reveal="scale" data-delay="200">
         <span class="bc-icon">🔁</span>
         <div class="bc-label">RELIABILITY</div>
         <h3>Auto-Rejoin</h3>
         <p>NIX watches the Roblox process. When it exits, it waits 5 seconds and relaunches into the same server automatically.</p>
       </div>
 
-      <div class="bc gc-2">
+      <div class="bc gc-2" data-reveal="scale" data-delay="100">
         <span class="bc-icon">🪟</span>
         <div class="bc-label">MULTI_INST</div>
         <h3>Multi-Instance</h3>
@@ -147,35 +166,35 @@
         </div>
       </div>
 
-      <div class="bc bc--purple gc-2">
+      <div class="bc bc--purple gc-2" data-reveal="scale" data-delay="200">
         <span class="bc-icon">🖼️</span>
         <div class="bc-label">MODS</div>
         <h3>Mod Support</h3>
         <p>Drop files into the Modifications folder — cursors, fonts, sounds. Built-in picker for custom death sound. Mods survive Roblox updates.</p>
       </div>
 
-      <div class="bc gc-2">
+      <div class="bc gc-2" data-reveal="scale" data-delay="300">
         <span class="bc-icon">🏳️</span>
         <div class="bc-label">FASTFLAGS</div>
         <h3>FastFlag Editor</h3>
         <p>Full JSON editor built into settings. Search, toggle, pin any FastFlag without digging through config files or restarting Roblox.</p>
       </div>
 
-      <div class="bc gc-1">
+      <div class="bc gc-1" data-reveal="scale" data-delay="100">
         <span class="bc-icon">🧹</span>
         <div class="bc-label">MEMORY</div>
         <h3>RAM Cleaner</h3>
         <p>Trims other processes' working sets before Roblox starts. More physical RAM available from the first frame.</p>
       </div>
 
-      <div class="bc bc--cyan gc-1">
+      <div class="bc bc--cyan gc-1" data-reveal="scale" data-delay="200">
         <span class="bc-icon">🚀</span>
         <div class="bc-label">SCHEDULING</div>
         <h3>Priority Boost</h3>
         <p>Set Roblox's CPU scheduling class to Above Normal, High, or Realtime. It wins CPU contention during load spikes.</p>
       </div>
 
-      <div class="bc gc-1">
+      <div class="bc gc-1" data-reveal="scale" data-delay="300">
         <span class="bc-icon">🌐</span>
         <div class="bc-label">NETWORK</div>
         <h3>Hone.gg</h3>
@@ -188,34 +207,34 @@
 <!-- INSTALL -->
 <section class="section install-bg" id="install">
   <div class="section-inner">
-    <div class="section-eyebrow">03 — Install</div>
-    <h2 class="section-head">Three steps.<br>That's it.</h2>
-    <p class="section-sub">NIX installs itself and registers as your Roblox launcher. You don't touch anything after that.</p>
+    <div class="section-eyebrow" data-reveal="fade">03 — Install</div>
+    <h2 class="section-head" data-reveal>Three steps.<br>That's it.</h2>
+    <p class="section-sub" data-reveal data-delay="100">NIX installs itself and registers as your Roblox launcher. You don't touch anything after that.</p>
 
     <div class="install-grid">
       <div class="install-steps">
-        <div class="install-step">
+        <div class="install-step" data-reveal="left">
           <div class="step-num-wrap"><span class="step-num">01</span></div>
           <div class="step-body">
             <h4>Download</h4>
             <p>Click the button below. You get a single <code>.exe</code> file. No zip, no installer wizard, no bundled garbage.</p>
           </div>
         </div>
-        <div class="install-step">
+        <div class="install-step" data-reveal="left" data-delay="100">
           <div class="step-num-wrap"><span class="step-num">02</span></div>
           <div class="step-body">
             <h4>Run it</h4>
             <p>Windows SmartScreen warns you because the binary isn't signed yet. Click <code>More info → Run anyway</code>. NIX sets itself up and registers the <code>roblox://</code> protocol handler.</p>
           </div>
         </div>
-        <div class="install-step">
+        <div class="install-step" data-reveal="left" data-delay="200">
           <div class="step-num-wrap"><span class="step-num">03</span></div>
           <div class="step-body">
             <h4>Open any Roblox game</h4>
             <p>Hit Play on the Roblox site or from the Start Menu. NIX intercepts the launch. Configure settings, mods, and integrations from the tray icon.</p>
           </div>
         </div>
-        <div class="install-cta">
+        <div class="install-cta" data-reveal="fade" data-delay="300">
           <a class="btn btn-primary" id="dl-btn-2" href="https://github.com/binx-ux/shadowstrap/releases/latest" target="_blank" rel="noopener">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download Latest Release
@@ -226,7 +245,7 @@
         </div>
       </div>
 
-      <div class="terminal-window" style="align-self:start">
+      <div class="terminal-window" style="align-self:start" data-reveal="right">
         <div class="terminal-bar">
           <div class="terminal-dots">
             <div class="terminal-dot td-red"></div>
@@ -258,29 +277,29 @@
 <!-- FAQ PREVIEW -->
 <section class="section faq-bg">
   <div class="section-inner">
-    <div class="section-eyebrow">04 — FAQ</div>
-    <h2 class="section-head">Common questions.</h2>
+    <div class="section-eyebrow" data-reveal="fade">04 — FAQ</div>
+    <h2 class="section-head" data-reveal>Common questions.</h2>
 
     <div class="faq-grid">
-      <div class="faq-item">
+      <div class="faq-item" data-reveal data-delay="100">
         <div class="faq-q">Is this safe to use?</div>
         <p class="faq-a">Yes. The full source is on GitHub and auditable by anyone. NIX doesn't touch the game client — it replaces the bootstrapper that launches Roblox, not Roblox itself.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-reveal data-delay="200">
         <div class="faq-q">Will I get banned?</div>
         <p class="faq-a">No. NIX doesn't interact with the game engine the way exploits do. It's a launcher. The same reason users of Bloxstrap (the upstream project) aren't banned.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-reveal data-delay="100">
         <div class="faq-q">Does it auto-update?</div>
         <p class="faq-a">Yes. On every launch NIX checks GitHub releases for a newer version. If one exists you'll get a prompt — or it updates silently based on your preference.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item" data-reveal data-delay="200">
         <div class="faq-q">How do I uninstall?</div>
         <p class="faq-a">Settings → NIX tab → Uninstall. Removes NIX and restores the default Roblox bootstrapper. Your Roblox installation is completely untouched.</p>
       </div>
     </div>
 
-    <div class="faq-more">
+    <div class="faq-more" data-reveal="fade" data-delay="300">
       <a class="btn btn-ghost" href="faq.html">View all questions →</a>
     </div>
   </div>
@@ -344,7 +363,6 @@ async function loadGitHub() {
         const btn = document.getElementById(id);
         if (btn) {
           btn.href = exe.browser_download_url;
-          // download attr triggers browser download instead of navigate
           btn.setAttribute('download', exe.name);
           btn.removeAttribute('target');
           btn.removeAttribute('rel');
@@ -356,13 +374,15 @@ async function loadGitHub() {
     if (rel.tag_name) {
       document.getElementById('nav-ver').textContent = rel.tag_name;
       document.getElementById('stat-ver').textContent = rel.tag_name;
+      document.querySelector('.hero-badge span').textContent = rel.tag_name + ' \u2014 Latest Release';
     }
 
     // Stars
     if (repo.stargazers_count !== undefined) {
-      const s = repo.stargazers_count;
-      document.getElementById('stat-stars').textContent =
-        s >= 1000 ? (s / 1000).toFixed(1) + 'k' : (s || '0');
+      window.__stars = repo.stargazers_count;
+      const el = document.getElementById('stat-stars');
+      const s = window.__stars;
+      el.textContent = s >= 1000 ? (s / 1000).toFixed(1) + 'k' : (s || '0');
     }
 
     // Total downloads
@@ -370,10 +390,13 @@ async function loadGitHub() {
     if (Array.isArray(allRel)) {
       allRel.forEach(r => r.assets?.forEach(a => { total += a.download_count || 0; }));
     }
+    window.__dl = total;
     document.getElementById('stat-dl').textContent =
       total >= 1000 ? (total / 1000).toFixed(1) + 'k' : (total || '0');
 
-  } catch (e) { /* graceful fallback — static values already in HTML */ }
+    window.__githubLoaded = true;
+    triggerCounters();
+  } catch (e) { /* graceful fallback */ }
 }
 
 loadGitHub();
@@ -422,6 +445,183 @@ async function runTerminal() {
 }
 
 runTerminal();
+
+// ── Scroll progress bar + nav shrink ──────────
+const scrollBar = document.getElementById('scroll-bar');
+const navEl = document.querySelector('.nav');
+if (scrollBar) {
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    scrollBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    navEl?.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+}
+
+// ── Scroll reveal (IntersectionObserver) ───────
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+
+document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+
+// ── Active nav scrollspy ───────────────────────
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+const spyObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-46% 0px -46% 0px' });
+document.querySelectorAll('section[id]').forEach(s => spyObs.observe(s));
+
+// ── Metric counter animation ───────────────────
+function animCount(el, end, suffix, decimals) {
+  if (!el || isNaN(end) || end === 0) return;
+  const dur = 1500;
+  const startTime = performance.now();
+  const step = (now) => {
+    const t = Math.min((now - startTime) / dur, 1);
+    const eased = 1 - Math.pow(1 - t, 4);
+    const val = eased * end;
+    el.textContent = decimals ? val.toFixed(decimals) + suffix : Math.round(val) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+    else el.closest('.metric')?.classList.add('is-counted');
+  };
+  requestAnimationFrame(step);
+}
+
+function triggerCounters() {
+  if (!window.__metricsInView || !window.__githubLoaded) return;
+  if (window.__countersDone) return;
+  window.__countersDone = true;
+
+  const dlEl = document.getElementById('stat-dl');
+  const starsEl = document.getElementById('stat-stars');
+  const dl = window.__dl || 0;
+  const st = window.__stars || 0;
+  if (dl >= 1000)  animCount(dlEl, dl / 1000, 'k', 1);
+  else             animCount(dlEl, dl, '', 0);
+  if (st >= 1000)  animCount(starsEl, st / 1000, 'k', 1);
+  else             animCount(starsEl, st, '', 0);
+}
+
+const metricsEl = document.querySelector('.metrics');
+if (metricsEl) {
+  new IntersectionObserver((entries) => {
+    if (!entries[0].isIntersecting) return;
+    window.__metricsInView = true;
+    triggerCounters();
+  }, { threshold: 0.4 }).observe(metricsEl);
+}
+
+// ── 3D card tilt ──────────────────────────────
+document.querySelectorAll('.bc').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+    const y = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+    card.style.transform = `translateY(-4px) perspective(700px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ── Constellation particle canvas ──────────────
+const canvas = document.getElementById('hero-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let W, H, pts = [];
+  const mouse = { x: -9999, y: -9999 };
+
+  const resize = () => {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  };
+
+  class Dot {
+    constructor() { this.init(); }
+    init() {
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.22;
+      this.vy = (Math.random() - 0.5) * 0.22;
+      this.r  = Math.random() * 1.3 + 0.4;
+      this.a  = Math.random() * 0.5 + 0.15;
+      this.col = Math.random() > 0.5 ? '167,139,250' : '34,211,238';
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0) this.x = W;
+      if (this.x > W) this.x = 0;
+      if (this.y < 0) this.y = H;
+      if (this.y > H) this.y = 0;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.col},${this.a})`;
+      ctx.fill();
+    }
+  }
+
+  const link = (a, b, maxD, baseA) => {
+    const dx = a.x - b.x, dy = a.y - b.y;
+    const d = Math.hypot(dx, dy);
+    if (d > maxD) return;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = `rgba(124,58,237,${baseA * (1 - d / maxD)})`;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  };
+
+  resize();
+  pts = Array.from({ length: 80 }, () => new Dot());
+
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  const draw = () => {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(p => { p.update(); p.draw(); });
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        link(pts[i], pts[j], 110, 0.14);
+      }
+      // Mouse pull lines
+      const dx = pts[i].x - mouse.x;
+      const dy = pts[i].y - mouse.y;
+      const d  = Math.hypot(dx, dy);
+      if (d < 160) {
+        ctx.beginPath();
+        ctx.moveTo(pts[i].x, pts[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(167,139,250,${0.28 * (1 - d / 160)})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  };
+
+  window.addEventListener('resize', resize, { passive: true });
+  draw();
+}
 </script>
 </body>
 </html>
