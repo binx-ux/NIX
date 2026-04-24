@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features — NIX</title>
+  <meta name="description" content="Every NIX feature explained in detail — performance presets, Discord RPC, per-game profiles, mod support, and more." />
+  <meta property="og:title" content="Features — NIX" />
+  <meta property="og:url" content="https://binx-ux.github.io/NIX/features.html" />
+  <meta name="theme-color" content="#7C3AED" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── FEATURE PAGE EXTRAS ────────────────────── */
+
+    /* Hero */
+    .feat-hero {
+      position: relative;
+      z-index: 1;
+      padding: 120px 28px 80px;
+      text-align: center;
+    }
+    .feat-hero-inner { max-width: 800px; margin: 0 auto; }
+    .feat-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      margin: 20px 0 20px;
+      color: var(--text-hi);
+      line-height: 1.1;
+    }
+    .feat-hero p {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.78;
+    }
+
+    /* Hero stat strip */
+    .feat-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid rgba(124,58,237,0.18);
+      border-radius: 12px;
+      background: rgba(12,21,36,0.6);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      max-width: 540px;
+      margin: 0 auto 56px;
+    }
+    .feat-stat {
+      flex: 1;
+      padding: 20px 16px;
+      border-right: 1px solid rgba(124,58,237,0.12);
+      text-align: center;
+    }
+    .feat-stat:last-child { border-right: none; }
+    .feat-stat-val {
+      font-family: var(--head);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-hi);
+      display: block;
+      letter-spacing: -0.03em;
+    }
+    .feat-stat-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Filter tabs */
+    .feat-filter {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 0 28px 40px;
+    }
+    .feat-tab {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(124,58,237,0.2);
+      background: transparent;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.16,1,.3,1);
+    }
+    .feat-tab:hover {
+      border-color: rgba(124,58,237,0.45);
+      color: var(--text-hi);
+      background: rgba(124,58,237,0.06);
+    }
+    .feat-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(124,58,237,0.4);
+    }
+
+    /* Feature grid */
+    .feat-body {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px 80px;
+    }
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 960px) { .feat-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px) { .feat-grid { grid-template-columns: 1fr; } }
+
+    .feat-card {
+      background: var(--surface);
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .22s, transform .22s, box-shadow .22s, opacity .3s;
+      cursor: default;
+      will-change: transform;
+    }
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,0.4), transparent);
+      transform: scaleX(0);
+      transition: transform .4s ease;
+    }
+    .feat-card:hover::before { transform: scaleX(1); }
+    .feat-card:hover {
+      border-color: rgba(124,58,237,0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4),
+                  0 0 0 1px rgba(124,58,237,0.2),
+                  0 0 40px rgba(124,58,237,0.1);
+    }
+    .feat-card.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px) scale(0.97);
+      position: absolute;
+      visibility: hidden;
+    }
+    .feat-card-cat {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid;
+      margin-bottom: 16px;
+    }
+    .cat-performance { color: #FCD34D; border-color: rgba(252,211,77,0.25); background: rgba(252,211,77,0.07); }
+    .cat-social      { color: #60A5FA; border-color: rgba(96,165,250,0.25); background: rgba(96,165,250,0.07); }
+    .cat-mods        { color: var(--green); border-color: rgba(16,185,129,0.25); background: rgba(16,185,129,0.07); }
+    .cat-automation  { color: var(--accent-hi); border-color: rgba(167,139,250,0.25); background: rgba(167,139,250,0.07); }
+    .cat-ui          { color: var(--cyan); border-color: rgba(34,211,238,0.25); background: rgba(34,211,238,0.07); }
+
+    .feat-card-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 12px;
+      line-height: 1;
+      transition: transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .feat-card:hover .feat-card-icon { transform: scale(1.15) rotate(-5deg); }
+
+    .feat-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-hi);
+      margin-bottom: 10px;
+    }
+    .feat-card p {
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .feat-card-details {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-mid);
+    }
+    .feat-card-details li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+    .feat-card-details li::before {
+      content: '›';
+      color: var(--accent-hi);
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: -1px;
+    }
+
+    /* Spotlight sections */
+    .spotlight {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(124,58,237,0.08);
+      border-bottom: 1px solid rgba(124,58,237,0.08);
+      background: var(--bg2);
+    }
+    .spotlight-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .spotlight-inner.rev { direction: rtl; }
+    .spotlight-inner.rev > * { direction: ltr; }
+    @media (max-width: 900px) {
+      .spotlight-inner { grid-template-columns: 1fr; gap: 36px; }
+      .spotlight-inner.rev { direction: ltr; }
+    }
+    .spotlight-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-hi);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .spotlight-label::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: var(--accent);
+    }
+    .spotlight h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-hi);
+      margin-bottom: 16px;
+    }
+    .spotlight p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .spotlight-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .spotlight-bullets li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .spotlight-bullets li .sb-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--accent-lo);
+      border: 1px solid var(--accent-b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .spotlight-bullets li .sb-dot::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent-hi);
+    }
+
+    /* Compare table */
+    .compare {
+      position: relative;
+      z-index: 1;
+      padding: 80px 28px;
+    }
+    .compare-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .compare h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .compare-sub {
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .compare-table th {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      padding: 14px 20px;
+      text-align: left;
+      border-bottom: 1px solid rgba(124,58,237,0.15);
+    }
+    .compare-table th:not(:first-child) { text-align: center; }
+    .compare-table .th-nix { color: var(--accent-hi); }
+    .compare-table td {
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(124,58,237,0.07);
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .compare-table td:not(:first-child) { text-align: center; }
+    .compare-table tbody tr:hover td { background: rgba(124,58,237,0.04); }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .ct-yes  { color: var(--green); font-size: 1rem; }
+    .ct-no   { color: var(--text-lo); font-size: 1rem; }
+    .ct-part { color: #FCD34D; font-size: 0.75rem; font-family: var(--mono); }
+    .compare-table td.feat-name { font-weight: 500; color: var(--text-hi); }
+    .compare-table td.feat-name .feat-new {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: var(--accent-lo);
+      border: 1px solid var(--accent-b);
+      color: var(--accent-hi);
+      margin-left: 7px;
+      vertical-align: middle;
+    }
+    .compare-header {
+      background: var(--surface);
+      border-radius: 10px 10px 0 0;
+      border: 1px solid rgba(124,58,237,0.15);
+      overflow: hidden;
+    }
+    .compare-body {
+      background: var(--surface);
+      border: 1px solid rgba(124,58,237,0.1);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+    }
+    .col-nix { background: rgba(124,58,237,0.04); }
+
+    /* CTA strip */
+    .feat-cta {
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
+      border-top: 1px solid rgba(124,58,237,0.1);
+    }
+    .feat-cta-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 28px;
+      text-align: center;
+    }
+    .feat-cta h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .feat-cta p {
+      font-size: 0.98rem;
+      color: var(--text);
+      margin-bottom: 36px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.75;
+    }
+    .feat-cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scroll-bar"></div>
+<div class="noise-overlay"></div>
+<div class="aurora">
+  <div class="aurora-blob" style="width:700px;height:700px;background:rgba(124,58,237,0.12);top:-200px;left:-140px;animation-delay:0s;animation-duration:18s"></div>
+  <div class="aurora-blob" style="width:500px;height:500px;background:rgba(34,211,238,0.07);top:40%;right:-100px;animation-delay:-7s;animation-duration:15s"></div>
+  <div class="aurora-blob" style="width:420px;height:420px;background:rgba(124,58,237,0.08);bottom:15%;left:30%;animation-delay:-12s;animation-duration:21s"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="nav-logo-mark">NIX</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.6</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="features.html" class="active">Features</a></li>
+      <li><a href="index.html#install">Install</a></li>
+      <li><a href="changelog.html">Changelog</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+      <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      OPERATIONAL
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="feat-hero">
+  <div class="feat-hero-inner">
+    <div class="hero-badge" style="margin:0 auto 22px">
+      <div class="hero-badge-dot"></div>
+      <span>14 features · 5 categories · 0 telemetry</span>
+    </div>
+    <h1>Everything the default<br><em class="text-gradient">launcher</em> should have been.</h1>
+    <p>NIX ships every feature that belongs in a modern Roblox launcher. No subscriptions, no accounts, no data collection. Just control.</p>
+
+    <div class="feat-stats" data-reveal="fade">
+      <div class="feat-stat">
+        <span class="feat-stat-val">14</span>
+        <span class="feat-stat-label">Features</span>
+      </div>
+      <div class="feat-stat">
+        <span class="feat-stat-val">0</span>
+        <span class="feat-stat-label">Telemetry</span>
+      </div>
+      <div class="feat-stat">
+        <span class="feat-stat-val">MIT</span>
+        <span class="feat-stat-label">License</span>
+      </div>
+      <div class="feat-stat">
+        <span class="feat-stat-val">Free</span>
+        <span class="feat-stat-label">Forever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER TABS -->
+<div class="feat-filter" data-reveal="fade">
+  <button class="feat-tab active" data-filter="all">All</button>
+  <button class="feat-tab" data-filter="performance">⚡ Performance</button>
+  <button class="feat-tab" data-filter="social">🎮 Social</button>
+  <button class="feat-tab" data-filter="mods">🖼️ Mods</button>
+  <button class="feat-tab" data-filter="automation">🔁 Automation</button>
+  <button class="feat-tab" data-filter="ui">🧩 UI & Tools</button>
+</div>
+
+<!-- FEATURE GRID -->
+<div class="feat-body">
+  <div class="feat-grid" id="feat-grid">
+
+    <div class="feat-card" data-cat="performance" data-reveal="scale">
+      <span class="feat-card-icon">⚡</span>
+      <span class="feat-card-cat cat-performance">Performance</span>
+      <h3>Performance Presets</h3>
+      <p>One-click FastFlag bundles that measurably improve FPS and reduce input latency without manual editing.</p>
+      <ul class="feat-card-details">
+        <li>Default, Balanced, and Max Performance profiles</li>
+        <li>Tuned for real hardware — not benchmarks</li>
+        <li>Adjusts renderer, lighting, texture quality</li>
+        <li>Active preset highlighted in the UI</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="performance" data-reveal="scale" data-delay="100">
+      <span class="feat-card-icon">🏳️</span>
+      <span class="feat-card-cat cat-performance">Performance</span>
+      <h3>FastFlag Editor</h3>
+      <p>Full JSON editor built directly into settings. No digging through AppData folders or restarting Roblox after every change.</p>
+      <ul class="feat-card-details">
+        <li>Search and filter any FastFlag by name</li>
+        <li>Toggle flags with a single click</li>
+        <li>Pin frequently used flags to the top</li>
+        <li>Changes apply on next Roblox launch</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="performance" data-reveal="scale" data-delay="200">
+      <span class="feat-card-icon">🧹</span>
+      <span class="feat-card-cat cat-performance">Performance</span>
+      <h3>RAM Cleaner</h3>
+      <p>Trims the working sets of background processes before Roblox starts, freeing physical RAM from the first frame.</p>
+      <ul class="feat-card-details">
+        <li>Runs once per launch, transparently</li>
+        <li>No impact on other running apps long-term</li>
+        <li>Works alongside process priority boost</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="performance" data-reveal="scale">
+      <span class="feat-card-icon">🚀</span>
+      <span class="feat-card-cat cat-performance">Performance</span>
+      <h3>CPU Priority Boost</h3>
+      <p>Elevate Roblox's CPU scheduling class so it wins contention against background processes during load spikes.</p>
+      <ul class="feat-card-details">
+        <li>Above Normal, High, or Realtime modes</li>
+        <li>Applied immediately after launch</li>
+        <li>Reduces frame time variance under load</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="performance" data-reveal="scale" data-delay="100">
+      <span class="feat-card-icon">🌐</span>
+      <span class="feat-card-cat cat-performance">Performance</span>
+      <h3>Hone.gg Integration</h3>
+      <p>Launch the Hone network optimizer before Roblox connects, reducing packet loss and improving route stability.</p>
+      <ul class="feat-card-details">
+        <li>2.5 s warm-up window before game launch</li>
+        <li>Toggled on/off from integrations settings</li>
+        <li>Requires a Hone account to use</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="automation" data-reveal="scale" data-delay="200">
+      <span class="feat-card-icon">🔁</span>
+      <span class="feat-card-cat cat-automation">Automation</span>
+      <h3>Auto-Rejoin</h3>
+      <p>NIX watches the Roblox process. When it exits unexpectedly, it waits 5 seconds and relaunches the original server URL automatically.</p>
+      <ul class="feat-card-details">
+        <li>Preserves the exact server you were on</li>
+        <li>Configurable delay (default 5 s)</li>
+        <li>Works with multi-instance sessions</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="automation" data-reveal="scale">
+      <span class="feat-card-icon">🎯</span>
+      <span class="feat-card-cat cat-automation">Automation</span>
+      <h3>Per-Game Profiles</h3>
+      <p>Automatically write a custom FastFlag set when you join a specific game, then restore your default flags when you leave.</p>
+      <ul class="feat-card-details">
+        <li>8 built-in presets for popular games</li>
+        <li>Create unlimited custom profiles</li>
+        <li>Toggle each profile individually</li>
+        <li>Import/export as JSON for community sharing</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="social" data-reveal="scale" data-delay="100">
+      <span class="feat-card-icon">🎮</span>
+      <span class="feat-card-cat cat-social">Social</span>
+      <h3>Discord Rich Presence</h3>
+      <p>Your Discord status shows exactly what you're playing — game name, server type, time elapsed, and server region.</p>
+      <ul class="feat-card-details">
+        <li>Game thumbnail shown in Discord</li>
+        <li>Server region via optional IP geolocation</li>
+        <li>Elapsed time tracked per session</li>
+        <li>Works with Private Servers and VIP servers</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="social" data-reveal="scale" data-delay="200">
+      <span class="feat-card-icon">📊</span>
+      <span class="feat-card-cat cat-social">Social</span>
+      <h3>Activity Tracking</h3>
+      <p>Every game session is logged locally — game name, playtime, server, and date. All stored on your machine, never uploaded.</p>
+      <ul class="feat-card-details">
+        <li>Full session history in the tray menu</li>
+        <li>Session summary popup after leaving a game</li>
+        <li>One-click rejoin from session summary</li>
+        <li>Zero external data transmission</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="social" data-reveal="scale">
+      <span class="feat-card-icon">🔍</span>
+      <span class="feat-card-cat cat-social">Social</span>
+      <h3>Server Browser</h3>
+      <p>Browse open public servers for any game by Place ID, sorted by ping, player count, and region. Join directly from the list.</p>
+      <ul class="feat-card-details">
+        <li>Ping, FPS, region, and fill rate shown</li>
+        <li>Direct join with one click</li>
+        <li>Works for any public Roblox game</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="ui" data-reveal="scale" data-delay="100">
+      <span class="feat-card-icon">💎</span>
+      <span class="feat-card-cat cat-ui">UI & Tools</span>
+      <h3>Inventory Viewer</h3>
+      <p>Look up any player's public collectible inventory — item thumbnails, RAP, serial numbers, and acquisition dates.</p>
+      <ul class="feat-card-details">
+        <li>Search by Roblox username</li>
+        <li>RAP (Recent Average Price) displayed per item</li>
+        <li>Serial number and series information</li>
+        <li>Reads from public Roblox API only</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="ui" data-reveal="scale" data-delay="200">
+      <span class="feat-card-icon">🪟</span>
+      <span class="feat-card-cat cat-ui">UI & Tools</span>
+      <h3>Multi-Instance</h3>
+      <p>Run as many simultaneous Roblox windows as your machine handles. NIX releases the singleton mutex before each launch.</p>
+      <ul class="feat-card-details">
+        <li>No scripts or third-party tools required</li>
+        <li>Uses NtQuerySystemInformation to close mutex</li>
+        <li>Each instance runs independently</li>
+        <li>Discord RPC updates for the active instance</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="mods" data-reveal="scale">
+      <span class="feat-card-icon">🖼️</span>
+      <span class="feat-card-cat cat-mods">Mods</span>
+      <h3>Mod Support</h3>
+      <p>Override any Roblox content file by dropping replacements into the Modifications folder. Mods persist through Roblox updates.</p>
+      <ul class="feat-card-details">
+        <li>Mirrors the Roblox content directory layout</li>
+        <li>Built-in custom death sound picker</li>
+        <li>Accepts .ogg, .mp3, and .wav for sounds</li>
+        <li>Custom cursors and fonts supported</li>
+      </ul>
+    </div>
+
+    <div class="feat-card" data-cat="ui" data-reveal="scale" data-delay="100">
+      <span class="feat-card-icon">📋</span>
+      <span class="feat-card-cat cat-ui">UI & Tools</span>
+      <h3>Session Summary</h3>
+      <p>A popup after every session showing game thumbnail, total playtime, server region, and a one-click rejoin button.</p>
+      <ul class="feat-card-details">
+        <li>Displayed automatically on Roblox exit</li>
+        <li>Rejoin puts you back on the same server</li>
+        <li>Dismiss or keep open — your choice</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- SPOTLIGHT: PERFORMANCE PRESETS -->
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <div data-reveal="left">
+      <div class="spotlight-label">Deep Dive</div>
+      <h2>Performance Presets,<br>explained.</h2>
+      <p>The default Roblox client ships with conservative flag values that prioritize compatibility over performance. NIX's presets push the flags that actually matter.</p>
+      <ul class="spotlight-bullets">
+        <li><span class="sb-dot"></span>Max Performance disables shadow maps, reduces texture resolution, and enables the Metal (fast-path) renderer where supported</li>
+        <li><span class="sb-dot"></span>Balanced keeps visual quality while removing the flags that cause frame time spikes on mid-range hardware</li>
+        <li><span class="sb-dot"></span>All presets are read-only starting points — you can customize any flag on top of them via the full editor</li>
+      </ul>
+    </div>
+    <div data-reveal="right">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <div class="terminal-dot td-red"></div>
+            <div class="terminal-dot td-yellow"></div>
+            <div class="terminal-dot td-green"></div>
+          </div>
+          <span class="terminal-title">max performance preset</span>
+        </div>
+        <div class="terminal-body" style="min-height:auto">
+          <span class="t-line"><span class="t-comment">// Applied flags (max performance)</span></span>
+          <span class="t-line">&nbsp;</span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">FIntRenderShadowIntensity</span> <span class="t-dim">→ 0</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">DFFlagGraphicsEnableD3D12</span> <span class="t-dim">→ true</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">FIntTerrainArraySliceSize</span> <span class="t-dim">→ 4</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">DFIntTextureQualityOverride</span> <span class="t-dim">→ 1</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">FFlagDebugDisableTelemetry</span> <span class="t-dim">→ true</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">FIntRenderLocalLightUpdatesMax</span> <span class="t-dim">→ 8</span></span>
+          <span class="t-line">&nbsp;</span>
+          <span class="t-line"><span class="t-comment">// 14 flags total · applied on next launch</span></span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-cursor"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT: PER-GAME PROFILES -->
+<section class="spotlight">
+  <div class="spotlight-inner rev">
+    <div data-reveal="right">
+      <div class="spotlight-label">Deep Dive</div>
+      <h2>Per-Game Profiles.<br>Automatic.</h2>
+      <p>Different games need different flags. A combat game needs low-latency settings. A showcase needs high quality rendering. NIX handles the switch automatically on game join.</p>
+      <ul class="spotlight-bullets">
+        <li><span class="sb-dot"></span>NIX reads the Roblox log to detect the Place ID the moment you join</li>
+        <li><span class="sb-dot"></span>The matching profile's flags are written to disk and a rejoin prompt appears so they take effect immediately</li>
+        <li><span class="sb-dot"></span>When you leave, your original flags are restored automatically — no manual switching</li>
+        <li><span class="sb-dot"></span>Built-in presets cover 8 of the most popular games, tuned by community testing</li>
+      </ul>
+    </div>
+    <div data-reveal="left">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <div class="terminal-dot td-red"></div>
+            <div class="terminal-dot td-yellow"></div>
+            <div class="terminal-dot td-green"></div>
+          </div>
+          <span class="terminal-title">profile — blox fruits</span>
+        </div>
+        <div class="terminal-body" style="min-height:auto">
+          <span class="t-line"><span class="t-comment">// Detected: Blox Fruits (PlaceId 2753915549)</span></span>
+          <span class="t-line"><span class="t-comment">// Matching profile: "Blox Fruits — Combat"</span></span>
+          <span class="t-line">&nbsp;</span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Saving original flags</span> <span class="t-dim">→ backup.json</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Writing profile flags</span> <span class="t-dim">→ 9 changes</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Notifying user</span> <span class="t-dim">→ rejoin prompt</span></span>
+          <span class="t-line">&nbsp;</span>
+          <span class="t-line"><span class="t-comment">// On leave:</span></span>
+          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Restoring original flags</span> <span class="t-dim">→ done</span></span>
+          <span class="t-line"><span class="t-prompt">$</span> <span class="t-cursor"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<div class="compare">
+  <div class="compare-inner">
+    <div data-reveal>
+      <div class="section-eyebrow" style="margin-bottom:14px">vs the alternatives</div>
+      <h2>How NIX stacks up.</h2>
+      <p class="compare-sub">Compared against the upstream Bloxstrap project and the default Roblox launcher.</p>
+    </div>
+    <div data-reveal data-delay="100">
+      <table class="compare-table">
+        <thead class="compare-header">
+          <tr>
+            <th>Feature</th>
+            <th class="th-nix">NIX</th>
+            <th>Bloxstrap</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody class="compare-body">
+          <tr>
+            <td class="feat-name">Performance Presets <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Per-Game Flag Profiles <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">RAM Cleaner <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">CPU Priority Boost <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Server Browser <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Inventory Viewer <span class="feat-new">NIX only</span></td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Discord Rich Presence</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Auto-Rejoin</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Multi-Instance</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Mod Support</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">FastFlag Editor</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Telemetry / Data Collection</td>
+            <td class="col-nix"><span class="ct-yes">None</span></td>
+            <td><span class="ct-yes">None</span></td>
+            <td><span class="ct-part">Yes</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Open Source</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-no">✗</span></td>
+          </tr>
+          <tr>
+            <td class="feat-name">Free</td>
+            <td class="col-nix"><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+            <td><span class="ct-yes">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="feat-cta">
+  <div class="feat-cta-inner" data-reveal>
+    <h2>Ready to actually<br><em class="text-gradient">use it?</em></h2>
+    <p>One file. No installer. Three steps and you're done. Works on Windows 10 and 11.</p>
+    <div class="feat-cta-btns">
+      <a class="btn btn-primary" href="https://github.com/binx-ux/shadowstrap/releases/latest" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for Windows
+      </a>
+      <a class="btn btn-ghost" href="index.html#install">See install guide →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html"><span class="nav-logo-mark">NIX</span></a>
+      <p>Free, open source Roblox bootstrapper. Not affiliated with Roblox Corporation.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Project</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/releases" target="_blank" rel="noopener">Releases</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/issues" target="_blank" rel="noopener">Issues</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Site</h5>
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="changelog.html">Changelog</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="https://discord.gg/nKjV3mGq6R" target="_blank" rel="noopener">Discord</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
+        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 binx-ux · MIT License</span>
+    <span class="footer-copy">Not affiliated with Roblox Corporation</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // Version
+  fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest')
+    .then(r => r.json())
+    .then(d => { if (d.tag_name) document.getElementById('nav-ver').textContent = d.tag_name; })
+    .catch(() => {});
+
+  // Scroll bar + nav shrink
+  const scrollBar = document.getElementById('scroll-bar');
+  const navEl = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollBar) scrollBar.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
+    navEl?.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
+
+  // Filter tabs
+  const tabs = document.querySelectorAll('.feat-tab');
+  const cards = document.querySelectorAll('.feat-card');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.cat === filter;
+        card.classList.toggle('hidden', !match);
+      });
+    });
+  });
+
+  // Card tilt
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+      card.style.transform = `translateY(-4px) perspective(700px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
+</script>
+</body>
+</html>

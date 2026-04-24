@@ -13,101 +13,365 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Roadmap board ──────────────────────────────────────────────── */
-    .rm-body  { position: relative; z-index: 1; padding: 0 0 80px; }
-    .rm-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    /* ── ROADMAP REDESIGN ─────────────────────────── */
 
+    /* Milestone track */
+    .milestone-track {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 28px 56px;
+    }
+    .milestone-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+    }
+    .milestone-line {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .milestone-rail {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 2px;
+      background: rgba(124,58,237,0.15);
+      transform: translateY(-50%);
+      border-radius: 1px;
+    }
+    .milestone-fill {
+      position: absolute;
+      top: 50%; left: 0;
+      width: 70%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hi));
+      transform: translateY(-50%);
+      border-radius: 1px;
+      box-shadow: 0 0 8px rgba(124,58,237,0.4);
+      animation: milestoneGrow 1.6s cubic-bezier(.16,1,.3,1) 0.5s both;
+    }
+    @keyframes milestoneGrow {
+      from { width: 0%; opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .milestone-nodes {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .milestone-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+    }
+    .milestone-dot {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid rgba(124,58,237,0.3);
+      position: relative;
+      z-index: 2;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .milestone-node.done .milestone-dot {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(124,58,237,0.5);
+    }
+    .milestone-node.current .milestone-dot {
+      border-color: var(--accent-hi);
+      background: var(--accent-hi);
+      box-shadow: 0 0 16px rgba(167,139,250,0.7);
+      animation: currentPulse 2.5s ease-in-out infinite;
+    }
+    .milestone-node.future .milestone-dot {
+      border-color: rgba(34,211,238,0.3);
+      border-style: dashed;
+    }
+    @keyframes currentPulse {
+      0%,100% { box-shadow: 0 0 10px rgba(167,139,250,0.5); }
+      50%     { box-shadow: 0 0 24px rgba(167,139,250,0.9); }
+    }
+    .milestone-ver {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-hi);
+      margin-top: 6px;
+    }
+    .milestone-node.future .milestone-ver { color: var(--text-mid); }
+    .milestone-date {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.04em;
+      color: var(--text-lo);
+    }
+    .milestone-tag {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-top: 2px;
+    }
+    .mt-current { background: var(--accent-lo); border: 1px solid var(--accent-b); color: var(--accent-hi); }
+    .mt-future  { background: rgba(34,211,238,0.06); border: 1px solid rgba(34,211,238,0.2); color: var(--cyan); }
+
+    /* Stat strip */
+    .rm-stats {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .rm-stat-card {
+      border-radius: 10px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid;
+    }
+    .rm-stat-card--done   { background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.2); }
+    .rm-stat-card--active { background: rgba(124,58,237,0.06); border-color: rgba(124,58,237,0.22); }
+    .rm-stat-card--plan   { background: rgba(34,211,238,0.05); border-color: rgba(34,211,238,0.18); }
+    .rm-stat-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .rm-stat-card--done .rm-stat-icon   { background: rgba(16,185,129,0.12); }
+    .rm-stat-card--active .rm-stat-icon { background: rgba(124,58,237,0.12); }
+    .rm-stat-card--plan .rm-stat-icon   { background: rgba(34,211,238,0.1); }
+    .rm-stat-num {
+      font-family: var(--head);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .rm-stat-card--done .rm-stat-num   { color: var(--green); }
+    .rm-stat-card--active .rm-stat-num { color: var(--accent-hi); }
+    .rm-stat-card--plan .rm-stat-num   { color: var(--cyan); }
+    .rm-stat-text {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-top: 3px;
+    }
+
+    /* Kanban board */
+    .rm-board-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 28px 80px;
+    }
     .rm-board {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 16px;
       align-items: start;
     }
     @media (max-width: 900px) { .rm-board { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .rm-stats { grid-template-columns: 1fr; }
+      .milestone-nodes { display: none; }
+    }
 
-    /* column header */
+    /* Column */
+    .rm-col {
+      background: rgba(255,255,255,0.015);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 4px;
+    }
     .rm-col-head {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid;
+      padding: 14px 16px 12px;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .rm-col-head h2 { font-size: 1rem; font-weight: 600; margin: 0; letter-spacing: .04em; text-transform: uppercase; }
-    .rm-col-head .rm-count {
-      margin-left: auto;
-      font-size: 0.75rem;
-      font-family: var(--mono);
-      background: rgba(255,255,255,0.06);
-      border-radius: 999px;
-      padding: 2px 8px;
-      color: var(--text-mid);
-    }
-
-    /* column colour tokens */
-    .rm-col--done   .rm-col-head { border-color: var(--green); }
-    .rm-col--done   .rm-col-head h2 { color: var(--green); }
-    .rm-col--active .rm-col-head { border-color: var(--accent-hi); }
-    .rm-col--active .rm-col-head h2 { color: var(--accent-hi); }
-    .rm-col--plan   .rm-col-head { border-color: var(--cyan); }
-    .rm-col--plan   .rm-col-head h2 { color: var(--cyan); }
-
-    /* item card */
-    .rm-item {
-      background: var(--card-bg, rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      transition: border-color .15s, transform .15s;
-    }
-    .rm-item:hover { border-color: rgba(139,92,246,.35); transform: translateY(-1px); }
-
-    .rm-item-title {
+    .rm-col-head-icon {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.9rem;
+    }
+    .rm-col--done   .rm-col-head-icon { background: rgba(16,185,129,0.15); }
+    .rm-col--active .rm-col-head-icon { background: rgba(124,58,237,0.15); }
+    .rm-col--plan   .rm-col-head-icon { background: rgba(34,211,238,0.1); }
+    .rm-col-head h2 {
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .rm-col--done   .rm-col-head h2 { color: var(--green); }
+    .rm-col--active .rm-col-head h2 { color: var(--accent-hi); }
+    .rm-col--plan   .rm-col-head h2 { color: var(--cyan); }
+    .rm-count {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .rm-col--done   .rm-count { background: rgba(16,185,129,0.12); color: var(--green); }
+    .rm-col--active .rm-count { background: rgba(124,58,237,0.12); color: var(--accent-hi); }
+    .rm-col--plan   .rm-count { background: rgba(34,211,238,0.1); color: var(--cyan); }
+
+    /* Item card */
+    .rm-cards { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .rm-item {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 9px;
+      padding: 14px 16px;
+      transition: border-color .18s, transform .18s, box-shadow .18s;
+      position: relative;
+      overflow: hidden;
+    }
+    .rm-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+    }
+    .rm-col--done   .rm-item::before { background: var(--green); opacity: 0.35; }
+    .rm-col--active .rm-item::before { background: var(--accent-hi); opacity: 0.5; }
+    .rm-col--plan   .rm-item::before { background: var(--cyan); opacity: 0.3; }
+
+    .rm-col--done   .rm-item:hover { border-color: rgba(16,185,129,0.3); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(16,185,129,0.06); }
+    .rm-col--active .rm-item:hover { border-color: rgba(124,58,237,0.35); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 20px rgba(124,58,237,0.1); }
+    .rm-col--plan   .rm-item:hover { border-color: rgba(34,211,238,0.28); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(34,211,238,0.06); }
+
+    .rm-item-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .rm-item-title {
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-hi);
-      margin: 0 0 4px;
+      margin: 0;
+      line-height: 1.35;
+    }
+    .rm-item--done .rm-item-title { color: var(--text); }
+    .rm-done-check {
+      font-size: 0.75rem;
+      color: var(--green);
+      flex-shrink: 0;
+      margin-top: 1px;
     }
     .rm-item-desc {
       font-size: 0.78rem;
       color: var(--text-mid);
-      line-height: 1.5;
-      margin: 0 0 8px;
+      line-height: 1.55;
+      margin: 0 0 10px;
     }
-    .rm-item-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rm-item-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
     .rm-tag {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       font-family: var(--mono);
       padding: 2px 7px;
       border-radius: 4px;
-      background: rgba(255,255,255,0.05);
-      color: var(--text-mid);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-lo);
+      border: 1px solid rgba(255,255,255,0.07);
+      letter-spacing: 0.04em;
     }
     .rm-tag--version { background: var(--accent-lo); border-color: var(--accent-b); color: var(--accent-hi); }
-    .rm-tag--cyan    { background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.2); color: var(--cyan); }
+    .rm-tag--cyan    { background: rgba(34,211,238,0.06); border-color: rgba(34,211,238,0.18); color: var(--cyan); }
+    .rm-tag--green   { background: rgba(16,185,129,0.07); border-color: rgba(16,185,129,0.2); color: var(--green); }
 
-    /* done tick */
-    .rm-item--done { opacity: 0.85; }
-    .rm-item--done .rm-item-title::before {
-      content: "✓ ";
-      color: var(--green);
+    /* Progress bar (in-progress items) */
+    .rm-progress {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      height: 3px;
+      overflow: hidden;
     }
+    .rm-progress-bar {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hi));
+      box-shadow: 0 0 6px rgba(124,58,237,0.5);
+      width: var(--pct, 50%);
+      transform-origin: left;
+      animation: progressReveal 1.4s cubic-bezier(.16,1,.3,1) var(--delay, 0s) both;
+    }
+    @keyframes progressReveal {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    .rm-progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.06em;
+    }
+    .rm-progress-label span:first-child { color: var(--text-lo); text-transform: uppercase; }
+    .rm-progress-label span:last-child  { color: var(--accent-hi); }
 
-    /* disclaimer */
     .rm-disclaimer {
       font-size: 0.78rem;
-      color: var(--text-mid);
+      color: var(--text-lo);
       text-align: center;
       margin-top: 40px;
-      opacity: 0.7;
+      font-family: var(--mono);
+      line-height: 1.7;
+      letter-spacing: 0.02em;
     }
+    .rm-disclaimer a { color: var(--text-mid); }
+    .rm-disclaimer a:hover { color: var(--text-hi); }
   </style>
 </head>
 <body>
 
+<div class="scroll-bar" id="scroll-bar"></div>
+<div class="noise-overlay"></div>
+<div class="aurora">
+  <div class="aurora-blob" style="width:660px;height:660px;background:rgba(124,58,237,0.12);top:-180px;left:-130px;animation-delay:0s;animation-duration:19s"></div>
+  <div class="aurora-blob" style="width:480px;height:480px;background:rgba(34,211,238,0.07);top:35%;right:-90px;animation-delay:-7s;animation-duration:14s"></div>
+  <div class="aurora-blob" style="width:400px;height:400px;background:rgba(16,185,129,0.05);bottom:20%;left:30%;animation-delay:-13s;animation-duration:20s"></div>
+</div>
+
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
@@ -115,7 +379,7 @@
       <span class="nav-logo-ver" id="nav-ver">v2.0.6</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#features">Features</a></li>
+      <li><a href="features.html">Features</a></li>
       <li><a href="index.html#install">Install</a></li>
       <li><a href="changelog.html">Changelog</a></li>
       <li><a href="roadmap.html" class="active">Roadmap</a></li>
@@ -130,29 +394,107 @@
   </div>
 </nav>
 
+<!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="section-eyebrow">What's Coming</div>
+    <div class="section-eyebrow">What's Being Built</div>
     <h1>Roadmap</h1>
     <p>Shipped, in progress, and what's next. Updated with each release.</p>
   </div>
 </div>
 
-<div class="rm-body">
-  <div class="rm-inner">
-    <div class="rm-board">
-
-      <!-- ── DONE ─────────────────────────────────────────────────── -->
-      <div class="rm-col rm-col--done">
-        <div class="rm-col-head">
-          <span>✓</span>
-          <h2>Released</h2>
-          <span class="rm-count">12</span>
+<!-- MILESTONE TRACK -->
+<div class="milestone-track" data-reveal="fade">
+  <div class="milestone-label">Version timeline</div>
+  <div class="milestone-line">
+    <div class="milestone-rail"></div>
+    <div class="milestone-fill"></div>
+    <div class="milestone-nodes">
+      <div class="milestone-node done">
+        <div class="milestone-dot"></div>
+        <div style="text-align:center">
+          <div class="milestone-ver">v2.0.0</div>
+          <div class="milestone-date">Jan 2026</div>
         </div>
+      </div>
+      <div class="milestone-node done">
+        <div class="milestone-dot"></div>
+        <div style="text-align:center">
+          <div class="milestone-ver">v2.0.2</div>
+          <div class="milestone-date">Feb 2026</div>
+        </div>
+      </div>
+      <div class="milestone-node done">
+        <div class="milestone-dot"></div>
+        <div style="text-align:center">
+          <div class="milestone-ver">v2.0.5</div>
+          <div class="milestone-date">Mar 2026</div>
+        </div>
+      </div>
+      <div class="milestone-node current">
+        <div class="milestone-dot"></div>
+        <div style="text-align:center">
+          <div class="milestone-ver">v2.0.6</div>
+          <div class="milestone-date">Apr 2026</div>
+          <div class="milestone-tag mt-current">Current</div>
+        </div>
+      </div>
+      <div class="milestone-node future">
+        <div class="milestone-dot"></div>
+        <div style="text-align:center">
+          <div class="milestone-ver">v2.1.x</div>
+          <div class="milestone-date">TBD</div>
+          <div class="milestone-tag mt-future">Next</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAT STRIP -->
+<div class="rm-stats">
+  <div class="rm-stat-card rm-stat-card--done" data-reveal="fade">
+    <div class="rm-stat-icon">✓</div>
+    <div>
+      <div class="rm-stat-num">12</div>
+      <div class="rm-stat-text">Shipped</div>
+    </div>
+  </div>
+  <div class="rm-stat-card rm-stat-card--active" data-reveal="fade" data-delay="100">
+    <div class="rm-stat-icon">⚡</div>
+    <div>
+      <div class="rm-stat-num">3</div>
+      <div class="rm-stat-text">In Progress</div>
+    </div>
+  </div>
+  <div class="rm-stat-card rm-stat-card--plan" data-reveal="fade" data-delay="200">
+    <div class="rm-stat-icon">🗓</div>
+    <div>
+      <div class="rm-stat-num">7</div>
+      <div class="rm-stat-text">Planned</div>
+    </div>
+  </div>
+</div>
+
+<!-- KANBAN BOARD -->
+<div class="rm-board-wrap">
+  <div class="rm-board">
+
+    <!-- RELEASED -->
+    <div class="rm-col rm-col--done" data-reveal="left">
+      <div class="rm-col-head">
+        <div class="rm-col-head-icon">✓</div>
+        <h2>Released</h2>
+        <span class="rm-count">12</span>
+      </div>
+      <div class="rm-cards">
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Per-game FastFlag Profiles</p>
-          <p class="rm-item-desc">Auto-apply game-specific flag sets on join, restore on leave. 8 built-in presets for popular games.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Per-game FastFlag Profiles</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Auto-apply game-specific flag sets on join, restore on leave. 8 built-in presets.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.6</span>
             <span class="rm-tag">FastFlags</span>
@@ -160,7 +502,10 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Community Flag Sharing</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Community Flag Sharing</p>
+            <span class="rm-done-check">✓</span>
+          </div>
           <p class="rm-item-desc">Export / import flag presets as JSON for GitHub community contributions.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.6</span>
@@ -169,8 +514,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Inventory / RAP Viewer</p>
-          <p class="rm-item-desc">Look up any player's public collectible inventory with item thumbnails, RAP, and serial numbers.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Inventory / RAP Viewer</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Look up any player's public collectible inventory with thumbnails, RAP, and serials.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.5</span>
             <span class="rm-tag">Inventory</span>
@@ -178,8 +526,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">FastFlag Editor Sidebar Tab</p>
-          <p class="rm-item-desc">Promoted from a sub-page to a top-level navigation item.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">FastFlag Editor Sidebar Tab</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Promoted to a top-level navigation item with search and pin functionality.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.5</span>
             <span class="rm-tag">FastFlags</span>
@@ -187,8 +538,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Session Summary Popup</p>
-          <p class="rm-item-desc">Post-game summary showing thumbnail, playtime, server region, and one-click rejoin.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Session Summary Popup</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Post-game summary with thumbnail, playtime, server region, and one-click rejoin.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.2</span>
             <span class="rm-tag">Activity</span>
@@ -196,8 +550,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Server Browser</p>
-          <p class="rm-item-desc">Browse open public servers by Place ID with ping, FPS, region, and direct join.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Server Browser</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Browse open servers by Place ID — ping, FPS, region, and direct join.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.2</span>
             <span class="rm-tag">Multiplayer</span>
@@ -205,8 +562,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Performance Presets</p>
-          <p class="rm-item-desc">One-click FastFlag bundles — Default, Balanced, Max Performance — with active-preset highlight.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Performance Presets</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Default, Balanced, and Max Performance FastFlag bundles.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">FastFlags</span>
@@ -214,8 +574,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Multi-Instance</p>
-          <p class="rm-item-desc">Run multiple Roblox windows simultaneously via mutex unlock.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Multi-Instance</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Multiple Roblox windows via mutex unlock.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">System</span>
@@ -223,8 +586,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Auto-Rejoin</p>
-          <p class="rm-item-desc">Monitors Roblox exit and relaunches the original roblox:// URL after 5 seconds.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Auto-Rejoin</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Monitors Roblox exit and relaunches the original server URL.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">Reliability</span>
@@ -232,8 +598,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Discord Rich Presence</p>
-          <p class="rm-item-desc">Game name, server type, elapsed time, and server region in Discord status.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Discord Rich Presence</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Game, server type, time, and region in Discord status.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">Social</span>
@@ -241,8 +610,11 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">Process Priority Boost</p>
-          <p class="rm-item-desc">Elevate Roblox to Above Normal, High, or Realtime CPU scheduling.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">CPU Priority Boost</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Elevate Roblox's CPU scheduling class on launch.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">Performance</span>
@@ -250,64 +622,100 @@
         </div>
 
         <div class="rm-item rm-item--done">
-          <p class="rm-item-title">RAM Cleaner</p>
-          <p class="rm-item-desc">Trims working sets of other processes before Roblox launches to free up RAM.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">RAM Cleaner</p>
+            <span class="rm-done-check">✓</span>
+          </div>
+          <p class="rm-item-desc">Trim background process working sets before launch.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--version">v2.0.0</span>
             <span class="rm-tag">Performance</span>
           </div>
         </div>
-      </div>
 
-      <!-- ── IN PROGRESS ────────────────────────────────────────────── -->
-      <div class="rm-col rm-col--active">
-        <div class="rm-col-head">
-          <span>⚡</span>
-          <h2>In Progress</h2>
-          <span class="rm-count">3</span>
-        </div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="rm-col rm-col--active" data-reveal>
+      <div class="rm-col-head">
+        <div class="rm-col-head-icon">⚡</div>
+        <h2>In Progress</h2>
+        <span class="rm-count">3</span>
+      </div>
+      <div class="rm-cards">
 
         <div class="rm-item">
-          <p class="rm-item-title">In-game Overlay</p>
-          <p class="rm-item-desc">Lightweight stats overlay (FPS, ping, RAM, server region) rendered on top of Roblox via a transparent WPF window, togglable by hotkey.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">In-game Stats Overlay</p>
+          </div>
+          <p class="rm-item-desc">Lightweight FPS / ping / RAM / server region overlay rendered transparently on top of Roblox, toggled by hotkey.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--cyan">v2.1.x</span>
             <span class="rm-tag">Performance</span>
             <span class="rm-tag">UI</span>
           </div>
+          <div class="rm-progress">
+            <div class="rm-progress-bar" style="--pct:28%;--delay:0.3s"></div>
+          </div>
+          <div class="rm-progress-label">
+            <span>Progress</span>
+            <span>28%</span>
+          </div>
         </div>
 
         <div class="rm-item">
-          <p class="rm-item-title">Automatic Game-Icon Presets</p>
-          <p class="rm-item-desc">Expand the built-in game profile list to 20+ titles. Community contributions via flags.json will be bundled into releases.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Expanded Game Icon Presets</p>
+          </div>
+          <p class="rm-item-desc">Expand built-in game profiles to 20+ titles. Community contributions via flags.json will be bundled directly into releases.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--cyan">v2.0.x</span>
             <span class="rm-tag">FastFlags</span>
             <span class="rm-tag">Community</span>
           </div>
+          <div class="rm-progress">
+            <div class="rm-progress-bar" style="--pct:62%;--delay:0.45s"></div>
+          </div>
+          <div class="rm-progress-label">
+            <span>Progress</span>
+            <span>62%</span>
+          </div>
         </div>
 
         <div class="rm-item">
-          <p class="rm-item-title">Winget Package</p>
-          <p class="rm-item-desc">Submit <code style="font-family:var(--mono);font-size:.85em;color:var(--cyan)">binx-ux.NIX</code> to the Windows Package Manager community repo so users can install and update via <code style="font-family:var(--mono);font-size:.85em;color:var(--cyan)">winget install nix</code>.</p>
+          <div class="rm-item-head">
+            <p class="rm-item-title">Winget Package</p>
+          </div>
+          <p class="rm-item-desc">Submit <code style="font-family:var(--mono);font-size:.82em;color:var(--cyan)">binx-ux.NIX</code> to the Windows Package Manager repo so users can install and update via <code style="font-family:var(--mono);font-size:.82em;color:var(--cyan)">winget install nix</code>.</p>
           <div class="rm-item-tags">
             <span class="rm-tag rm-tag--cyan">v2.1.x</span>
             <span class="rm-tag">Distribution</span>
           </div>
+          <div class="rm-progress">
+            <div class="rm-progress-bar" style="--pct:18%;--delay:0.6s"></div>
+          </div>
+          <div class="rm-progress-label">
+            <span>Progress</span>
+            <span>18%</span>
+          </div>
         </div>
-      </div>
 
-      <!-- ── PLANNED ─────────────────────────────────────────────────── -->
-      <div class="rm-col rm-col--plan">
-        <div class="rm-col-head">
-          <span>🗓</span>
-          <h2>Planned</h2>
-          <span class="rm-count">7</span>
-        </div>
+      </div>
+    </div>
+
+    <!-- PLANNED -->
+    <div class="rm-col rm-col--plan" data-reveal="right">
+      <div class="rm-col-head">
+        <div class="rm-col-head-icon">🗓</div>
+        <h2>Planned</h2>
+        <span class="rm-count">7</span>
+      </div>
+      <div class="rm-cards">
 
         <div class="rm-item">
           <p class="rm-item-title">Flag Scheduler</p>
-          <p class="rm-item-desc">Apply different flag profiles on a time schedule (e.g. low-latency flags on weekday evenings, quality flags on weekends).</p>
+          <p class="rm-item-desc">Apply different flag profiles on a time schedule — low-latency on weekday evenings, quality on weekends.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">FastFlags</span>
             <span class="rm-tag">Automation</span>
@@ -315,8 +723,8 @@
         </div>
 
         <div class="rm-item">
-          <p class="rm-item-title">Custom Keybinds</p>
-          <p class="rm-item-desc">Global hotkeys for toggle multi-instance, rejoin, screenshot, and open NIX settings from anywhere.</p>
+          <p class="rm-item-title">Custom Global Keybinds</p>
+          <p class="rm-item-desc">Global hotkeys for toggling multi-instance, rejoin, screenshot, and open NIX from anywhere.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">UI</span>
             <span class="rm-tag">Input</span>
@@ -324,8 +732,8 @@
         </div>
 
         <div class="rm-item">
-          <p class="rm-item-title">Profile Export / Backup</p>
-          <p class="rm-item-desc">One-click export of all settings (flags, mods, profiles, appearance) to a single JSON backup file and import on any machine.</p>
+          <p class="rm-item-title">Profile Export & Backup</p>
+          <p class="rm-item-desc">One-click export of all settings, flags, mods, and profiles to a single portable JSON file.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">Settings</span>
             <span class="rm-tag">Portability</span>
@@ -334,7 +742,7 @@
 
         <div class="rm-item">
           <p class="rm-item-title">Friend Activity Feed</p>
-          <p class="rm-item-desc">Show which games your Roblox friends are currently playing in the tray menu, with quick-join links.</p>
+          <p class="rm-item-desc">Show which games your Roblox friends are playing in the tray menu, with quick-join links.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">Social</span>
             <span class="rm-tag">Activity</span>
@@ -342,8 +750,8 @@
         </div>
 
         <div class="rm-item">
-          <p class="rm-item-title">Mod Manager UI Revamp</p>
-          <p class="rm-item-desc">Drag-and-drop mod cards, load-order control, per-mod enable/disable without deleting files, and conflict detection.</p>
+          <p class="rm-item-title">Mod Manager Revamp</p>
+          <p class="rm-item-desc">Drag-and-drop mod cards, load-order control, per-mod toggle without deleting files, and conflict detection.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">Mods</span>
             <span class="rm-tag">UI</span>
@@ -352,7 +760,7 @@
 
         <div class="rm-item">
           <p class="rm-item-title">Roblox Update Deferral</p>
-          <p class="rm-item-desc">Intercept the bootstrapper update check and defer patching for up to 24 hours so mods and flags survive a Roblox update for one session.</p>
+          <p class="rm-item-desc">Defer Roblox patches for up to 24 hours so mods and flags survive an update for one session.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">System</span>
             <span class="rm-tag">Reliability</span>
@@ -361,19 +769,26 @@
 
         <div class="rm-item">
           <p class="rm-item-title">Session History Export</p>
-          <p class="rm-item-desc">Export full session log (game, time played, dates) to CSV or JSON for personal stats tracking.</p>
+          <p class="rm-item-desc">Export the full session log to CSV or JSON for personal stats tracking.</p>
           <div class="rm-item-tags">
             <span class="rm-tag">Activity</span>
             <span class="rm-tag">Data</span>
           </div>
         </div>
+
       </div>
     </div>
 
-    <p class="rm-disclaimer">Roadmap is indicative, not a commitment. Items may be re-ordered or dropped based on feasibility and community feedback. Want something added? Open an issue on GitHub.</p>
   </div>
+
+  <p class="rm-disclaimer" data-reveal="fade" data-delay="300">
+    Roadmap is indicative, not a commitment.<br>
+    Items may be re-ordered or dropped based on feasibility and community feedback.<br>
+    Want something added? <a href="https://github.com/binx-ux/shadowstrap/issues" target="_blank" rel="noopener">Open an issue on GitHub ↗</a>
+  </p>
 </div>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -391,6 +806,7 @@
     <div class="footer-col">
       <h5>Site</h5>
       <ul>
+        <li><a href="features.html">Features</a></li>
         <li><a href="changelog.html">Changelog</a></li>
         <li><a href="roadmap.html">Roadmap</a></li>
         <li><a href="faq.html">FAQ</a></li>
@@ -412,11 +828,25 @@
 </footer>
 
 <script>
-fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest')
-  .then(r => r.json())
-  .then(d => { if (d.tag_name) document.getElementById('nav-ver').textContent = d.tag_name; })
-  .catch(() => {});
-</script>
+(function() {
+  fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest')
+    .then(r => r.json())
+    .then(d => { if (d.tag_name) document.getElementById('nav-ver').textContent = d.tag_name; })
+    .catch(() => {});
 
+  const scrollBar = document.getElementById('scroll-bar');
+  const navEl = document.querySelector('.nav');
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollBar) scrollBar.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
+    navEl?.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
+})();
+</script>
 </body>
 </html>
