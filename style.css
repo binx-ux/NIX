@@ -834,6 +834,7 @@ h1,h2,h3,h4,h5 {
 .tl-b-current { background: var(--accent-lo); border: 1px solid var(--accent-b); color: var(--accent-hi); }
 .tl-b-stable  { background: var(--green-lo);  border: 1px solid rgba(16,185,129,0.22); color: var(--green); }
 .tl-b-legacy  { background: rgba(46,58,80,0.2); border: 1px solid rgba(46,58,80,0.4); color: var(--text-mid); }
+.tl-b-final   { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.28); color: #FCA5A5; }
 .tl-content h2 { font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; color: var(--text-hi); }
 .change-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
 .ci { display: flex; gap: 10px; align-items: flex-start; font-size: 0.86rem; color: var(--text); line-height: 1.6; }
