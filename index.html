@@ -3,31 +3,305 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NIX — Roblox Bootstrapper</title>
-  <meta name="description" content="NIX replaces the Roblox bootstrapper. Performance presets, Discord RPC, mod support, multi-instance, auto-rejoin. Free and open source." />
-  <meta property="og:title" content="NIX — Roblox Bootstrapper" />
-  <meta property="og:description" content="The Roblox bootstrapper you should have had." />
+  <title>NIX — End of Project</title>
+  <meta name="description" content="Shadowstrap / NIX is shutting down. It was a proof of concept — and it worked." />
+  <meta property="og:title" content="NIX — End of Project" />
+  <meta property="og:description" content="Shadowstrap is shutting down. It was only a test of what could be." />
   <meta property="og:url" content="https://binx-ux.github.io/NIX/" />
   <meta name="theme-color" content="#7C3AED" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── SHUTDOWN PAGE ─────────────────────────────── */
+
+    body { overflow-x: hidden; }
+
+    /* Dim the aurora slightly to feel more subdued */
+    .aurora { opacity: 0.6; }
+
+    /* Nav status override */
+    .status-dot {
+      background: #6B7280 !important;
+      box-shadow: 0 0 8px rgba(107,114,128,0.5) !important;
+      animation: none !important;
+    }
+    .nav-status { color: #6B7280 !important; }
+
+    /* ── HERO ─────────────────────────────────── */
+    .sd-hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 28px 80px;
+    }
+
+    .sd-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6B7280;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .sd-eyebrow::before,
+    .sd-eyebrow::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: #374151;
+    }
+
+    .sd-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      border: 1px solid #374151;
+      background: rgba(17,24,39,0.7);
+      padding: 7px 16px;
+      border-radius: 999px;
+      margin-bottom: 36px;
+      backdrop-filter: blur(8px);
+    }
+    .sd-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #6B7280;
+    }
+
+    .sd-hero h1 {
+      font-family: var(--head);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--text-hi);
+      margin-bottom: 32px;
+    }
+    .sd-hero h1 .dim { color: #374151; }
+    .sd-hero h1 .strike {
+      position: relative;
+      color: #6B7280;
+    }
+    .sd-hero h1 .strike::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      top: 50%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #8B5CF6, transparent);
+      transform: translateY(-50%);
+      border-radius: 2px;
+    }
+
+    .sd-hero p.sd-lead {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text);
+      max-width: 600px;
+      line-height: 1.85;
+      margin: 0 auto 56px;
+    }
+    .sd-hero p.sd-lead em {
+      color: var(--accent-hi);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .sd-divider {
+      width: 1px;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, rgba(124,58,237,0.4), transparent);
+      margin: 0 auto 56px;
+    }
+
+    /* ── TERMINAL BLOCK ───────────────────────── */
+    .sd-terminal {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto 64px;
+    }
+
+    /* ── PROOF SECTION ────────────────────────── */
+    .sd-proof {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 28px 96px;
+    }
+    .sd-proof-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-hi);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .sd-proof-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .sd-proof-label::after {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .sd-proof h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      text-align: center;
+      color: var(--text-hi);
+      margin-bottom: 48px;
+      line-height: 1.2;
+    }
+    .sd-proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 640px) { .sd-proof-grid { grid-template-columns: 1fr; } }
+
+    .sd-proof-card {
+      background: var(--surface);
+      border: 1px solid rgba(124,58,237,0.12);
+      border-radius: 12px;
+      padding: 28px 22px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .22s, transform .22s;
+    }
+    .sd-proof-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(167,139,250,0.3), transparent);
+    }
+    .sd-proof-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-3px);
+    }
+    .sd-proof-num {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent-hi);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+    .sd-proof-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-hi);
+      margin-bottom: 6px;
+    }
+    .sd-proof-card p {
+      font-size: 0.8rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    /* ── LETTER ───────────────────────────────── */
+    .sd-letter {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(124,58,237,0.08);
+      background: var(--bg2);
+    }
+    .sd-letter-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 28px 96px;
+    }
+    .sd-letter-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-lo);
+      margin-bottom: 32px;
+    }
+    .sd-letter-inner p {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+    .sd-letter-inner p:last-of-type { margin-bottom: 40px; }
+    .sd-letter-inner strong { color: var(--text-hi); }
+    .sd-letter-sig {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      border-top: 1px solid rgba(124,58,237,0.1);
+      padding-top: 24px;
+    }
+
+    /* ── LINKS ────────────────────────────────── */
+    .sd-links {
+      position: relative;
+      z-index: 1;
+      padding: 64px 28px 96px;
+      text-align: center;
+    }
+    .sd-links p {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 24px;
+    }
+    .sd-links-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Slide-in animation */
+    @keyframes sdIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sd-hero > * { animation: sdIn 0.9s cubic-bezier(.16,1,.3,1) both; }
+    .sd-eyebrow  { animation-delay: 0.1s; }
+    .sd-badge    { animation-delay: 0.2s; }
+    .sd-hero h1  { animation-delay: 0.32s; }
+    .sd-hero .sd-lead { animation-delay: 0.46s; }
+    .sd-divider  { animation-delay: 0.56s; }
+    .sd-terminal { animation-delay: 0.64s; }
+  </style>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS -->
 <div class="scroll-bar" id="scroll-bar"></div>
-
-<!-- NOISE GRAIN -->
 <div class="noise-overlay"></div>
-
-<!-- AURORA BACKGROUND -->
 <div class="aurora">
-  <div class="aurora-blob" style="width:720px;height:720px;background:rgba(124,58,237,0.13);top:-220px;left:-160px;animation-delay:0s;animation-duration:18s"></div>
-  <div class="aurora-blob" style="width:520px;height:520px;background:rgba(34,211,238,0.07);top:28%;right:-110px;animation-delay:-6s;animation-duration:14s"></div>
-  <div class="aurora-blob" style="width:460px;height:460px;background:rgba(124,58,237,0.09);bottom:18%;left:22%;animation-delay:-11s;animation-duration:22s"></div>
-  <div class="aurora-blob" style="width:360px;height:360px;background:rgba(34,211,238,0.06);bottom:-60px;right:18%;animation-delay:-8s;animation-duration:16s"></div>
+  <div class="aurora-blob" style="width:720px;height:720px;background:rgba(124,58,237,0.08);top:-220px;left:-160px;animation-delay:0s;animation-duration:22s"></div>
+  <div class="aurora-blob" style="width:500px;height:500px;background:rgba(107,114,128,0.04);top:30%;right:-100px;animation-delay:-8s;animation-duration:18s"></div>
+  <div class="aurora-blob" style="width:420px;height:420px;background:rgba(124,58,237,0.06);bottom:15%;left:25%;animation-delay:-14s;animation-duration:24s"></div>
 </div>
 
 <!-- NAV -->
@@ -35,303 +309,146 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
       <span class="nav-logo-mark">NIX</span>
-      <span class="nav-logo-ver" id="nav-ver">v2.0.8</span>
+      <span class="nav-logo-ver" style="color:#6B7280">sunset</span>
     </a>
     <ul class="nav-links">
-      <li><a href="features.html">Features</a></li>
-      <li><a href="#install">Install</a></li>
       <li><a href="changelog.html">Changelog</a></li>
-      <li><a href="roadmap.html">Roadmap</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
       <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub ↗</a></li>
     </ul>
-    <div class="nav-status">
-      <span class="status-dot"></span>
-      OPERATIONAL
+    <div class="nav-status" style="color:#6B7280">
+      <span class="status-dot" style="background:#6B7280;box-shadow:none;animation:none"></span>
+      OFFLINE
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <canvas class="hero-canvas" id="hero-canvas"></canvas>
-  <div class="hero-inner">
-    <div>
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        <span>v2.0.8 &mdash; Latest Release</span>
-      </div>
-      <div class="hero-eyebrow">Open Source &nbsp;·&nbsp; Windows 10 / 11 &nbsp;·&nbsp; Free</div>
-      <h1>The Roblox<br>bootstrapper<br>you <em class="text-gradient">actually</em><br>wanted.</h1>
-      <p class="hero-desc">
-        NIX replaces the default Roblox launcher with something built for people
-        who actually care. Performance presets, Discord RPC, multi-instance,
-        auto-rejoin, mod support. No telemetry. No nonsense.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" id="dl-btn" href="https://github.com/binx-ux/shadowstrap/releases/latest" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download for Windows
-        </a>
-        <a class="btn btn-ghost" href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          Source Code
-        </a>
-      </div>
-      <p class="hero-req">Requires <span>Windows 10/11</span> · <span>.NET 6 Desktop Runtime</span> · <span>x64</span></p>
-    </div>
+<section class="sd-hero">
+  <div class="sd-eyebrow">Project Closure</div>
 
-    <div class="terminal-window float">
-      <div class="terminal-bar">
-        <div class="terminal-dots">
-          <div class="terminal-dot td-red"></div>
-          <div class="terminal-dot td-yellow"></div>
-          <div class="terminal-dot td-green"></div>
-        </div>
-        <span class="terminal-title">nix — system status</span>
+  <div class="sd-badge">
+    <div class="sd-badge-dot"></div>
+    <span>Apr 24, 2026 — Final Release v2.0.8</span>
+  </div>
+
+  <h1>
+    <span class="strike">Shadowstrap</span><br>
+    <span style="font-size:0.55em;color:#6B7280;letter-spacing:-0.01em;font-weight:500">is shutting down.</span>
+  </h1>
+
+  <p class="sd-lead">
+    NIX was never meant to be permanent.<br>
+    It was a question — <em>what could a bootstrapper actually be?</em><br>
+    That question has been answered.
+  </p>
+
+  <div class="sd-divider"></div>
+
+  <div class="sd-terminal terminal-window" style="max-width:480px;width:100%;margin-bottom:0">
+    <div class="terminal-bar">
+      <div class="terminal-dots">
+        <div class="terminal-dot td-red"></div>
+        <div class="terminal-dot td-yellow"></div>
+        <div class="terminal-dot td-green"></div>
       </div>
-      <div class="terminal-body" id="hero-terminal"></div>
+      <span class="terminal-title">nix — final status</span>
     </div>
+    <div class="terminal-body" id="sd-terminal"></div>
   </div>
 </section>
 
-<!-- METRICS -->
-<div class="metrics">
-  <div class="metrics-inner">
-    <div class="metric" data-reveal="fade">
-      <div class="metric-label">Total Downloads</div>
-      <div class="metric-val" id="stat-dl">—</div>
-      <div class="metric-sub">across all releases</div>
+<!-- WHAT WAS PROVEN -->
+<div class="sd-proof" data-reveal="fade">
+  <div class="sd-proof-label">What Was Built</div>
+  <h2>A proof of concept that proved its point.</h2>
+
+  <div class="sd-proof-grid">
+    <div class="sd-proof-card" data-reveal="scale">
+      <div class="sd-proof-num">11</div>
+      <h4>Features Shipped</h4>
+      <p>From performance presets to Discord RPC, server browser, activity tracking, and multi-instance — all from scratch.</p>
     </div>
-    <div class="metric" data-reveal="fade" data-delay="100">
-      <div class="metric-label">GitHub Stars</div>
-      <div class="metric-val" id="stat-stars">—</div>
-      <div class="metric-sub">and counting</div>
+    <div class="sd-proof-card" data-reveal="scale" data-delay="100">
+      <div class="sd-proof-num">8</div>
+      <h4>Versions Released</h4>
+      <p>v2.0.0 through v2.0.8, each adding, fixing, and refining. A working release cadence with a real changelog.</p>
     </div>
-    <div class="metric" data-reveal="fade" data-delay="200">
-      <div class="metric-label">Latest Version</div>
-      <div class="metric-val" id="stat-ver">v2.0.8</div>
-      <div class="metric-sub">stable</div>
-    </div>
-    <div class="metric" data-reveal="fade" data-delay="300">
-      <div class="metric-label">License</div>
-      <div class="metric-val" style="font-size:1.1rem;letter-spacing:0">MIT</div>
-      <div class="metric-sub">free forever</div>
+    <div class="sd-proof-card" data-reveal="scale" data-delay="200">
+      <div class="sd-proof-num">0</div>
+      <h4>Telemetry Collected</h4>
+      <p>No analytics. No tracking. No accounts. Every feature worked without knowing anything about the user.</p>
     </div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<section class="section features-bg" id="features">
-  <div class="section-inner">
-    <div class="section-eyebrow" data-reveal="fade">02 — Features</div>
-    <h2 class="section-head" data-reveal>Built for people<br>who actually play.</h2>
-    <p class="section-sub" data-reveal data-delay="100">Every feature came from someone asking for it. Nothing is here to look good on a list.</p>
-
-    <div class="bento">
-      <div class="bc bc--purple gc-3" data-reveal="scale">
-        <span class="bc-icon">⚡</span>
-        <div class="bc-label">PERF_PRESETS</div>
-        <h3>Performance Presets</h3>
-        <p>One-click FastFlag bundles — Default, Balanced, Max Performance. Tuned for real hardware, not spec sheets. The FPS difference is measurable.</p>
-        <div class="bc-tags">
-          <span class="bc-tag">FastFlags</span>
-          <span class="bc-tag">FPS Boost</span>
-          <span class="bc-tag">Renderer</span>
-        </div>
-      </div>
-
-      <div class="bc gc-2" data-reveal="scale" data-delay="100">
-        <span class="bc-icon">🎮</span>
-        <div class="bc-label">DISCORD_RPC</div>
-        <h3>Discord Rich Presence</h3>
-        <p>Shows which game you're in, which server, elapsed time, and server region if you enable location lookup. Works automatically once you enable it.</p>
-      </div>
-
-      <div class="bc bc--cyan gc-1" data-reveal="scale" data-delay="200">
-        <span class="bc-icon">🔁</span>
-        <div class="bc-label">RELIABILITY</div>
-        <h3>Auto-Rejoin</h3>
-        <p>NIX watches the Roblox process. When it exits, it waits 5 seconds and relaunches into the same server automatically.</p>
-      </div>
-
-      <div class="bc gc-2" data-reveal="scale" data-delay="100">
-        <span class="bc-icon">🪟</span>
-        <div class="bc-label">MULTI_INST</div>
-        <h3>Multi-Instance</h3>
-        <p>Run as many Roblox windows as your machine handles. NIX closes the singleton mutex each time so instances don't block each other.</p>
-        <div class="bc-tags">
-          <span class="bc-tag bc-tag--cyan">Mutex unlock</span>
-        </div>
-      </div>
-
-      <div class="bc bc--purple gc-2" data-reveal="scale" data-delay="200">
-        <span class="bc-icon">🖼️</span>
-        <div class="bc-label">MODS</div>
-        <h3>Mod Support</h3>
-        <p>Drop files into the Modifications folder — cursors, fonts, sounds. Override any game asset without touching the Roblox install. Mods survive updates.</p>
-      </div>
-
-      <div class="bc gc-2" data-reveal="scale" data-delay="300">
-        <span class="bc-icon">🏳️</span>
-        <div class="bc-label">FASTFLAGS</div>
-        <h3>FastFlag Editor</h3>
-        <p>Full JSON editor built into settings. Search, toggle, pin any FastFlag without digging through config files or restarting Roblox.</p>
-      </div>
-
-      <div class="bc gc-1" data-reveal="scale" data-delay="100">
-        <span class="bc-icon">🧹</span>
-        <div class="bc-label">MEMORY</div>
-        <h3>RAM Cleaner</h3>
-        <p>Trims other processes' working sets before Roblox starts. More physical RAM available from the first frame.</p>
-      </div>
-
-      <div class="bc bc--cyan gc-1" data-reveal="scale" data-delay="200">
-        <span class="bc-icon">🚀</span>
-        <div class="bc-label">SCHEDULING</div>
-        <h3>Priority Boost</h3>
-        <p>Set Roblox's CPU scheduling class to Above Normal, High, or Realtime. It wins CPU contention during load spikes.</p>
-      </div>
-
+<!-- LETTER -->
+<div class="sd-letter">
+  <div class="sd-letter-inner" data-reveal="fade">
+    <div class="sd-letter-tag">// a note from the builder</div>
+    <p>
+      Shadowstrap started as a fork and became something more — a personal experiment
+      in what a Roblox bootstrapper could look like if someone actually cared.
+      Performance tuning. A proper UI. Features the default launcher should have shipped years ago.
+    </p>
+    <p>
+      It was never a business. It was never trying to be.
+      It was a test of <strong>what's possible in a weekend, a week, a month</strong>
+      — and it turns out the answer is: quite a lot.
+    </p>
+    <p>
+      The source code stays public. Everything built here is documented, readable,
+      and available to anyone who wants to learn from it, fork it, or take it further.
+      The experiment is over. The work isn't wasted.
+    </p>
+    <div class="sd-letter-sig">
+      — binx-ux &nbsp;·&nbsp; Apr 2026
     </div>
   </div>
-</section>
+</div>
 
-<!-- INSTALL -->
-<section class="section install-bg" id="install">
-  <div class="section-inner">
-    <div class="section-eyebrow" data-reveal="fade">03 — Install</div>
-    <h2 class="section-head" data-reveal>Three steps.<br>That's it.</h2>
-    <p class="section-sub" data-reveal data-delay="100">NIX installs itself and registers as your Roblox launcher. You don't touch anything after that.</p>
-
-    <div class="install-grid">
-      <div class="install-steps">
-        <div class="install-step" data-reveal="left">
-          <div class="step-num-wrap"><span class="step-num">01</span></div>
-          <div class="step-body">
-            <h4>Download</h4>
-            <p>Click the button below. You get a single <code>.exe</code> file. No zip, no installer wizard, no bundled garbage.</p>
-          </div>
-        </div>
-        <div class="install-step" data-reveal="left" data-delay="100">
-          <div class="step-num-wrap"><span class="step-num">02</span></div>
-          <div class="step-body">
-            <h4>Run it</h4>
-            <p>Windows SmartScreen warns you because the binary isn't signed yet. Click <code>More info → Run anyway</code>. NIX sets itself up and registers the <code>roblox://</code> protocol handler.</p>
-          </div>
-        </div>
-        <div class="install-step" data-reveal="left" data-delay="200">
-          <div class="step-num-wrap"><span class="step-num">03</span></div>
-          <div class="step-body">
-            <h4>Open any Roblox game</h4>
-            <p>Hit Play on the Roblox site or from the Start Menu. NIX intercepts the launch. Configure settings, mods, and integrations from the tray icon.</p>
-          </div>
-        </div>
-        <div class="install-cta" data-reveal="fade" data-delay="300">
-          <a class="btn btn-primary" id="dl-btn-2" href="https://github.com/binx-ux/shadowstrap/releases/latest" target="_blank" rel="noopener">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Latest Release
-          </a>
-          <p class="install-note">
-            <a href="https://dotnet.microsoft.com/download/dotnet/6.0" target="_blank" rel="noopener">.NET 6 Desktop Runtime</a> required — prompted automatically if missing.
-          </p>
-        </div>
-      </div>
-
-      <div class="terminal-window" style="align-self:start" data-reveal="right">
-        <div class="terminal-bar">
-          <div class="terminal-dots">
-            <div class="terminal-dot td-red"></div>
-            <div class="terminal-dot td-yellow"></div>
-            <div class="terminal-dot td-green"></div>
-          </div>
-          <span class="terminal-title">install log</span>
-        </div>
-        <div class="terminal-body">
-          <span class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">./Shadowstrap-v2.0.1.exe</span></span>
-          <span class="t-line">&nbsp;</span>
-          <span class="t-line"><span class="t-comment">// NIX initializing...</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Checking .NET 6 runtime</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Registering roblox:// handler</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Creating modification folders</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Writing config to %AppData%</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Registering tray icon</span></span>
-          <span class="t-line">&nbsp;</span>
-          <span class="t-line"><span class="t-comment">// Done. NIX is now your</span></span>
-          <span class="t-line"><span class="t-comment">// default Roblox bootstrapper.</span></span>
-          <span class="t-line">&nbsp;</span>
-          <span class="t-line"><span class="t-prompt">$</span> <span class="t-cursor"></span></span>
-        </div>
-      </div>
-    </div>
+<!-- ARCHIVE LINKS -->
+<div class="sd-links" data-reveal="fade">
+  <p>The repository and all releases remain archived and publicly accessible.</p>
+  <div class="sd-links-row">
+    <a class="btn btn-ghost" href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      View Source Archive
+    </a>
+    <a class="btn btn-ghost" href="https://github.com/binx-ux/shadowstrap/releases" target="_blank" rel="noopener">
+      Past Releases
+    </a>
+    <a class="btn btn-ghost" href="changelog.html">
+      Full Changelog
+    </a>
   </div>
-</section>
-
-<!-- FAQ PREVIEW -->
-<section class="section faq-bg">
-  <div class="section-inner">
-    <div class="section-eyebrow" data-reveal="fade">04 — FAQ</div>
-    <h2 class="section-head" data-reveal>Common questions.</h2>
-
-    <div class="faq-grid">
-      <div class="faq-item" data-reveal data-delay="100">
-        <div class="faq-q">Is this safe to use?</div>
-        <p class="faq-a">Yes. The full source is on GitHub and auditable by anyone. NIX doesn't touch the game client — it replaces the bootstrapper that launches Roblox, not Roblox itself.</p>
-      </div>
-      <div class="faq-item" data-reveal data-delay="200">
-        <div class="faq-q">Will I get banned?</div>
-        <p class="faq-a">No. NIX doesn't interact with the game engine the way exploits do. It's a launcher. The same reason users of Bloxstrap (the upstream project) aren't banned.</p>
-      </div>
-      <div class="faq-item" data-reveal data-delay="100">
-        <div class="faq-q">Does it auto-update?</div>
-        <p class="faq-a">Yes. On every launch NIX checks GitHub releases for a newer version. If one exists you'll get a prompt — or it updates silently based on your preference.</p>
-      </div>
-      <div class="faq-item" data-reveal data-delay="200">
-        <div class="faq-q">How do I uninstall?</div>
-        <p class="faq-a">Settings → NIX tab → Uninstall. Removes NIX and restores the default Roblox bootstrapper. Your Roblox installation is completely untouched.</p>
-      </div>
-    </div>
-
-    <div class="faq-more" data-reveal="fade" data-delay="300">
-      <a class="btn btn-ghost" href="faq.html">View all questions →</a>
-      <a class="btn btn-ghost" href="features.html" style="margin-left:10px">All features →</a>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a class="nav-logo" href="index.html">
-        <span class="nav-logo-mark">NIX</span>
-      </a>
-      <p>A free, open source replacement for the Roblox bootstrapper. Not affiliated with Roblox Corporation.</p>
+      <a class="nav-logo" href="index.html"><span class="nav-logo-mark">NIX</span></a>
+      <p>Sunset Apr 2026. Source remains public under MIT License.</p>
     </div>
     <div class="footer-col">
-      <h5>Project</h5>
+      <h5>Archive</h5>
       <ul>
         <li><a href="https://github.com/binx-ux/shadowstrap" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="https://github.com/binx-ux/shadowstrap/releases" target="_blank" rel="noopener">Releases</a></li>
         <li><a href="https://github.com/binx-ux/shadowstrap/wiki" target="_blank" rel="noopener">Wiki</a></li>
-        <li><a href="https://github.com/binx-ux/shadowstrap/issues" target="_blank" rel="noopener">Issues</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Site</h5>
+      <h5>History</h5>
       <ul>
         <li><a href="changelog.html">Changelog</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="https://discord.gg/nKjV3mGq6R" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="features.html">What Was Built</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Legal</h5>
       <ul>
         <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
-        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
-        <li><a href="https://github.com/binx-ux/shadowstrap/blob/main/SECURITY.md" target="_blank" rel="noopener">Security Policy</a></li>
       </ul>
     </div>
   </div>
@@ -342,281 +459,70 @@
 </footer>
 
 <script>
-// ── Load live GitHub data ──────────────────────
-async function loadGitHub() {
-  try {
-    const [rel, repo, allRel] = await Promise.all([
-      fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases/latest').then(r => r.json()),
-      fetch('https://api.github.com/repos/binx-ux/shadowstrap').then(r => r.json()),
-      fetch('https://api.github.com/repos/binx-ux/shadowstrap/releases').then(r => r.json()),
-    ]);
-
-    // Direct exe download
-    const exe = rel.assets?.find(a => a.name.endsWith('.exe'));
-    if (exe) {
-      ['dl-btn', 'dl-btn-2'].forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) {
-          btn.href = exe.browser_download_url;
-          btn.setAttribute('download', exe.name);
-          btn.removeAttribute('target');
-          btn.removeAttribute('rel');
-        }
-      });
-    }
-
-    // Version label
-    if (rel.tag_name) {
-      document.getElementById('nav-ver').textContent = rel.tag_name;
-      document.getElementById('stat-ver').textContent = rel.tag_name;
-      document.querySelector('.hero-badge span').textContent = rel.tag_name + ' \u2014 Latest Release';
-    }
-
-    // Stars
-    if (repo.stargazers_count !== undefined) {
-      window.__stars = repo.stargazers_count;
-      const el = document.getElementById('stat-stars');
-      const s = window.__stars;
-      el.textContent = s >= 1000 ? (s / 1000).toFixed(1) + 'k' : (s || '0');
-    }
-
-    // Total downloads
-    let total = 0;
-    if (Array.isArray(allRel)) {
-      allRel.forEach(r => r.assets?.forEach(a => { total += a.download_count || 0; }));
-    }
-    window.__dl = total;
-    document.getElementById('stat-dl').textContent =
-      total >= 1000 ? (total / 1000).toFixed(1) + 'k' : (total || '0');
-
-    window.__githubLoaded = true;
-    triggerCounters();
-  } catch (e) { /* graceful fallback */ }
-}
-
-loadGitHub();
-
-// ── Hero terminal typing animation ────────────
-const LINES = [
-  { k: 'prompt', v: 'nix --version' },
-  { k: 'val',    v: 'NIX v2.0.8  (stable / 2026-04-24)' },
-  { k: 'blank' },
-  { k: 'prompt', v: 'nix --status' },
-  { k: 'ok',     v: '✓', rest: 'Performance Presets      ON' },
-  { k: 'ok',     v: '✓', rest: 'Discord Rich Presence    ON' },
-  { k: 'ok',     v: '✓', rest: 'Activity Tracking        ON' },
-  { k: 'ok',     v: '✓', rest: 'Auto-Rejoin              ON' },
-  { k: 'ok',     v: '✓', rest: 'Multi-Instance           OFF' },
-  { k: 'ok',     v: '✓', rest: 'FastFlag Editor          ON' },
-  { k: 'blank' },
-  { k: 'cursor' },
-];
-
-const DELAYS = { prompt: 60, val: 20, ok: 30, blank: 80 };
-
-async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-async function runTerminal() {
-  const el = document.getElementById('hero-terminal');
-  if (!el) return;
-  await sleep(400);
-  for (const ln of LINES) {
-    await sleep(DELAYS[ln.k] || 50);
-    const span = document.createElement('span');
-    span.className = 't-line';
-    if (ln.k === 'blank') {
-      span.innerHTML = '&nbsp;';
-    } else if (ln.k === 'prompt') {
-      span.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${ln.v}</span>`;
-    } else if (ln.k === 'val') {
-      span.innerHTML = `<span class="t-val">${ln.v}</span>`;
-    } else if (ln.k === 'ok') {
-      span.innerHTML = `<span class="t-ok">${ln.v}</span> <span class="t-val">${ln.rest}</span>`;
-    } else if (ln.k === 'cursor') {
-      span.innerHTML = `<span class="t-prompt">$</span> <span class="t-cursor"></span>`;
-    }
-    el.appendChild(span);
-  }
-}
-
-runTerminal();
-
-// ── Scroll progress bar + nav shrink ──────────
-const scrollBar = document.getElementById('scroll-bar');
-const navEl = document.querySelector('.nav');
-if (scrollBar) {
+(function() {
+  // Scroll progress
+  const scrollBar = document.getElementById('scroll-bar');
+  const navEl = document.querySelector('.nav');
   window.addEventListener('scroll', () => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    scrollBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    if (scrollBar) scrollBar.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
     navEl?.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
-}
 
-// ── Scroll reveal (IntersectionObserver) ───────
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('is-visible');
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  // Scroll reveal
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); ro.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
 
-document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+  // Terminal animation
+  const LINES = [
+    { k: 'prompt', v: 'nix --status' },
+    { k: 'dim',    v: '// checking systems...' },
+    { k: 'blank' },
+    { k: 'off',    v: '✗', rest: 'Bootstrapper          OFFLINE' },
+    { k: 'off',    v: '✗', rest: 'Auto-updater          OFFLINE' },
+    { k: 'off',    v: '✗', rest: 'Download server       OFFLINE' },
+    { k: 'blank' },
+    { k: 'dim',    v: '// project status: SUNSET' },
+    { k: 'dim',    v: '// source archived at github.com/binx-ux/shadowstrap' },
+    { k: 'blank' },
+    { k: 'val',    v: 'Final version: v2.0.8  ·  Apr 24 2026' },
+    { k: 'blank' },
+    { k: 'cursor' },
+  ];
 
-// ── Active nav scrollspy ───────────────────────
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-const spyObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove('active'));
-      const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-      if (link) link.classList.add('active');
-    }
-  });
-}, { rootMargin: '-46% 0px -46% 0px' });
-document.querySelectorAll('section[id]').forEach(s => spyObs.observe(s));
+  async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── Metric counter animation ───────────────────
-function animCount(el, end, suffix, decimals) {
-  if (!el || isNaN(end) || end === 0) return;
-  const dur = 1500;
-  const startTime = performance.now();
-  const step = (now) => {
-    const t = Math.min((now - startTime) / dur, 1);
-    const eased = 1 - Math.pow(1 - t, 4);
-    const val = eased * end;
-    el.textContent = decimals ? val.toFixed(decimals) + suffix : Math.round(val) + suffix;
-    if (t < 1) requestAnimationFrame(step);
-    else el.closest('.metric')?.classList.add('is-counted');
-  };
-  requestAnimationFrame(step);
-}
-
-function triggerCounters() {
-  if (!window.__metricsInView || !window.__githubLoaded) return;
-  if (window.__countersDone) return;
-  window.__countersDone = true;
-
-  const dlEl = document.getElementById('stat-dl');
-  const starsEl = document.getElementById('stat-stars');
-  const dl = window.__dl || 0;
-  const st = window.__stars || 0;
-  if (dl >= 1000)  animCount(dlEl, dl / 1000, 'k', 1);
-  else             animCount(dlEl, dl, '', 0);
-  if (st >= 1000)  animCount(starsEl, st / 1000, 'k', 1);
-  else             animCount(starsEl, st, '', 0);
-}
-
-const metricsEl = document.querySelector('.metrics');
-if (metricsEl) {
-  new IntersectionObserver((entries) => {
-    if (!entries[0].isIntersecting) return;
-    window.__metricsInView = true;
-    triggerCounters();
-  }, { threshold: 0.4 }).observe(metricsEl);
-}
-
-// ── 3D card tilt ──────────────────────────────
-document.querySelectorAll('.bc').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
-    const y = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
-    card.style.transform = `translateY(-4px) perspective(700px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
-
-// ── Constellation particle canvas ──────────────
-const canvas = document.getElementById('hero-canvas');
-if (canvas) {
-  const ctx = canvas.getContext('2d');
-  let W, H, pts = [];
-  const mouse = { x: -9999, y: -9999 };
-
-  const resize = () => {
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  };
-
-  class Dot {
-    constructor() { this.init(); }
-    init() {
-      this.x  = Math.random() * W;
-      this.y  = Math.random() * H;
-      this.vx = (Math.random() - 0.5) * 0.22;
-      this.vy = (Math.random() - 0.5) * 0.22;
-      this.r  = Math.random() * 1.3 + 0.4;
-      this.a  = Math.random() * 0.5 + 0.15;
-      this.col = Math.random() > 0.5 ? '167,139,250' : '34,211,238';
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0) this.x = W;
-      if (this.x > W) this.x = 0;
-      if (this.y < 0) this.y = H;
-      if (this.y > H) this.y = 0;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.col},${this.a})`;
-      ctx.fill();
+  async function runTerminal() {
+    const el = document.getElementById('sd-terminal');
+    if (!el) return;
+    await sleep(900);
+    for (const ln of LINES) {
+      await sleep(ln.k === 'blank' ? 60 : ln.k === 'dim' ? 30 : 55);
+      const span = document.createElement('span');
+      span.className = 't-line';
+      if (ln.k === 'blank') {
+        span.innerHTML = '&nbsp;';
+      } else if (ln.k === 'prompt') {
+        span.innerHTML = `<span class="t-prompt">$</span> <span class="t-cmd">${ln.v}</span>`;
+      } else if (ln.k === 'dim') {
+        span.innerHTML = `<span class="t-comment">${ln.v}</span>`;
+      } else if (ln.k === 'val') {
+        span.innerHTML = `<span class="t-val">${ln.v}</span>`;
+      } else if (ln.k === 'off') {
+        span.innerHTML = `<span style="color:#6B7280">${ln.v}</span> <span style="color:#4B5563">${ln.rest}</span>`;
+      } else if (ln.k === 'cursor') {
+        span.innerHTML = `<span class="t-prompt">$</span> <span class="t-cursor"></span>`;
+      }
+      el.appendChild(span);
     }
   }
 
-  const link = (a, b, maxD, baseA) => {
-    const dx = a.x - b.x, dy = a.y - b.y;
-    const d = Math.hypot(dx, dy);
-    if (d > maxD) return;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.strokeStyle = `rgba(124,58,237,${baseA * (1 - d / maxD)})`;
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
-  };
-
-  resize();
-  pts = Array.from({ length: 80 }, () => new Dot());
-
-  canvas.addEventListener('mousemove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-  });
-  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
-
-  const draw = () => {
-    ctx.clearRect(0, 0, W, H);
-    pts.forEach(p => { p.update(); p.draw(); });
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        link(pts[i], pts[j], 110, 0.14);
-      }
-      // Mouse pull lines
-      const dx = pts[i].x - mouse.x;
-      const dy = pts[i].y - mouse.y;
-      const d  = Math.hypot(dx, dy);
-      if (d < 160) {
-        ctx.beginPath();
-        ctx.moveTo(pts[i].x, pts[i].y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(167,139,250,${0.28 * (1 - d / 160)})`;
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
-      }
-    }
-    requestAnimationFrame(draw);
-  };
-
-  window.addEventListener('resize', resize, { passive: true });
-  draw();
-}
+  runTerminal();
+})();
 </script>
 </body>
 </html>
