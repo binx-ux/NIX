@@ -27,7 +27,7 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
       <span class="nav-logo-mark">NIX</span>
-      <span class="nav-logo-ver" id="nav-ver">v2.0.6</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.8</span>
     </a>
     <ul class="nav-links">
       <li><a href="features.html">Features</a></li>
@@ -56,12 +56,45 @@
 <div class="cl-body">
   <div class="cl-inner">
 
+    <!-- v2.0.8 -->
+    <div class="tl-item">
+      <div class="tl-meta">
+        <span class="tl-ver">v2.0.8</span>
+        <span class="tl-date">Apr 2026</span>
+        <span class="tl-badge tl-b-current">Current</span>
+      </div>
+      <div class="tl-content">
+        <h2>Cleanup — Removed Features</h2>
+        <ul class="change-list">
+          <li class="ci"><span class="ct ct-remove">remove</span><strong>Game Profiles</strong> — per-game FastFlag profile tab and all related logic removed. The feature had reliability issues and added complexity without enough practical use.</li>
+          <li class="ci"><span class="ct ct-remove">remove</span><strong>Inventory Viewer</strong> — player collectible inventory lookup tab removed. Roblox API changes made the data unreliable.</li>
+          <li class="ci"><span class="ct ct-remove">remove</span><strong>Hone.gg Integration</strong> — auto-launch integration removed from the Integrations page. The integration had no meaningful adoption.</li>
+          <li class="ci"><span class="ct ct-remove">remove</span><strong>Custom Death Sound</strong> — in-app death sound file picker removed from Mods page. You can still place any <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">ouch.ogg</code> directly in the Modifications folder manually.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v2.0.7 -->
+    <div class="tl-item">
+      <div class="tl-meta">
+        <span class="tl-ver">v2.0.7</span>
+        <span class="tl-date">Apr 2026</span>
+        <span class="tl-badge tl-b-stable">Stable</span>
+      </div>
+      <div class="tl-content">
+        <h2>Hotfix — Settings Crash</h2>
+        <ul class="change-list">
+          <li class="ci"><span class="ct ct-fix">fix</span>App crashed immediately when opening the Settings window — <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">XamlParseException: GameChat20 is not a valid value for SymbolRegular</code>. Icon name corrected to a valid <code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">SymbolRegular</code> enum value.</li>
+        </ul>
+      </div>
+    </div>
+
     <!-- v2.0.6 -->
     <div class="tl-item">
       <div class="tl-meta">
         <span class="tl-ver">v2.0.6</span>
         <span class="tl-date">Apr 2026</span>
-        <span class="tl-badge tl-b-current">Current</span>
+        <span class="tl-badge tl-b-stable">Stable</span>
       </div>
       <div class="tl-content">
         <h2>Per-Game FastFlag Profiles &amp; Community Sharing</h2>
@@ -75,15 +108,6 @@
           <li class="ci"><span class="ct ct-add">add</span><code style="font-family:var(--mono);font-size:0.8em;color:var(--cyan)">community/flags.json</code> added to the repo — community-contributed FastFlag presets live here.</li>
           <li class="ci"><span class="ct ct-add">add</span>Import Community Profile — paste a JSON blob from GitHub directly into the Game Profiles tab to add a profile without manual entry.</li>
         </ul>
-
-        <!-- Known issues banner -->
-        <div style="margin-top:14px;padding:10px 14px;border-radius:8px;border:1px solid rgba(251,191,36,0.3);background:rgba(251,191,36,0.07);display:flex;gap:10px;align-items:flex-start;">
-          <span style="font-size:1rem;line-height:1.4;">⚠️</span>
-          <div>
-            <p style="margin:0 0 4px;font-size:0.82rem;font-weight:600;color:#FCD34D;letter-spacing:.03em;">KNOWN ISSUE — Game Profiles tab</p>
-            <p style="margin:0;font-size:0.78rem;color:#A78BFA;line-height:1.5;">The Game Profiles tab can be slow to load and thumbnail images may not appear. A fix is in progress and will ship in the next patch. Everything still works — profiles are applied correctly on game join.</p>
-          </div>
-        </div>
       </div>
     </div>
 

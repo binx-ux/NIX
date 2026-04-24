@@ -850,6 +850,7 @@ h1,h2,h3,h4,h5 {
 .ct-add    { background: var(--green-lo); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
 .ct-fix    { background: rgba(239,68,68,0.08); color: #F87171; border: 1px solid rgba(239,68,68,0.2); }
 .ct-change { background: rgba(245,158,11,0.08); color: #FCD34D; border: 1px solid rgba(245,158,11,0.2); }
+.ct-remove { background: rgba(239,68,68,0.06); color: #FDA4AF; border: 1px solid rgba(239,68,68,0.18); }
 
 /* ── FAQ PAGE ─────────────────────────────────── */
 .faq-pg-body { position: relative; z-index: 1; }

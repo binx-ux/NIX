@@ -436,7 +436,7 @@
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
       <span class="nav-logo-mark">NIX</span>
-      <span class="nav-logo-ver" id="nav-ver">v2.0.6</span>
+      <span class="nav-logo-ver" id="nav-ver">v2.0.8</span>
     </a>
     <ul class="nav-links">
       <li><a href="features.html" class="active">Features</a></li>
@@ -459,14 +459,14 @@
   <div class="feat-hero-inner">
     <div class="hero-badge" style="margin:0 auto 22px">
       <div class="hero-badge-dot"></div>
-      <span>14 features · 5 categories · 0 telemetry</span>
+      <span>11 features · 5 categories · 0 telemetry</span>
     </div>
     <h1>Everything the default<br><em class="text-gradient">launcher</em> should have been.</h1>
     <p>NIX ships every feature that belongs in a modern Roblox launcher. No subscriptions, no accounts, no data collection. Just control.</p>
 
     <div class="feat-stats" data-reveal="fade">
       <div class="feat-stat">
-        <span class="feat-stat-val">14</span>
+        <span class="feat-stat-val">11</span>
         <span class="feat-stat-label">Features</span>
       </div>
       <div class="feat-stat">
@@ -549,18 +549,6 @@
       </ul>
     </div>
 
-    <div class="feat-card" data-cat="performance" data-reveal="scale" data-delay="100">
-      <span class="feat-card-icon">🌐</span>
-      <span class="feat-card-cat cat-performance">Performance</span>
-      <h3>Hone.gg Integration</h3>
-      <p>Launch the Hone network optimizer before Roblox connects, reducing packet loss and improving route stability.</p>
-      <ul class="feat-card-details">
-        <li>2.5 s warm-up window before game launch</li>
-        <li>Toggled on/off from integrations settings</li>
-        <li>Requires a Hone account to use</li>
-      </ul>
-    </div>
-
     <div class="feat-card" data-cat="automation" data-reveal="scale" data-delay="200">
       <span class="feat-card-icon">🔁</span>
       <span class="feat-card-cat cat-automation">Automation</span>
@@ -570,19 +558,6 @@
         <li>Preserves the exact server you were on</li>
         <li>Configurable delay (default 5 s)</li>
         <li>Works with multi-instance sessions</li>
-      </ul>
-    </div>
-
-    <div class="feat-card" data-cat="automation" data-reveal="scale">
-      <span class="feat-card-icon">🎯</span>
-      <span class="feat-card-cat cat-automation">Automation</span>
-      <h3>Per-Game Profiles</h3>
-      <p>Automatically write a custom FastFlag set when you join a specific game, then restore your default flags when you leave.</p>
-      <ul class="feat-card-details">
-        <li>8 built-in presets for popular games</li>
-        <li>Create unlimited custom profiles</li>
-        <li>Toggle each profile individually</li>
-        <li>Import/export as JSON for community sharing</li>
       </ul>
     </div>
 
@@ -624,19 +599,6 @@
       </ul>
     </div>
 
-    <div class="feat-card" data-cat="ui" data-reveal="scale" data-delay="100">
-      <span class="feat-card-icon">💎</span>
-      <span class="feat-card-cat cat-ui">UI & Tools</span>
-      <h3>Inventory Viewer</h3>
-      <p>Look up any player's public collectible inventory — item thumbnails, RAP, serial numbers, and acquisition dates.</p>
-      <ul class="feat-card-details">
-        <li>Search by Roblox username</li>
-        <li>RAP (Recent Average Price) displayed per item</li>
-        <li>Serial number and series information</li>
-        <li>Reads from public Roblox API only</li>
-      </ul>
-    </div>
-
     <div class="feat-card" data-cat="ui" data-reveal="scale" data-delay="200">
       <span class="feat-card-icon">🪟</span>
       <span class="feat-card-cat cat-ui">UI & Tools</span>
@@ -657,9 +619,9 @@
       <p>Override any Roblox content file by dropping replacements into the Modifications folder. Mods persist through Roblox updates.</p>
       <ul class="feat-card-details">
         <li>Mirrors the Roblox content directory layout</li>
-        <li>Built-in custom death sound picker</li>
-        <li>Accepts .ogg, .mp3, and .wav for sounds</li>
-        <li>Custom cursors and fonts supported</li>
+        <li>Custom cursors, fonts, and sounds supported</li>
+        <li>Drop any file to override the matching game asset</li>
+        <li>Survives Roblox client updates automatically</li>
       </ul>
     </div>
 
@@ -719,47 +681,6 @@
   </div>
 </section>
 
-<!-- SPOTLIGHT: PER-GAME PROFILES -->
-<section class="spotlight">
-  <div class="spotlight-inner rev">
-    <div data-reveal="right">
-      <div class="spotlight-label">Deep Dive</div>
-      <h2>Per-Game Profiles.<br>Automatic.</h2>
-      <p>Different games need different flags. A combat game needs low-latency settings. A showcase needs high quality rendering. NIX handles the switch automatically on game join.</p>
-      <ul class="spotlight-bullets">
-        <li><span class="sb-dot"></span>NIX reads the Roblox log to detect the Place ID the moment you join</li>
-        <li><span class="sb-dot"></span>The matching profile's flags are written to disk and a rejoin prompt appears so they take effect immediately</li>
-        <li><span class="sb-dot"></span>When you leave, your original flags are restored automatically — no manual switching</li>
-        <li><span class="sb-dot"></span>Built-in presets cover 8 of the most popular games, tuned by community testing</li>
-      </ul>
-    </div>
-    <div data-reveal="left">
-      <div class="terminal-window">
-        <div class="terminal-bar">
-          <div class="terminal-dots">
-            <div class="terminal-dot td-red"></div>
-            <div class="terminal-dot td-yellow"></div>
-            <div class="terminal-dot td-green"></div>
-          </div>
-          <span class="terminal-title">profile — blox fruits</span>
-        </div>
-        <div class="terminal-body" style="min-height:auto">
-          <span class="t-line"><span class="t-comment">// Detected: Blox Fruits (PlaceId 2753915549)</span></span>
-          <span class="t-line"><span class="t-comment">// Matching profile: "Blox Fruits — Combat"</span></span>
-          <span class="t-line">&nbsp;</span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Saving original flags</span> <span class="t-dim">→ backup.json</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Writing profile flags</span> <span class="t-dim">→ 9 changes</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Notifying user</span> <span class="t-dim">→ rejoin prompt</span></span>
-          <span class="t-line">&nbsp;</span>
-          <span class="t-line"><span class="t-comment">// On leave:</span></span>
-          <span class="t-line"><span class="t-ok">✓</span> <span class="t-val">Restoring original flags</span> <span class="t-dim">→ done</span></span>
-          <span class="t-line"><span class="t-prompt">$</span> <span class="t-cursor"></span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- COMPARISON TABLE -->
 <div class="compare">
   <div class="compare-inner">
@@ -786,12 +707,6 @@
             <td><span class="ct-no">✗</span></td>
           </tr>
           <tr>
-            <td class="feat-name">Per-Game Flag Profiles <span class="feat-new">NIX only</span></td>
-            <td class="col-nix"><span class="ct-yes">✓</span></td>
-            <td><span class="ct-no">✗</span></td>
-            <td><span class="ct-no">✗</span></td>
-          </tr>
-          <tr>
             <td class="feat-name">RAM Cleaner <span class="feat-new">NIX only</span></td>
             <td class="col-nix"><span class="ct-yes">✓</span></td>
             <td><span class="ct-no">✗</span></td>
@@ -805,12 +720,6 @@
           </tr>
           <tr>
             <td class="feat-name">Server Browser <span class="feat-new">NIX only</span></td>
-            <td class="col-nix"><span class="ct-yes">✓</span></td>
-            <td><span class="ct-no">✗</span></td>
-            <td><span class="ct-no">✗</span></td>
-          </tr>
-          <tr>
-            <td class="feat-name">Inventory Viewer <span class="feat-new">NIX only</span></td>
             <td class="col-nix"><span class="ct-yes">✓</span></td>
             <td><span class="ct-no">✗</span></td>
             <td><span class="ct-no">✗</span></td>
